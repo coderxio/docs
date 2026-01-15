@@ -21,8 +21,8 @@ CodeRx is a comprehensive pharmaceutical data platform that provides structured 
 Explore our documentation to learn how to work with pharmaceutical data:
 
 - **[Concepts](/concepts/classes)** - Understand the core data models and concepts
-- **[Tutorials](/tutorials/working-with-ndcs)** - Step-by-step guides for common tasks
-  - Working with NDCs
+- **[Tutorials](/tutorials/working-with-packages)** - Step-by-step guides for common tasks
+  - Working with Packages
   - Working with drugs
   - Working with ingredients
 

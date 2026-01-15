@@ -26,6 +26,7 @@ const config: Config = {
   projectName: 'docs', // Usually your repo name.
 
   onBrokenLinks: 'throw',
+  onBrokenAnchors: 'ignore',
 
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
@@ -117,12 +118,12 @@ const config: Config = {
       },
       items: [
         {
-          to: '/#product-intro',
+          href: '/#product-intro',
           label: 'Product',
           position: 'left',
         },
         {
-          to: '/#comparison',
+          href: '/#comparison',
           label: 'Pricing',
           position: 'left',
         },
@@ -135,7 +136,7 @@ const config: Config = {
           to: '/docs',
           label: 'Docs',
           position: 'right',
-          activeBaseRegex: '^/(?!blog$|blog/|$)',
+          activeBaseRegex: '^/(concepts|tutorials|getting-started|docs)(/|$)',
         },
         {to: '/blog', label: 'Blog', position: 'right'},
         {

@@ -2,17 +2,17 @@
 sidebar_position: 1
 ---
 
-# Working with NDCs
+# Working with Packages
 
-Learn how to work with National Drug Codes (NDCs) in the system.
+Learn how to work with drug packages and their identifiers in the system.
 
 ## Overview
 
-NDCs (National Drug Codes) are unique identifiers for drugs in the United States. This tutorial will guide you through understanding NDC structure, converting between formats, and working with NDC data effectively.
+Drugs are manufactured and sold in packages, and each package is assigned a unique identifier called a National Drug Code (NDC). This tutorial will guide you through understanding package identifiers (NDCs), mapping them to drugs, and working with package data effectively.
 
 ## What are NDCs?
 
-Drugs are manufactured in packages, and the FDA assigns each package a unique National Drug Code (NDC). These codes serve as identifiers for drug packages sold in the United States.
+**NDCs (National Drug Codes) are identifiers for packages of drugs.** Drugs are manufactured in packages, and the FDA assigns each package a unique National Drug Code (NDC). These codes serve as identifiers for drug packages sold in the United States.
 
 ### NDC Structure
 

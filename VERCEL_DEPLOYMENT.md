@@ -157,10 +157,22 @@ If you prefer to use a service like Zapier, Make (Integromat), or a custom endpo
    - Make sure they're added to the correct environment (Production, Preview, Development)
    - **After adding/updating environment variables, you must redeploy for changes to take effect**
 
+1a. **View deployment logs** (easiest way to debug):
+   - Go to Vercel Dashboard → Your Project → **Deployments** tab
+   - Click on your latest deployment
+   - Click the **"Logs"** tab at the top
+   - Submit the contact form, then refresh the logs
+   - You'll see all console.log and console.error output from the API function
+   - This will show you exactly what environment variables are detected and any errors
+
 2. **Check serverless function logs**:
-   - Go to Vercel Dashboard → Your Project → Functions
-   - Click on the `/api/contact` function
-   - Check the logs for any errors
+   - Go to Vercel Dashboard → Your Project → **Deployments** tab
+   - Click on the latest deployment
+   - Click on the **"Functions"** tab (or look for "View Function Logs")
+   - You should see `/api/contact` listed
+   - Click on it to view logs
+   - **Alternative**: Go to Vercel Dashboard → Your Project → **Logs** tab to see real-time logs
+   - **Note**: Functions only appear after the API route has been accessed at least once, or after a deployment that includes the API route
 
 3. **Test API endpoint directly**:
    ```bash
@@ -173,6 +185,13 @@ If you prefer to use a service like Zapier, Make (Integromat), or a custom endpo
        "message": "This is a test message"
      }'
    ```
+   After testing, the function should appear in the Functions tab.
+
+4. **If functions still don't appear**:
+   - Make sure the `api/contact.ts` file is in your repository root (or in the `docs` folder if that's your project root)
+   - Verify the file was included in your latest deployment
+   - Try accessing the API endpoint directly (step 3) - this will create the function
+   - Check that `@vercel/node` is in your `package.json` dependencies (it should be in devDependencies)
 
 ### Email not sending?
 

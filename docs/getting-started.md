@@ -216,7 +216,7 @@ Each data mart includes:
 ## Next Steps
 
 - **[Concepts](/concepts/classes)** - Learn about the data models
-- **[Tutorials](/tutorials/working-with-ndcs)** - Step-by-step guides
+- **[Tutorials](/tutorials/working-with-packages)** - Step-by-step guides
 - **[Data Schema](/concepts/erd)** - Explore the database schema
 
 ## Support

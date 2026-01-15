@@ -38,26 +38,20 @@ async function sendEmailWithResend(data: ContactFormData): Promise<boolean> {
   }
 
   try {
-    const response = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
-        from: fromEmail,
-        to: toEmail,
-        reply_to: data.email,
-        subject: `Contact Form: ${data.subject}`,
-        html: `
-          <h2>New Contact Form Submission</h2>
-          <p><strong>From:</strong> ${data.name} (${data.email})</p>
-          <p><strong>Subject:</strong> ${data.subject}</p>
-          <hr>
-          <h3>Message:</h3>
-          <p>${data.message.replace(/\n/g, '<br>')}</p>
-        `,
-        text: `
+    const emailPayload = {
+      from: fromEmail,
+      to: toEmail,
+      reply_to: data.email,
+      subject: `Contact Form: ${data.subject}`,
+      html: `
+        <h2>New Contact Form Submission</h2>
+        <p><strong>From:</strong> ${data.name} (${data.email})</p>
+        <p><strong>Subject:</strong> ${data.subject}</p>
+        <hr>
+        <h3>Message:</h3>
+        <p>${data.message.replace(/\n/g, '<br>')}</p>
+      `,
+      text: `
 New Contact Form Submission
 
 From: ${data.name} (${data.email})
@@ -65,18 +59,44 @@ Subject: ${data.subject}
 
 Message:
 ${data.message}
-        `,
-      }),
+      `,
+    };
+    
+    console.log('Sending email via Resend:', {
+      from: fromEmail,
+      to: toEmail,
+      reply_to: data.email,
+      subject: emailPayload.subject,
+    });
+    
+    const response = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify(emailPayload),
     });
 
     if (!response.ok) {
       const errorData = await response.text();
-      console.error('Resend API error:', response.status, errorData);
+      console.error('Resend API error - Status:', response.status);
+      console.error('Resend API error - Response:', errorData);
       console.error('Resend API request details:', {
         from: fromEmail,
         to: toEmail,
         hasApiKey: !!apiKey,
+        apiKeyPrefix: apiKey?.substring(0, 5) + '...',
       });
+      
+      // Try to parse error for better logging
+      try {
+        const errorJson = JSON.parse(errorData);
+        console.error('Resend API error details:', errorJson);
+      } catch (e) {
+        // Not JSON, that's fine
+      }
+      
       return false;
     }
 
@@ -85,6 +105,10 @@ ${data.message}
     return true;
   } catch (error) {
     console.error('Error sending email with Resend:', error);
+    if (error instanceof Error) {
+      console.error('Error message:', error.message);
+      console.error('Error stack:', error.stack);
+    }
     return false;
   }
 }

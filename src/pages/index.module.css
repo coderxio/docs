@@ -162,24 +162,24 @@
   align-items: center;
   justify-content: center;
   perspective: 1200px;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .dataCardsWrapper {
   position: relative;
   width: 100%;
-  max-width: 520px;
+  max-width: 600px;
   height: 420px;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  overflow: visible;
 }
 
 /* Data Card */
 .dataCard {
   position: absolute;
-  width: 480px;
+  width: 560px;
   padding: 2rem;
   background: #ffffff;
   border-radius: 16px;
@@ -188,7 +188,7 @@
   pointer-events: none;
   border: 1px solid #e5e5e5;
   left: 50%;
-  margin-left: -240px;
+  margin-left: -280px;
   box-sizing: border-box;
 }
 
@@ -1385,7 +1385,7 @@
 
 @media screen and (max-width: 576px) {
   .hero {
-    padding: 3rem 1.5rem 2rem;
+    padding: 5rem 1.5rem 2rem;
     overflow-x: hidden;
   }
   
@@ -1416,7 +1416,9 @@
   }
   
   .heroTitle {
-    font-size: 2.25rem;
+    font-size: 3.75rem;
+    line-height: 1.1;
+    margin-top: 2.5rem;
   }
   
   .heroDescription {
