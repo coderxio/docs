@@ -1,0 +1,69 @@
+facebook:
+  label: Facebook
+  permalink: /facebook
+  description: Facebook tag description
+
+hello:
+  label: Hello
+  permalink: /hello
+  description: Hello tag description
+
+docusaurus:
+  label: Docusaurus
+  permalink: /docusaurus
+  description: Docusaurus tag description
+
+hola:
+  label: Hola
+  permalink: /hola
+  description: Hola tag description
+
+rxnorm:
+  label: RxNorm
+  permalink: /rxnorm
+  description: Posts about RxNorm drug terminology and database
+
+drug-data:
+  label: Drug Data
+  permalink: /drug-data
+  description: Posts about drug data, datasets, and data sources
+
+healthcare:
+  label: Healthcare
+  permalink: /healthcare
+  description: Posts about healthcare data and systems
+
+database:
+  label: Database
+  permalink: /database
+  description: Posts about databases and database management
+
+open-data:
+  label: Open Data
+  permalink: /open-data
+  description: Posts about open data sources and accessibility
+
+packaging:
+  label: Packaging
+  permalink: /packaging
+  description: Posts about drug packaging and package size information
+
+ndc:
+  label: NDC
+  permalink: /ndc
+  description: Posts about National Drug Code (NDC) identifiers
+
+pricing:
+  label: Pricing
+  permalink: /pricing
+  description: Posts about drug pricing and pricing data
+
+pharmacy:
+  label: Pharmacy
+  permalink: /pharmacy
+  description: Posts about pharmacy operations and drug product data
+
+nadac:
+  label: NADAC
+  permalink: /nadac
+  description: Posts about National Average Drug Acquisition Cost (NADAC) pricing data

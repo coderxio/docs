@@ -1,0 +1,122 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* You can override the default Infima variables here. */
+:root {
+  --ifm-color-primary: #d52d34;
+  --ifm-color-primary-dark: #951f24;
+  --ifm-color-primary-darker: #7a191d;
+  --ifm-color-primary-darkest: #5e1317;
+  --ifm-color-primary-light: #ea969a;
+  --ifm-color-primary-lighter: #f0b3b6;
+  --ifm-color-primary-lightest: #f5d0d2;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  /* Secondary brand color (yellow) */
+  --ifm-color-secondary: #fbcb41;
+  --ifm-color-secondary-dark: #b08e2e;
+  --ifm-color-secondary-darker: #8a6f24;
+  --ifm-color-secondary-darkest: #64501a;
+  --ifm-color-secondary-light: #fde5a0;
+  --ifm-color-secondary-lighter: #fdebb8;
+  --ifm-color-secondary-lightest: #fef1d0;
+}
+
+/* For readability concerns, you should choose a lighter palette in dark mode. */
+[data-theme='dark'] {
+  --ifm-color-primary: #ff4757;
+  --ifm-color-primary-dark: #ff2e43;
+  --ifm-color-primary-darker: #ff1f36;
+  --ifm-color-primary-darkest: #e61e33;
+  --ifm-color-primary-light: #ff6b7a;
+  --ifm-color-primary-lighter: #ff7a87;
+  --ifm-color-primary-lightest: #ff9ca6;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  /* Secondary brand color (yellow) for dark mode */
+  --ifm-color-secondary: #ffd93d;
+  --ifm-color-secondary-dark: #ffd11a;
+  --ifm-color-secondary-darker: #ffcc0a;
+  --ifm-color-secondary-darkest: #e6b509;
+  --ifm-color-secondary-light: #ffe160;
+  --ifm-color-secondary-lighter: #ffe573;
+  --ifm-color-secondary-lightest: #ffed99;
+}
+
+/* Footer styling - white text and links */
+.footer {
+  color: #ffffff;
+}
+
+.footer__link-item {
+  color: #ffffff;
+}
+
+.footer__link-item:hover {
+  color: #ffffff;
+  opacity: 0.8;
+}
+
+.footer__copyright {
+  color: #ffffff;
+}
+
+.footer__title {
+  color: #ffffff;
+}
+
+/* Smooth scrolling for anchor links */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Product and Pricing navbar links - always default color, never red */
+/* Maximum specificity to override Docusaurus active link styles */
+.navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="product-intro"],
+.navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="comparison"],
+.navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="product-intro"]:hover,
+.navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="comparison"]:hover,
+.navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="product-intro"]:focus,
+.navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="comparison"]:focus,
+.navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="product-intro"]:active,
+.navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="comparison"]:active,
+.navbar .navbar__inner .navbar__items .navbar__item a.navbar__link.navbar__link--active[href*="product-intro"],
+.navbar .navbar__inner .navbar__items .navbar__item a.navbar__link.navbar__link--active[href*="comparison"],
+.navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="product-intro"][aria-current="page"],
+.navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="comparison"][aria-current="page"] {
+  color: #ffffff !important;
+}
+
+/* Light mode - use dark color for light theme navbar links */
+:root:not([data-theme='dark']) .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="product-intro"],
+:root:not([data-theme='dark']) .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="comparison"],
+:root:not([data-theme='dark']) .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="product-intro"]:hover,
+:root:not([data-theme='dark']) .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="comparison"]:hover,
+:root:not([data-theme='dark']) .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="product-intro"]:focus,
+:root:not([data-theme='dark']) .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="comparison"]:focus,
+:root:not([data-theme='dark']) .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="product-intro"]:active,
+:root:not([data-theme='dark']) .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="comparison"]:active,
+:root:not([data-theme='dark']) .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link.navbar__link--active[href*="product-intro"],
+:root:not([data-theme='dark']) .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link.navbar__link--active[href*="comparison"],
+:root:not([data-theme='dark']) .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="product-intro"][aria-current="page"],
+:root:not([data-theme='dark']) .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="comparison"][aria-current="page"] {
+  color: #242526 !important;
+}
+
+/* Dark mode - use white for dark theme navbar links */
+[data-theme='dark'] .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="product-intro"],
+[data-theme='dark'] .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="comparison"],
+[data-theme='dark'] .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="product-intro"]:hover,
+[data-theme='dark'] .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="comparison"]:hover,
+[data-theme='dark'] .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="product-intro"]:focus,
+[data-theme='dark'] .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="comparison"]:focus,
+[data-theme='dark'] .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="product-intro"]:active,
+[data-theme='dark'] .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="comparison"]:active,
+[data-theme='dark'] .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link.navbar__link--active[href*="product-intro"],
+[data-theme='dark'] .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link.navbar__link--active[href*="comparison"],
+[data-theme='dark'] .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="product-intro"][aria-current="page"],
+[data-theme='dark'] .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="comparison"][aria-current="page"] {
+  color: #ffffff !important;
+}

@@ -1,0 +1,100 @@
+---
+sidebar_position: 1
+---
+
+# Working with NDCs
+
+Learn how to work with National Drug Codes (NDCs) in the system.
+
+## Overview
+
+NDCs (National Drug Codes) are unique identifiers for drugs in the United States. This tutorial will guide you through understanding NDC structure, converting between formats, and working with NDC data effectively.
+
+## What are NDCs?
+
+Drugs are manufactured in packages, and the FDA assigns each package a unique National Drug Code (NDC). These codes serve as identifiers for drug packages sold in the United States.
+
+### NDC Structure
+
+NDCs are originally formatted with hyphens and consist of three segments:
+
+1. **Labeler/Manufacturer segment** - Identifies the company that manufactures, repackages, or distributes the drug
+2. **Product segment** - Identifies the specific drug product (ingredient, strength, and dose form)
+3. **Pack size segment** - Identifies the package size and type
+
+For example, an NDC might look like: `12345-678-90`
+- `12345` = Labeler code
+- `678` = Product code  
+- `90` = Package code
+
+### Converting to NDC11 Format
+
+To work with NDCs programmatically, it's best to convert them to **NDC11 format** (an 11-digit format without hyphens). The conversion process involves:
+
+1. Removing all hyphens from the original NDC
+2. Padding segments with leading zeros to ensure the total length is 11 digits
+3. The labeler segment can be 5 or 6 digits, product segment can be 3 or 4 digits, and package segment can be 1 or 2 digits
+
+For example:
+- `12345-678-90` → `12345067890` (NDC11)
+- `1234-567-8` → `01234567008` (NDC11, with padding)
+
+### Hierarchical NDC Relationships
+
+NDCs can contain other NDCs, creating a hierarchical structure. For instance, a box of pre-filled flu shot syringes has an outer box NDC, while each individual pre-filled syringe inside has its own different NDC. This packaging hierarchy is important to understand when working with drug package data.
+
+For more information about the complexities of drug packaging and package size data, see our blog post on [The elusiveness of drug package size](/blog/the-elusiveness-of-drug-package-size).
+
+## The Limitations of NDC Product Identifiers
+
+While each NDC has a segment for a product identifier, this number is created by the manufacturer to represent their specific product. It is **not normalized** across different manufacturers or even across different products from the same manufacturer. This means:
+
+- The same drug product from different manufacturers will have different product codes
+- There's no standardized way to group equivalent products using just the NDC product segment
+- Direct comparison or aggregation of drug data using NDC product codes alone is not reliable
+
+## Normalizing with RxNorm
+
+This is where **RxNorm** comes in. RxNorm is a standardized drug nomenclature maintained by the National Library of Medicine that maps NDCs to standardized **RXCUIs** (Rx Concept Unique Identifiers).
+
+RXCUIs are normalized representations that combine three essential elements:
+
+1. **Ingredient** - The active pharmaceutical ingredient(s)
+2. **Strength** - The amount of active ingredient
+3. **Dose form** - How the drug is administered (e.g., tablet, injection, capsule)
+
+By mapping an NDC to its corresponding RXCUI, you can:
+- Group equivalent drug products together regardless of manufacturer
+- Compare products across different brands and manufacturers
+- Aggregate drug data at a meaningful clinical level
+
+For a deeper dive into drug products and how they're structured, see our blog post on [Working with drug product data](/blog/working-with-drug-product-data).
+
+## Accessing the Drug Knowledge Graph
+
+Once you normalize an NDC to a RXCUI, you gain access to the rich knowledge graph of drug information available from open drug data sources. This includes:
+
+- Relationships between brand and generic products
+- Drug class associations
+- Ingredient-level information
+- Dose form details
+- Historical data and discontinued products
+- And much more
+
+This normalization step transforms NDCs from simple package identifiers into gateways to comprehensive, standardized drug information that can power analytics, research, and clinical applications.
+
+## The Importance of Up-to-Date NDC Data
+
+NDCs are not static identifiers. The FDA updates the NDC directory on a **daily basis**, with changes including:
+
+- **New NDCs added** - As manufacturers introduce new products or package sizes
+- **NDCs inactivated** - When products are discontinued or removed from the market
+- **NDCs re-used** - The same NDC code may be assigned to a completely different drug product after a period of time
+
+Working with outdated NDC data can lead to:
+- Incorrect product identification
+- Missing or invalid NDC mappings
+- Inaccurate analytics and reporting
+- Compliance and safety issues
+
+For reliable NDC data operations, it's essential to have access to a **regularly updated drug database** that tracks these daily changes. Whether you're building applications, conducting research, or managing pharmacy operations, staying current with NDC updates ensures the accuracy and reliability of your drug data workflows.

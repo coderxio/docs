@@ -1,0 +1,225 @@
+.container {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 1rem;
+  min-height: calc(100vh - var(--ifm-navbar-height));
+}
+
+.content {
+  max-width: 800px;
+  width: 100%;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--ifm-heading-color);
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  color: var(--ifm-color-content-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.formWrapper {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+}
+
+@media (min-width: 992px) {
+  .formWrapper {
+    grid-template-columns: 2fr 1fr;
+  }
+}
+
+.form {
+  background: var(--ifm-card-background-color);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: var(--ifm-card-border-radius);
+  padding: 2rem;
+  box-shadow: var(--ifm-global-shadow-lw);
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--ifm-heading-color);
+  font-size: 0.95rem;
+}
+
+.required {
+  color: var(--ifm-color-danger);
+  margin-left: 0.25rem;
+}
+
+.input,
+.textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--ifm-color-emphasis-300);
+  border-radius: var(--ifm-global-radius);
+  font-size: 1rem;
+  font-family: var(--ifm-font-family-base);
+  background: var(--ifm-background-color);
+  color: var(--ifm-font-color-base);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input:focus,
+.textarea:focus {
+  outline: none;
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 0 0 3px rgba(var(--ifm-color-primary-rgb), 0.1);
+}
+
+.input:hover:not(:disabled),
+.textarea:hover:not(:disabled) {
+  border-color: var(--ifm-color-emphasis-400);
+}
+
+.input:disabled,
+.textarea:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.inputError,
+.textareaError {
+  border-color: var(--ifm-color-danger);
+}
+
+.inputError:focus,
+.textareaError:focus {
+  border-color: var(--ifm-color-danger);
+  box-shadow: 0 0 0 3px rgba(var(--ifm-color-danger-rgb), 0.1);
+}
+
+.error {
+  display: block;
+  color: var(--ifm-color-danger);
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+.successMessage {
+  background: var(--ifm-color-success-contrast-background);
+  color: var(--ifm-color-success-contrast-foreground);
+  padding: 1rem;
+  border-radius: var(--ifm-global-radius);
+  margin-bottom: 1rem;
+  border: 1px solid var(--ifm-color-success);
+}
+
+.errorMessage {
+  background: var(--ifm-color-danger-contrast-background);
+  color: var(--ifm-color-danger-contrast-foreground);
+  padding: 1rem;
+  border-radius: var(--ifm-global-radius);
+  margin-bottom: 1rem;
+  border: 1px solid var(--ifm-color-danger);
+}
+
+.submitButton {
+  width: 100%;
+  padding: 0.875rem 1.5rem;
+  background: var(--ifm-color-primary);
+  color: var(--ifm-color-primary-contrast-foreground);
+  border: none;
+  border-radius: var(--ifm-global-radius);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+  margin-top: 0.5rem;
+}
+
+.submitButton:hover:not(:disabled) {
+  background: var(--ifm-color-primary-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--ifm-global-shadow-md);
+}
+
+.submitButton:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.submitButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.info {
+  background: var(--ifm-card-background-color);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: var(--ifm-card-border-radius);
+  padding: 2rem;
+  height: fit-content;
+  box-shadow: var(--ifm-global-shadow-lw);
+}
+
+.infoTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--ifm-heading-color);
+}
+
+.infoLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.infoLink {
+  color: var(--ifm-color-primary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+
+.infoLink:hover {
+  color: var(--ifm-color-primary-dark);
+  text-decoration: underline;
+}
+
+@media (max-width: 991px) {
+  .info {
+    margin-top: 2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .title {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .form {
+    padding: 1.5rem;
+  }
+}
