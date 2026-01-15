@@ -31,13 +31,13 @@ For example, an NDC might look like: `12345-678-90`
 
 To work with NDCs programmatically, it's best to convert them to **NDC11 format** (an 11-digit format without hyphens). The conversion process involves:
 
-1. Removing all hyphens from the original NDC
-2. Padding segments with leading zeros to ensure the total length is 11 digits
-3. The labeler segment can be 5 or 6 digits, product segment can be 3 or 4 digits, and package segment can be 1 or 2 digits
+1. Pad each segments with leading zeros so the first segment is 5 digits long, second segment is 4 digits long, and third segment is 2 digits long.
+2. Remove all hyphens from the original NDC.
+3. The total length of the NDC should now be 11 digits long.
 
 For example:
 - `12345-678-90` → `12345067890` (NDC11)
-- `1234-567-8` → `01234567008` (NDC11, with padding)
+- `1234-567-8` → `01234056708` (NDC11)
 
 ### Hierarchical NDC Relationships
 

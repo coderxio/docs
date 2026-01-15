@@ -14,9 +14,18 @@ function isValidEmail(email: string): boolean {
 
 // Send email using Resend (recommended for Vercel)
 async function sendEmailWithResend(data: ContactFormData): Promise<boolean> {
-  const apiKey = process.env.RESEND_API_KEY;
-  const fromEmail = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
-  const toEmail = process.env.CONTACT_EMAIL || process.env.RESEND_TO_EMAIL;
+  const apiKey = process.env.RESEND_API_KEY?.trim();
+  const fromEmail = (process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev').trim();
+  const toEmail = (process.env.CONTACT_EMAIL || process.env.RESEND_TO_EMAIL)?.trim();
+
+  console.log('Resend configuration check:', {
+    hasApiKey: !!apiKey,
+    apiKeyLength: apiKey?.length || 0,
+    fromEmail,
+    toEmail,
+    hasContactEmail: !!process.env.CONTACT_EMAIL,
+    hasResendToEmail: !!process.env.RESEND_TO_EMAIL,
+  });
 
   if (!apiKey) {
     console.error('RESEND_API_KEY not configured');
@@ -24,7 +33,7 @@ async function sendEmailWithResend(data: ContactFormData): Promise<boolean> {
   }
 
   if (!toEmail) {
-    console.error('CONTACT_EMAIL or RESEND_TO_EMAIL not configured');
+    console.error('CONTACT_EMAIL or RESEND_TO_EMAIL not configured. RESEND_API_KEY is set but destination email is missing.');
     return false;
   }
 
@@ -63,9 +72,16 @@ ${data.message}
     if (!response.ok) {
       const errorData = await response.text();
       console.error('Resend API error:', response.status, errorData);
+      console.error('Resend API request details:', {
+        from: fromEmail,
+        to: toEmail,
+        hasApiKey: !!apiKey,
+      });
       return false;
     }
 
+    const result = await response.json();
+    console.log('Resend API success:', result);
     return true;
   } catch (error) {
     console.error('Error sending email with Resend:', error);
@@ -209,7 +225,14 @@ export default async function handler(
 
     // Try Resend first (recommended)
     if (process.env.RESEND_API_KEY) {
+      console.log('RESEND_API_KEY found, attempting to send email...');
+      console.log('CONTACT_EMAIL:', process.env.CONTACT_EMAIL ? 'set' : 'not set');
+      console.log('RESEND_TO_EMAIL:', process.env.RESEND_TO_EMAIL ? 'set' : 'not set');
+      console.log('RESEND_FROM_EMAIL:', process.env.RESEND_FROM_EMAIL || 'using default');
       sent = await sendEmailWithResend({ name, email, subject, message });
+      console.log('Resend send result:', sent ? 'success' : 'failed');
+    } else {
+      console.log('RESEND_API_KEY not found in environment');
     }
 
     // Fallback to SendGrid
@@ -223,13 +246,33 @@ export default async function handler(
     }
 
     if (!sent) {
+      const hasResendKey = !!process.env.RESEND_API_KEY;
+      const hasContactEmail = !!(process.env.CONTACT_EMAIL || process.env.RESEND_TO_EMAIL);
+      const hasSendGridKey = !!process.env.SENDGRID_API_KEY;
+      const hasWebhook = !!process.env.CONTACT_WEBHOOK_URL;
+      
       console.error('No email service configured. Available env vars:', {
-        hasResendKey: !!process.env.RESEND_API_KEY,
-        hasSendGridKey: !!process.env.SENDGRID_API_KEY,
-        hasWebhook: !!process.env.CONTACT_WEBHOOK_URL,
+        hasResendKey,
+        hasContactEmail,
+        hasSendGridKey,
+        hasWebhook,
       });
+      
+      // Provide more specific error message
+      if (hasResendKey && !hasContactEmail) {
+        return res.status(500).json({
+          error: 'RESEND_API_KEY is configured but CONTACT_EMAIL or RESEND_TO_EMAIL is missing. Please set CONTACT_EMAIL in your Vercel environment variables.',
+        });
+      }
+      
+      if (hasResendKey && hasContactEmail) {
+        return res.status(500).json({
+          error: 'Email service failed to send. Please check your RESEND_API_KEY and CONTACT_EMAIL configuration, and check Vercel function logs for details.',
+        });
+      }
+      
       return res.status(500).json({
-        error: 'Email service not configured. Please configure RESEND_API_KEY, SENDGRID_API_KEY, or CONTACT_WEBHOOK_URL',
+        error: 'Email service not configured. Please configure RESEND_API_KEY with CONTACT_EMAIL, SENDGRID_API_KEY, or CONTACT_WEBHOOK_URL',
       });
     }
 

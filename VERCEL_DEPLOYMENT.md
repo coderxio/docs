@@ -153,7 +153,9 @@ If you prefer to use a service like Zapier, Make (Integromat), or a custom endpo
 1. **Check environment variables**:
    - Go to Vercel Dashboard → Your Project → Settings → Environment Variables
    - Verify all required variables are set correctly
+   - **Important**: If using Resend, you need BOTH `RESEND_API_KEY` AND `CONTACT_EMAIL` (or `RESEND_TO_EMAIL`)
    - Make sure they're added to the correct environment (Production, Preview, Development)
+   - **After adding/updating environment variables, you must redeploy for changes to take effect**
 
 2. **Check serverless function logs**:
    - Go to Vercel Dashboard → Your Project → Functions
@@ -191,12 +193,12 @@ If you prefer to use a service like Zapier, Make (Integromat), or a custom endpo
 | Variable | Required For | Description |
 |----------|--------------|-------------|
 | `RESEND_API_KEY` | Resend | Your Resend API key |
-| `RESEND_FROM_EMAIL` | Resend | Email address to send from (must be verified in Resend) |
+| `RESEND_FROM_EMAIL` | Resend | Email address to send from (must be verified in Resend). Defaults to `onboarding@resend.dev` if not set. |
 | `RESEND_TO_EMAIL` | Resend | Optional - email to receive submissions (falls back to CONTACT_EMAIL) |
 | `SENDGRID_API_KEY` | SendGrid | Your SendGrid API key |
 | `SENDGRID_FROM_EMAIL` | SendGrid | Email address to send from (must be verified in SendGrid) |
 | `SENDGRID_TO_EMAIL` | SendGrid | Optional - email to receive submissions (falls back to CONTACT_EMAIL) |
-| `CONTACT_EMAIL` | All | Email address to receive contact form submissions |
+| `CONTACT_EMAIL` | **Required** | Email address to receive contact form submissions. **Must be set if using Resend or SendGrid.** |
 | `CONTACT_WEBHOOK_URL` | Webhook | Webhook URL to receive form submissions |
 
 ## Support
