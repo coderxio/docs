@@ -1,5 +1,5 @@
 ---
-sidebar_position: 7
+sidebar_position: 3.5
 ---
 
 # Entity Relationship Diagram
@@ -7,7 +7,9 @@ sidebar_position: 7
 This diagram illustrates the relationships between the core concepts in the CodeRx data model.
 
 ```mermaid
+%%{init: {'theme':'base', 'themeVariables': {'primaryColor':'#fef1d0', 'primaryTextColor':'#64501a', 'primaryBorderColor':'#b08e2e', 'secondaryColor':'#fdebb8', 'tertiaryColor':'#fde5a0'}}}%%
 erDiagram
+    %% Main chain entities (left side)
     PACKAGES {
         string ndc11 PK "Primary Key"
         string ndc9 "9-digit NDC"
@@ -71,6 +73,18 @@ erDiagram
         string strength_text
     }
 
+    %% Branch entities (right side)
+    EXCIPIENTS {
+        string ndc9 FK "References Packages"
+        string mthspl_excipient_name
+        string fda_unii_code
+        string fda_unii_display_name
+        string pubchem_id
+        boolean is_preservative
+        boolean is_dye
+        boolean is_gluten
+    }
+
     CLASSES {
         string drug_id FK "References Drugs"
         string drug_name
@@ -84,30 +98,22 @@ erDiagram
         string atc_4_name
     }
 
-    EXCIPIENTS {
-        string ndc9 FK "References Packages"
-        string mthspl_excipient_name
-        string fda_unii_code
-        string fda_unii_display_name
-        string pubchem_id
-        boolean is_preservative
-        boolean is_dye
-        boolean is_gluten
-    }
-
     SYNONYMS {
         string drug_id FK "References Drugs"
         string synonym
         string source "RXNORM, NADAC, FDA"
     }
 
-    %% Relationships
-    PACKAGES ||--o{ EXCIPIENTS : "has (via ndc9)"
+    %% Main chain relationships (left side - vertical flow)
     PACKAGES }o--|| DRUGS : "maps to (via drug_id)"
     DRUGS ||--o{ INGREDIENTS : "contains"
+    DRUGS }o--o| DRUGS : "brand/generic (via clinical_drug_id)"
+    INGREDIENTS ||--o{ INGREDIENTS : "has component (via ingredient_id -> ingredient_component_id)"
+
+    %% Branch relationships (right side - horizontal flow)
+    PACKAGES ||--o{ EXCIPIENTS : "has (via ndc9)"
     DRUGS ||--o{ CLASSES : "classified in"
     DRUGS ||--o{ SYNONYMS : "has"
-    DRUGS }o--o| DRUGS : "brand/generic (via clinical_drug_id)"
 ```
 
 ## Relationship Details
@@ -141,6 +147,11 @@ erDiagram
 - **Type**: Many-to-One (Self-referential)
 - **Key**: `drugs.clinical_drug_id` → `drugs.drug_id`
 - **Description**: Brand drugs reference their generic/clinical equivalents. Clinical drugs reference themselves.
+
+### Ingredients Self-Reference
+- **Type**: One-to-Many (Self-referential)
+- **Key**: `ingredients.ingredient_id` → `ingredients.ingredient_component_id`
+- **Description**: Ingredients can reference other ingredients as components. An ingredient can have one or more ingredient components, where the `ingredient_id` of a parent ingredient matches the `ingredient_component_id` of child ingredient records. This allows for hierarchical ingredient structures (e.g., a compound ingredient containing multiple sub-ingredients).
 
 ## Key Identifiers
 

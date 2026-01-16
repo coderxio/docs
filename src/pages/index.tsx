@@ -61,7 +61,7 @@ function DrugDataVisual() {
   React.useEffect(() => {
     const interval = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % dataTypes.length);
-    }, 8000);
+    }, 3000);
     return () => clearInterval(interval);
   }, [dataTypes.length]);
   
@@ -517,26 +517,28 @@ function ProductIntroSection() {
             Built by pharmacists who understand the complexities of drug data, designed 
             for developers and analysts who need reliable information without the overhead.
           </p>
-          <div className={styles.productHighlights}>
-            <div className={styles.productHighlight}>
-              <span className={styles.highlightIcon}>◆</span>
-              <div>
-                <span className={styles.highlightTitle}>Unified Schema</span>
-                <span className={styles.highlightDesc}>Pre-joined tables with consistent identifiers</span>
+          <div className={styles.productHighlightsWrapper}>
+            <div className={styles.productHighlights}>
+              <div className={styles.productHighlight}>
+                <span className={styles.highlightIcon}>◆</span>
+                <div>
+                  <span className={styles.highlightTitle}>Unified Schema</span>
+                  <span className={styles.highlightDesc}>Pre-joined tables with consistent identifiers</span>
+                </div>
               </div>
-            </div>
-            <div className={styles.productHighlight}>
-              <span className={styles.highlightIcon}>◆</span>
-              <div>
-                <span className={styles.highlightTitle}>Weekly Refresh</span>
-                <span className={styles.highlightDesc}>Current with FDA, RxNorm, and pricing updates</span>
+              <div className={styles.productHighlight}>
+                <span className={styles.highlightIcon}>◆</span>
+                <div>
+                  <span className={styles.highlightTitle}>Weekly Refresh</span>
+                  <span className={styles.highlightDesc}>Current with FDA, RxNorm, and pricing updates</span>
+                </div>
               </div>
-            </div>
-            <div className={styles.productHighlight}>
-              <span className={styles.highlightIcon}>◆</span>
-              <div>
-                <span className={styles.highlightTitle}>Query-Ready</span>
-                <span className={styles.highlightDesc}>Standard SQL on semantic drug concepts</span>
+              <div className={styles.productHighlight}>
+                <span className={styles.highlightIcon}>◆</span>
+                <div>
+                  <span className={styles.highlightTitle}>Query-Ready</span>
+                  <span className={styles.highlightDesc}>Standard SQL on semantic drug concepts</span>
+                </div>
               </div>
             </div>
           </div>

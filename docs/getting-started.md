@@ -15,7 +15,11 @@ CodeRx is available as an annual subscription starting at **$5,500/year**. This 
 
 To subscribe, complete payment through our secure Stripe checkout:
 
+:::tip Subscribe Now
+**Ready to get started?** Complete your subscription through our secure Stripe checkout to access CodeRx's comprehensive drug database with daily NDC updates, complete RxNorm mappings, and rich drug knowledge graphs.
+
 **[Subscribe Now →](https://buy.stripe.com/6oUfZh6B53YzbtE9s0gEg01)**
+:::
 
 Once your payment is confirmed, you'll receive:
 
@@ -217,7 +221,7 @@ Each data mart includes:
 
 - **[Concepts](/concepts/classes)** - Learn about the data models
 - **[Tutorials](/tutorials/working-with-packages)** - Step-by-step guides
-- **[Data Schema](/concepts/erd)** - Explore the database schema
+- **[Data Schema](/erd)** - Explore the database schema
 
 ## Support
 

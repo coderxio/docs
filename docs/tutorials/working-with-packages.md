@@ -98,3 +98,9 @@ Working with outdated NDC data can lead to:
 - Compliance and safety issues
 
 For reliable NDC data operations, it's essential to have access to a **regularly updated drug database** that tracks these daily changes. Whether you're building applications, conducting research, or managing pharmacy operations, staying current with NDC updates ensures the accuracy and reliability of your drug data workflows.
+
+:::tip Ready to Get Started?
+**Don't let outdated data hold you back.** Explore our comprehensive drug database with daily NDC updates, complete RxNorm mappings, and rich drug knowledge graphs. Start building reliable, accurate drug data workflows today—your applications, research, and operations deserve the most current information available.
+
+[Get Started →](/getting-started) | [Explore the Packages Model →](/concepts/packages)
+:::

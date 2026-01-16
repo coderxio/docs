@@ -120,3 +120,67 @@ html {
 [data-theme='dark'] .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="comparison"][aria-current="page"] {
   color: #ffffff !important;
 }
+
+/* Mermaid ER Diagram - Yellow color scheme */
+/* Target all entity rectangles in ER diagrams */
+.mermaid svg .er rect,
+.mermaid svg .entityBox {
+  fill: var(--ifm-color-secondary-lightest) !important;
+  stroke: var(--ifm-color-secondary-dark) !important;
+  stroke-width: 2px !important;
+}
+
+/* Target entity text labels */
+.mermaid svg .er text.entityLabel,
+.mermaid svg .er .entityLabel {
+  fill: var(--ifm-color-secondary-darkest) !important;
+}
+
+/* Relationship lines and labels use default colors (removed custom styling) */
+
+/* Target attribute rectangles */
+.mermaid svg .er rect.attributeBox,
+.mermaid svg .er .attributeBox {
+  fill: var(--ifm-color-secondary-lighter) !important;
+  stroke: var(--ifm-color-secondary-dark) !important;
+}
+
+/* Target attribute text */
+.mermaid svg .er text.attributeLabel,
+.mermaid svg .er .attributeLabel {
+  fill: var(--ifm-color-secondary-darkest) !important;
+}
+
+/* Override any purple/violet colors in ER diagrams with yellow */
+.mermaid svg .er [fill*="purple"],
+.mermaid svg .er [fill*="violet"],
+.mermaid svg .er [stroke*="purple"],
+.mermaid svg .er [stroke*="violet"] {
+  fill: var(--ifm-color-secondary) !important;
+  stroke: var(--ifm-color-secondary) !important;
+}
+
+/* Dark mode adjustments for ER diagrams */
+[data-theme='dark'] .mermaid svg .er rect,
+[data-theme='dark'] .mermaid svg .entityBox {
+  fill: rgba(255, 217, 61, 0.2) !important;
+  stroke: var(--ifm-color-secondary) !important;
+}
+
+[data-theme='dark'] .mermaid svg .er text.entityLabel,
+[data-theme='dark'] .mermaid svg .er .entityLabel {
+  fill: var(--ifm-color-secondary) !important;
+}
+
+/* Relationship lines and labels use default colors in dark mode (removed custom styling) */
+
+[data-theme='dark'] .mermaid svg .er rect.attributeBox,
+[data-theme='dark'] .mermaid svg .er .attributeBox {
+  fill: rgba(255, 217, 61, 0.15) !important;
+  stroke: var(--ifm-color-secondary) !important;
+}
+
+[data-theme='dark'] .mermaid svg .er text.attributeLabel,
+[data-theme='dark'] .mermaid svg .er .attributeLabel {
+  fill: var(--ifm-color-secondary-light) !important;
+}
