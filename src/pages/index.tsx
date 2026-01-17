@@ -422,13 +422,13 @@ function ComparisonSection() {
             className={clsx(styles.comparisonTab, activeTab === 'databases' && styles.comparisonTabActive)}
             onClick={() => setActiveTab('databases')}
           >
-            Other Databases
+            Versus Others
           </button>
           <button
             className={clsx(styles.comparisonTab, activeTab === 'rawdata' && styles.comparisonTabActive)}
             onClick={() => setActiveTab('rawdata')}
           >
-            Raw Open Data
+            Versus Raw Data
           </button>
         </div>
         <div className={styles.comparisonHeader}>

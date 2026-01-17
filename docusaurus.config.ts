@@ -123,7 +123,7 @@ const config: Config = {
           position: 'left',
         },
         {
-          href: '/#comparison',
+          to: '/pricing',
           label: 'Pricing',
           position: 'left',
         },

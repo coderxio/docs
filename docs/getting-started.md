@@ -5,30 +5,37 @@ sidebar_position: 2
 
 # Getting Started
 
-Welcome! This guide will walk you through subscribing to CodeRx and accessing your pharmaceutical data.
+Get started with CodeRx in minutes. Start your **30-day free trial** today and explore everything risk-free. You won't be charged until after your trial period ends—cancel anytime during the trial with no obligation.
 
-## Subscription
+## Start Your Free Trial
 
-CodeRx is available as an annual subscription starting at **$5,500/year**. This gives you access to weekly-updated drug data marts hosted on AWS S3.
+Every CodeRx subscription comes with a **full 30-day free trial**. Explore our comprehensive drug database, access weekly-updated data marts, and integrate with your existing workflows—all free for 30 days. Your card won't be charged until the trial ends, and you can cancel anytime during the trial period.
 
-### Payment
+### Flexible Billing Options
 
-To subscribe, complete payment through our secure Stripe checkout:
+We offer two simple pricing plans to fit your needs:
 
-:::tip Subscribe Now
-**Ready to get started?** Complete your subscription through our secure Stripe checkout to access CodeRx's comprehensive drug database with weekly updates, complete RxNorm mappings, and rich drug knowledge graphs.
+- **Monthly**: $550/month — Perfect if you want flexibility or are testing the waters
+- **Yearly**: $5,500/year — Best value if you're committed long-term
 
-**[Subscribe Now →](https://buy.stripe.com/6oUfZh6B53YzbtE9s0gEg01)**
+Both plans include the same features and data access: weekly updates, complete RxNorm mappings, rich drug knowledge graphs, and direct access to data marts hosted on AWS S3. The only difference is how you're billed.
+
+:::tip Ready to Get Started?
+**Start your 30-day free trial today.** Try CodeRx's comprehensive drug database free for 30 days—you won't be charged until after your trial ends. Choose between monthly or yearly billing when you subscribe.
+
+**[View Pricing & Start Free Trial →](/pricing)**
 :::
 
-Once your payment is confirmed, you'll receive:
+### After Your Trial or Subscription
+
+Once you've started your free trial or confirmed your subscription, you'll receive:
 
 - **AWS S3 Access Credentials** - Access key ID and secret access key
 - **S3 Bucket Information** - Bucket name and region details
 - **Connection Instructions** - Step-by-step setup guide
 - **Welcome Email** - Additional resources and documentation links
 
-> **Note**: Access credentials are typically provided within 24 hours of payment confirmation.
+> **Note**: Access credentials are typically provided within 24 hours of starting your free trial or subscription confirmation.
 
 ## Accessing Your Data
 
