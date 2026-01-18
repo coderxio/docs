@@ -4,6 +4,12 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
+// Google Analytics configuration
+// Set GOOGLE_ANALYTICS_ID environment variable or replace with your tracking ID
+// For GA4, use format: G-XXXXXXXXXX
+// For Universal Analytics, use format: UA-XXXXXXXXXX
+const googleAnalyticsId = process.env.GOOGLE_ANALYTICS_ID;
+
 const config: Config = {
   title: 'CodeRx',
   tagline: 'Pharmacists engineering pharmacy',
@@ -110,6 +116,15 @@ const config: Config = {
     colorMode: {
       respectPrefersColorScheme: true,
     },
+    // Google Analytics configuration (optional - only added if GOOGLE_ANALYTICS_ID is set)
+    ...(googleAnalyticsId && {
+      analytics: {
+        googleAnalytics: {
+          trackingID: googleAnalyticsId,
+          anonymizeIP: true, // Anonymize IP addresses for privacy compliance
+        },
+      },
+    }),
     navbar: {
       title: 'CodeRx',
       logo: {
