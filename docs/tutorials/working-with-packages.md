@@ -83,6 +83,42 @@ Once you normalize an NDC to a RXCUI, you gain access to the rich knowledge grap
 
 This normalization step transforms NDCs from simple package identifiers into gateways to comprehensive, standardized drug information that can power analytics, research, and clinical applications.
 
+## NADAC Pricing Data
+
+In addition to package identifiers and drug information, each NDC also includes **NADAC (National Average Drug Acquisition Cost)** pricing data. NADAC is a pricing benchmark published by the Centers for Medicare & Medicaid Services (CMS) that represents the national average price that retail pharmacies pay to acquire prescription drugs.
+
+### Weekly Updates
+
+NADAC pricing data is updated **weekly** to reflect current market prices. Each update includes:
+
+- **Current NADAC price** - The most recent national average drug acquisition cost for the specific NDC
+- **Historical change data** - Information about how the price has changed over time, including:
+  - **Dollar change** - The absolute dollar amount change from the previous period
+  - **Percent change** - The percentage change from the previous period
+  - **Change type** - Classification of the type of price change
+
+### Understanding Pricing Units
+
+When working with NADAC pricing data, it's **critical** to pay attention to the `pricing_unit` field. NADAC prices are reported per a specific unit of measure, which can vary by drug and package type. Common pricing units include:
+
+- Per unit (e.g., per tablet, per capsule, per milliliter)
+- Per package
+- Per gram or other weight measurement
+
+**Always check the `pricing_unit` before performing any calculations** to ensure you're comparing prices on the same basis. For example, if one NDC has a price per tablet and another has a price per package, you'll need to normalize these values before making meaningful comparisons.
+
+### Using NADAC Data
+
+NADAC pricing data enables you to:
+
+- Track price trends for specific drug packages over time
+- Compare acquisition costs across different NDCs
+- Monitor price volatility and market changes
+- Support cost analysis and reimbursement calculations
+- Identify significant price increases or decreases
+
+For more detailed information about NADAC methodology and data sources, visit the [CMS NADAC page](https://www.medicaid.gov/medicaid/nadac).
+
 ## The Importance of Up-to-Date NDC Data
 
 NDCs are not static identifiers. The FDA updates the NDC directory on a **daily basis**, with changes including:
@@ -104,3 +140,4 @@ For reliable NDC data operations, it's essential to have access to a **regularly
 
 [Get Started →](/getting-started) | [Explore the Packages Model →](/concepts/packages)
 :::
+

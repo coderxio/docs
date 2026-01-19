@@ -108,7 +108,7 @@
 }
 
 .pricingCardFeatured .priceAmount {
-  color: var(--ifm-color-primary-dark);
+  color: var(--ifm-color-primary);
 }
 
 .pricePeriod {
@@ -187,11 +187,11 @@
 }
 
 .pricingCardFeatured .pricingButton {
-  background: var(--ifm-color-primary-dark);
+  background: var(--ifm-color-primary);
 }
 
 .pricingCardFeatured .pricingButton:hover {
-  background: var(--ifm-color-primary-darker);
+  background: var(--ifm-color-primary-dark);
 }
 
 .footer {

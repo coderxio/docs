@@ -229,12 +229,18 @@ export default function ContactUs() {
               <h3 className={styles.infoTitle}>Other Ways to Reach Us</h3>
               <div className={styles.infoLinks}>
                 <a
+                  href="mailto:hello@coderx.io"
+                  className={styles.infoLink}
+                >
+                  Email us directly
+                </a>
+                <a
                   href="https://join.slack.com/t/coderx/shared_invite/zt-5b8e9kr4-PsKAVe4crGmECQyyxDIJgQ"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={styles.infoLink}
                 >
-                  Join our Slack community
+                  Join our Slack
                 </a>
                 <a
                   href="https://github.com/coderxio"
