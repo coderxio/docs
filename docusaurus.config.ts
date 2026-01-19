@@ -9,6 +9,8 @@ import type * as Preset from '@docusaurus/preset-classic';
 // For GA4, use format: G-XXXXXXXXXX
 // For Universal Analytics, use format: UA-XXXXXXXXXX
 const googleAnalyticsId = process.env.GOOGLE_ANALYTICS_ID;
+const isGA4 = googleAnalyticsId && googleAnalyticsId.startsWith('G-');
+const isUniversalAnalytics = googleAnalyticsId && googleAnalyticsId.startsWith('UA-');
 
 const config: Config = {
   title: 'CodeRx',
@@ -106,6 +108,22 @@ const config: Config = {
         theme: {
           customCss: './src/css/custom.css',
         },
+        // Google Analytics configuration
+        // For GA4 (G-XXXXXXXXXX), uses gtag plugin
+        // For Universal Analytics (UA-XXXXXXXXXX), uses googleAnalytics plugin
+        // Set GOOGLE_ANALYTICS_ID environment variable in Vercel
+        ...(isGA4 && {
+          gtag: {
+            trackingID: googleAnalyticsId,
+            anonymizeIP: true, // Anonymize IP addresses for privacy compliance
+          },
+        }),
+        ...(isUniversalAnalytics && {
+          googleAnalytics: {
+            trackingID: googleAnalyticsId,
+            anonymizeIP: true, // Anonymize IP addresses for privacy compliance
+          },
+        }),
       } satisfies Preset.Options,
     ],
   ],
@@ -116,15 +134,6 @@ const config: Config = {
     colorMode: {
       respectPrefersColorScheme: true,
     },
-    // Google Analytics configuration (optional - only added if GOOGLE_ANALYTICS_ID is set)
-    ...(googleAnalyticsId && {
-      analytics: {
-        googleAnalytics: {
-          trackingID: googleAnalyticsId,
-          anonymizeIP: true, // Anonymize IP addresses for privacy compliance
-        },
-      },
-    }),
     navbar: {
       title: 'CodeRx',
       logo: {
