@@ -1,6 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
+import Head from '@docusaurus/Head';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
@@ -358,7 +359,7 @@ function ComparisonSection() {
         <ul className={styles.comparisonList}>
           <li className={styles.comparisonItemPositive}>Easy to get started</li>
           <li className={styles.comparisonItemPositive}>Ready-to-use analytics data marts</li>
-          <li className={styles.comparisonItemPositive}>Weekly data updates</li>
+          <li className={styles.comparisonItemPositive}>Terminology plus analytics</li>
           <li className={styles.comparisonItemPositive}>Web-hosted, searchable docs</li>
           <li className={styles.comparisonItemPositive}>Community-driven innovation</li>
           <li className={styles.comparisonItemPositive}>Open standard drug identifiers</li>
@@ -612,6 +613,9 @@ export default function Home() {
     <Layout
       title={`${siteConfig.title} — Drug Data, Simplified`}
       description="CodeRx transforms complex government drug data sources into easy-to-use data marts purpose-built for pharmacy analytics. Built by pharmacists, designed for analytics.">
+      <Head>
+        <title>{`${siteConfig.title} - Drug Data, Simplified`}</title>
+      </Head>
       <main className={styles.main}>
         <HomepageHeader />
         <ProductIntroSection />

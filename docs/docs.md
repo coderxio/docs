@@ -7,9 +7,9 @@ sidebar_position: 1
 
 Welcome to the CodeRx docs. This comprehensive resource provides detailed information about pharmaceutical data, including drugs, ingredients, NDCs, and related concepts.
 
-## What is CodeRx?
+## What is The CodeRx Drug Database?
 
-CodeRx is a comprehensive pharmaceutical data platform that provides structured access to drug information, including:
+The CodeRx Drug Database is a comprehensive pharmaceutical data platform that provides structured access to drug information, including:
 
 - **Drug Information**: Detailed data about pharmaceutical products
 - **Ingredients**: Active and inactive ingredients used in medications
@@ -20,8 +20,8 @@ CodeRx is a comprehensive pharmaceutical data platform that provides structured 
 
 Explore our documentation to learn how to work with pharmaceutical data:
 
-- **[Concepts](/concepts/classes)** - Understand the core data models and concepts
-- **[Tutorials](/tutorials/working-with-packages)** - Step-by-step guides for common tasks
+- **[Concepts](/concepts)** - Understand the core data models and concepts
+- **[Tutorials](/tutorials)** - Step-by-step guides for common tasks
   - Working with Packages
   - Working with drugs
   - Working with ingredients
