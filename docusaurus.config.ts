@@ -10,6 +10,9 @@ import type * as Preset from '@docusaurus/preset-classic';
 // For Universal Analytics, use format: UA-XXXXXXXXXX
 const googleAnalyticsId = process.env.GOOGLE_ANALYTICS_ID;
 
+// Determine if it's GA4 (starts with G-) or Universal Analytics (starts with UA-)
+const isGA4 = googleAnalyticsId?.startsWith('G-');
+
 const config: Config = {
   title: 'CodeRx',
   tagline: 'Pharmacists engineering pharmacy',
@@ -122,12 +125,21 @@ const config: Config = {
     },
     // Google Analytics configuration (optional - only added if GOOGLE_ANALYTICS_ID is set)
     ...(googleAnalyticsId && {
-      analytics: {
-        googleAnalytics: {
-          trackingID: googleAnalyticsId,
-          anonymizeIP: true, // Anonymize IP addresses for privacy compliance
-        },
-      },
+      analytics: isGA4
+        ? {
+            // GA4 uses gtag
+            gtag: {
+              trackingID: googleAnalyticsId,
+              anonymizeIP: true, // Anonymize IP addresses for privacy compliance
+            },
+          }
+        : {
+            // Universal Analytics uses googleAnalytics
+            googleAnalytics: {
+              trackingID: googleAnalyticsId,
+              anonymizeIP: true, // Anonymize IP addresses for privacy compliance
+            },
+          },
     }),
     navbar: {
       logo: {
