@@ -72,6 +72,28 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Navbar logo - add logo.png before text logo */
+.navbar__brand {
+  display: flex !important;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.navbar__brand::before {
+  content: '';
+  display: inline-block;
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  background-image: url('/img/logo.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  flex-shrink: 0;
+  order: -1;
+  transform: translateY(-3px);
+}
+
 /* Product and Pricing navbar links - always default color, never red */
 /* Maximum specificity to override Docusaurus active link styles */
 .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="product-intro"],

@@ -20,13 +20,6 @@ export default function Pricing() {
           </p>
         </div>
 
-        <div className={styles.freeTrialBanner}>
-          <span className={styles.freeTrialIcon}>🎉</span>
-          <span className={styles.freeTrialText}>
-            <strong>30-day free trial</strong> included with both plans
-          </span>
-        </div>
-
         <div className={styles.pricingOptions}>
           <div className={styles.pricingCard}>
             <div className={styles.pricingCardHeader}>
@@ -37,9 +30,6 @@ export default function Pricing() {
               <span className={styles.priceAmount}>$550</span>
               <span className={styles.pricePeriod}>/month</span>
             </div>
-            <div className={styles.freeTrialNote}>
-              <span className={styles.freeTrialBadge}>30-day free trial</span>
-            </div>
             <p className={styles.pricingCardDescription}>
               Perfect for teams who want to start small and scale as needed.
             </p>
@@ -49,7 +39,7 @@ export default function Pricing() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Start Free Trial
+              Subscribe
             </Link>
           </div>
 
@@ -62,9 +52,6 @@ export default function Pricing() {
               <span className={styles.priceAmount}>$5,500</span>
               <span className={styles.pricePeriod}>/year</span>
             </div>
-            <div className={styles.freeTrialNote}>
-              <span className={styles.freeTrialBadge}>30-day free trial</span>
-            </div>
             <p className={styles.pricingCardDescription}>
               Save more with annual billing. Same great features, better value.
             </p>
@@ -74,7 +61,7 @@ export default function Pricing() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Start Free Trial
+              Subscribe
             </Link>
           </div>
         </div>

@@ -23,33 +23,6 @@
   margin: 0 auto;
 }
 
-.freeTrialBanner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
-  color: #ffffff;
-  padding: 1rem 2rem;
-  border-radius: 12px;
-  margin: 2rem auto 3rem;
-  max-width: 900px;
-  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
-}
-
-.freeTrialIcon {
-  font-size: 1.5rem;
-}
-
-.freeTrialText {
-  font-size: 1.1rem;
-  font-weight: 500;
-}
-
-.freeTrialText strong {
-  font-weight: 700;
-}
-
 .pricingOptions {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -115,27 +88,6 @@
   font-size: 1.25rem;
   font-weight: 500;
   color: #737373;
-}
-
-.freeTrialNote {
-  margin-bottom: 1.5rem;
-}
-
-.freeTrialBadge {
-  display: inline-block;
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: #22c55e;
-  background: #dcfce7;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  border: 1px solid #86efac;
-}
-
-.pricingCardFeatured .freeTrialBadge {
-  background: #dcfce7;
-  color: #16a34a;
-  border-color: #86efac;
 }
 
 .pricingCardBadge {
@@ -253,15 +205,6 @@
     font-size: 1.1rem;
   }
 
-  .freeTrialBanner {
-    padding: 0.875rem 1.5rem;
-    margin: 1.5rem auto 2rem;
-  }
-
-  .freeTrialText {
-    font-size: 1rem;
-  }
-
   .priceAmount {
     font-size: 2.5rem;
   }
@@ -335,10 +278,4 @@
 
 [data-theme='dark'] .pricePeriod {
   color: #a3a3a3;
-}
-
-[data-theme='dark'] .freeTrialBadge {
-  background: #1a5f2e;
-  color: #86efac;
-  border-color: #22c55e;
 }

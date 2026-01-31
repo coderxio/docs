@@ -143,7 +143,7 @@ WHERE is_brand = true AND active = true;
 7. **Be aware of pipe-delimited values** in ingredient fields for pack/kit drugs
 
 :::tip Ready to Get Started?
-**Working with drug data doesn't have to be complicated.** Put this guide to use with the CodeRx Drug Database—get instant access to comprehensive drug information, complete RxNorm mappings, and all the relationships you need to build powerful applications. With weekly updates and standardized identifiers, you can focus on building your solution instead of wrestling with data complexity. **Start your 30-day free trial today** and experience how easy drug data can be.
+**Working with drug data doesn't have to be complicated.** Put this guide to use with the CodeRx Drug Database—get instant access to comprehensive drug information, complete RxNorm mappings, and all the relationships you need to build powerful applications. With weekly updates and standardized identifiers, you can focus on building your solution instead of wrestling with data complexity.
 
 [Get Started →](/getting-started) | [Explore the Drugs Model →](/concepts/drugs)
 :::

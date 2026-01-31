@@ -130,10 +130,10 @@ const config: Config = {
       },
     }),
     navbar: {
-      title: 'CodeRx',
       logo: {
         alt: 'CodeRx Logo',
-        src: 'img/logo.svg',
+        src: 'img/coderx_text_logo_black.svg',
+        srcDark: 'img/coderx_text_logo_white.svg',
       },
       items: [
         {
@@ -172,8 +172,16 @@ const config: Config = {
           title: 'Docs',
           items: [
             {
-              label: 'Tutorial',
-              to: 'docs',
+              label: 'Getting Started',
+              to: '/getting-started',
+            },
+            {
+              label: 'Concepts',
+              to: '/concepts',
+            },
+            {
+              label: 'Tutorials',
+              to: '/tutorials',
             },
           ],
         },
