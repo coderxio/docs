@@ -113,6 +113,22 @@ const config: Config = {
         theme: {
           customCss: './src/css/custom.css',
         },
+        // Google Analytics configuration via preset (recommended approach)
+        ...(googleAnalyticsId && isGA4
+          ? {
+              gtag: {
+                trackingID: googleAnalyticsId,
+                anonymizeIP: true,
+              },
+            }
+          : googleAnalyticsId
+            ? {
+                googleAnalytics: {
+                  trackingID: googleAnalyticsId,
+                  anonymizeIP: true,
+                },
+              }
+            : {}),
       } satisfies Preset.Options,
     ],
   ],
@@ -123,24 +139,6 @@ const config: Config = {
     colorMode: {
       respectPrefersColorScheme: true,
     },
-    // Google Analytics configuration (optional - only added if GOOGLE_ANALYTICS_ID is set)
-    ...(googleAnalyticsId && {
-      analytics: isGA4
-        ? {
-            // GA4 uses gtag
-            gtag: {
-              trackingID: googleAnalyticsId,
-              anonymizeIP: true, // Anonymize IP addresses for privacy compliance
-            },
-          }
-        : {
-            // Universal Analytics uses googleAnalytics
-            googleAnalytics: {
-              trackingID: googleAnalyticsId,
-              anonymizeIP: true, // Anonymize IP addresses for privacy compliance
-            },
-          },
-    }),
     navbar: {
       logo: {
         alt: 'CodeRx Logo',
