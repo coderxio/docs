@@ -17,6 +17,8 @@ We offer a simple annual pricing plan:
 
 - **Yearly**: $5,500/year — Get access to comprehensive drug data marts with weekly updates, complete RxNorm mappings, rich drug knowledge graphs, and direct access to data marts hosted on AWS S3.
 
+All subscriptions come with a **30-day money-back guarantee**. If you're not satisfied, we'll provide a full refund.
+
 :::tip Ready to Get Started?
 **Subscribe to CodeRx today.** Get instant access to our comprehensive drug database with weekly updates, complete RxNorm mappings, and rich drug knowledge graphs. Annual billing available.
 

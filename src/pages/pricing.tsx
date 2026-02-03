@@ -40,6 +40,9 @@ export default function Pricing() {
             >
               Subscribe
             </Link>
+            <p className={styles.guarantee}>
+              30-day money-back guarantee
+            </p>
           </div>
         </div>
 

@@ -146,6 +146,18 @@
   background: var(--ifm-color-primary-dark);
 }
 
+.guarantee {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #525252;
+  margin-top: 1rem;
+  margin-bottom: 0;
+}
+
+[data-theme='dark'] .guarantee {
+  color: #a3a3a3;
+}
+
 .footer {
   margin-top: 4rem;
   padding-top: 3rem;
