@@ -8,7 +8,7 @@ export default function Pricing() {
   return (
     <Layout
       title="Pricing - CodeRx"
-      description="Subscribe to CodeRx and get access to comprehensive drug data marts with weekly updates. Choose monthly or yearly billing.">
+      description="Subscribe to CodeRx and get access to comprehensive drug data marts with weekly updates. Annual billing available.">
       <div className={styles.container}>
         <div className={styles.header}>
           <Heading as="h1" className={styles.title}>
@@ -21,39 +21,16 @@ export default function Pricing() {
         </div>
 
         <div className={styles.pricingOptions}>
-          <div className={styles.pricingCard}>
-            <div className={styles.pricingCardHeader}>
-              <h2 className={styles.pricingCardTitle}>Monthly</h2>
-              <div className={styles.pricingCardBadge}>Flexible</div>
-            </div>
-            <div className={styles.pricingCardPrice}>
-              <span className={styles.priceAmount}>$550</span>
-              <span className={styles.pricePeriod}>/month</span>
-            </div>
-            <p className={styles.pricingCardDescription}>
-              Perfect for teams who want to start small and scale as needed.
-            </p>
-            <Link
-              href="https://buy.stripe.com/9B6eVdaRlbr1gNY47GgEg03"
-              className={styles.pricingButton}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Subscribe
-            </Link>
-          </div>
-
           <div className={`${styles.pricingCard} ${styles.pricingCardFeatured}`}>
             <div className={styles.pricingCardHeader}>
               <h2 className={styles.pricingCardTitle}>Yearly</h2>
-              <div className={styles.pricingCardBadge}>Best Value</div>
             </div>
             <div className={styles.pricingCardPrice}>
               <span className={styles.priceAmount}>$5,500</span>
               <span className={styles.pricePeriod}>/year</span>
             </div>
             <p className={styles.pricingCardDescription}>
-              Save more with annual billing. Same great features, better value.
+              Get access to comprehensive drug data marts with weekly updates, complete RxNorm mappings, and rich drug knowledge graphs.
             </p>
             <Link
               href="https://buy.stripe.com/fZu9ATcZt7aLapAdIggEg02"

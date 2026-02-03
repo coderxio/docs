@@ -25,9 +25,9 @@
 
 .pricingOptions {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr;
   gap: 2rem;
-  max-width: 900px;
+  max-width: 500px;
   margin: 3rem auto;
 }
 

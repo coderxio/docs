@@ -11,17 +11,14 @@ Get started with CodeRx in minutes. Subscribe today and get instant access to ou
 
 Subscribe to CodeRx and get instant access to our comprehensive drug database. Explore weekly-updated data marts and integrate with your existing workflows.
 
-### Flexible Billing Options
+### Subscription Plan
 
-We offer two simple pricing plans to fit your needs:
+We offer a simple annual pricing plan:
 
-- **Monthly**: $550/month — Perfect if you want flexibility or are testing the waters
-- **Yearly**: $5,500/year — Best value if you're committed long-term
-
-Both plans include the same features and data access: weekly updates, complete RxNorm mappings, rich drug knowledge graphs, and direct access to data marts hosted on AWS S3. The only difference is how you're billed.
+- **Yearly**: $5,500/year — Get access to comprehensive drug data marts with weekly updates, complete RxNorm mappings, rich drug knowledge graphs, and direct access to data marts hosted on AWS S3.
 
 :::tip Ready to Get Started?
-**Subscribe to CodeRx today.** Get instant access to our comprehensive drug database with weekly updates, complete RxNorm mappings, and rich drug knowledge graphs. Choose between monthly or yearly billing.
+**Subscribe to CodeRx today.** Get instant access to our comprehensive drug database with weekly updates, complete RxNorm mappings, and rich drug knowledge graphs. Annual billing available.
 
 **[View Pricing & Subscribe →](/pricing)**
 :::
