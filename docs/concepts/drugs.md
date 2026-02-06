@@ -16,6 +16,8 @@ The Drugs concept represents a comprehensive data model that unifies brand-name 
 |------------|-------------|-------|
 | `drug_id` | RxNorm RXCUI identifier for the drug. Can be either a brand product (SBD/BPCK) or clinical product (SCD/GPCK) RXCUI. This field is unique and serves as the primary key for the model. | `unique`, `not_null` |
 | `drug_name` | The RxNorm name (STR) for this drug. | |
+| `prescribable_name` | The RxNorm prescribable name (PSN) for this drug. This is the standardized name used for prescribing purposes. | |
+| `representative_ndc11` | Representative NDC11 code for this drug. Used to identify a canonical NDC for grouping similar packages of the same drug. | |
 | `drug_type` | RxNorm term type (TTY). Allowable values are SBD (brand drug), BPCK (branded pack), SCD (clinical drug), or GPCK (generic pack). | `accepted_values: ['SBD', 'BPCK', 'SCD', 'GPCK']` |
 | `is_brand` | Boolean flag indicating if this is a brand drug (true) or clinical/generic drug (false). | |
 | `brand_name` | The brand name extracted from the drug name for brand products. Null for clinical/generic drugs. | |
