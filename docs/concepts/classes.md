@@ -27,7 +27,7 @@ Classes offer various classification schemes that group drugs based on their the
 
 ## Key Features
 
-- **Multiple Classification Systems**: Support for various classification schemes (ATC, USP, etc.)
+- **Multiple Classification Systems**: Support for various classification schemes (ATC, i.e.)
 - **Therapeutic Classifications**: Group drugs by their therapeutic use or indication
 - **Hierarchical Organization**: Navigate through class hierarchies and subcategories
 - **Cross-Classification**: Drugs can belong to multiple classes simultaneously
