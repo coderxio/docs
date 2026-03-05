@@ -285,22 +285,22 @@
 .ctaSection {
   margin-top: 4rem;
   padding: 3rem 2rem;
-  background: #0a0a0a;
+  background: #f9f9f9;
   border-radius: 16px;
   text-align: center;
-  border: 1px solid #262626;
+  border: 1px solid #e5e5e5;
 }
 
 .ctaTitle {
   font-size: 1.75rem;
   font-weight: 700;
-  color: #ffffff;
+  color: #0a0a0a;
   margin-bottom: 0.75rem;
 }
 
 .ctaSubtitle {
   font-size: 1.05rem;
-  color: #a3a3a3;
+  color: #525252;
   margin-bottom: 1.75rem;
   line-height: 1.6;
 }
@@ -337,6 +337,7 @@
   box-shadow: 0 4px 16px rgba(213, 45, 52, 0.3);
 }
 
+/* Same styling as View Pricing on homepage: neutral outline (gray border + text) */
 .ctaButtonSecondary {
   display: inline-block;
   padding: 0.9rem 2.5rem;
@@ -346,17 +347,17 @@
   text-decoration: none;
   border-radius: 4px;
   background: transparent;
-  color: #ffffff;
-  border: 1px solid #404040;
+  color: #525252;
+  border: 1px solid #a3a3a3;
   transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
   cursor: pointer;
   font-family: inherit;
 }
 
 .ctaButtonSecondary:hover {
-  background: #1a1a1a;
-  border-color: #525252;
-  color: #ffffff;
+  background: #ffffff;
+  border-color: #737373;
+  color: #171717;
   text-decoration: none;
 }
 

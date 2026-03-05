@@ -25,7 +25,7 @@ const featureSections = [
       },
       {
         name: 'Drugs',
-        description: 'All brand and generic drugs',
+        description: 'All brand and generic drugs with open standard identifiers',
         basic: CHECK,
         premium: CHECK,
       },
