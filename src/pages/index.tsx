@@ -229,7 +229,7 @@ function WhoThisIsForSection() {
       <div className={styles.whoThisIsForInner}>
         <div className={styles.whoThisIsForHeader}>
           <Heading as="h2" className={styles.whoThisIsForTitle}>
-            Built for teams like yours
+            Built for Teams Like Yours
           </Heading>
         </div>
         <div className={styles.whoThisIsForGrid}>

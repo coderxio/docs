@@ -1,7 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
 import styles from './contact-us.module.css';
+
+declare global {
+  interface Window {
+    Cal?: (...args: any[]) => void;
+  }
+}
 
 interface FormData {
   name: string;
@@ -28,6 +34,47 @@ export default function ContactUs() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [submitMessage, setSubmitMessage] = useState('');
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const existingScript = document.querySelector('script[src="https://app.cal.com/embed/embed.js"]');
+    if (!existingScript) {
+      (function (C: any, A: string, L: string) {
+        const p = (a: any, ar: any) => { a.q.push(ar); };
+        const d = C.document;
+        C.Cal = C.Cal || function (...args: any[]) {
+          const cal = C.Cal;
+          if (!cal.loaded) {
+            cal.ns = {};
+            cal.q = cal.q || [];
+            const s = d.createElement('script');
+            s.src = A;
+            s.async = true;
+            d.head.appendChild(s);
+            cal.loaded = true;
+          }
+          if (args[0] === L) {
+            const api: any = (...a: any[]) => { p(api, a); };
+            const namespace = args[1];
+            api.q = api.q || [];
+            typeof namespace === 'string'
+              ? (cal.ns[namespace] = api) && p(api, args)
+              : p(cal, args);
+            return;
+          }
+          p(cal, args);
+        };
+      })(window, 'https://app.cal.com/embed/embed.js', 'init');
+
+      window.Cal!('init', { origin: 'https://cal.com' });
+      window.Cal!('ui', {
+        styles: { branding: { brandColor: '#d52d34' } },
+        hideEventTypeDetails: false,
+        layout: 'month_view',
+      });
+    }
+  }, []);
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
@@ -228,6 +275,14 @@ export default function ContactUs() {
             <div className={styles.info}>
               <h3 className={styles.infoTitle}>Other Ways to Reach Us</h3>
               <div className={styles.infoLinks}>
+                <button
+                  type="button"
+                  data-cal-link="coderx/30-min"
+                  data-cal-config='{"layout":"month_view"}'
+                  className={styles.infoLink}
+                >
+                  Book a meeting
+                </button>
                 <a
                   href="mailto:hello@coderx.io"
                   className={styles.infoLink}

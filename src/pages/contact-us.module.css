@@ -190,6 +190,19 @@
   gap: 0.75rem;
 }
 
+.infoLinks .infoLink {
+  cursor: pointer;
+}
+
+.infoLinks button.infoLink {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  font-weight: 600;
+  text-align: left;
+}
+
 .infoLink {
   color: var(--ifm-color-primary);
   text-decoration: none;

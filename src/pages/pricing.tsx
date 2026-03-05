@@ -118,8 +118,8 @@ const featureSections = [
     title: 'Support',
     features: [
       {
-        name: 'Community Support (Slack)',
-        description: 'Access to the CodeRx Slack community and support email',
+        name: 'Email Support',
+        description: 'Access to support email and the CodeRx Slack community',
         basic: CHECK,
         premium: CHECK,
       },
