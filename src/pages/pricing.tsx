@@ -179,7 +179,7 @@ export default function Pricing() {
 
   return (
     <Layout
-      title="Pricing - CodeRx"
+      title="Pricing"
       description="Choose the CodeRx plan that fits your team. Basic or Premium — both include weekly drug data updates, AWS S3 access, and complete documentation.">
       <div className={styles.container}>
 
