@@ -13,16 +13,16 @@ Subscribe to CodeRx and get instant access to our comprehensive drug database. E
 
 ### Subscription Plan
 
-We offer a simple annual pricing plan:
+We offer two annual pricing plans:
 
-- **Yearly**: $5,500/year — Get access to comprehensive drug data marts with weekly updates, complete RxNorm mappings, rich drug knowledge graphs, and direct access to data marts hosted on AWS S3.
+- **Basic**: $5,500/year — Get access to comprehensive drug data marts with weekly updates, complete RxNorm mappings, rich drug knowledge graphs, and direct access to data marts hosted on AWS S3. Includes packages, drugs, ingredients, excipients, synonyms, and ATC classification.
 
-All subscriptions come with a **30-day money-back guarantee**. If you're not satisfied, we'll provide a full refund.
+- **Premium**: $15,000/year — Everything in Basic, plus indications, CMS pricing (ASP / NDC to HCPCS mappings / NADAC pricing with 5+ years historical changes), CMS plans (Medicare Part D plan information including formularies, tiers, and pricing), NCPDP mappings, packaging data, and label images. Includes priority support from the CodeRx team.
 
 :::tip Ready to Get Started?
 **Subscribe to CodeRx today.** Get instant access to our comprehensive drug database with weekly updates, complete RxNorm mappings, and rich drug knowledge graphs. Annual billing available.
 
-**[View Pricing & Subscribe →](/pricing)**
+**[View Pricing & Book a Demo →](/pricing)**
 :::
 
 ### After Your Subscription
@@ -40,17 +40,12 @@ Once you've confirmed your subscription, you'll receive:
 
 After receiving your credentials, you can access your data from AWS S3 using Python:
 
-### S3 Bucket Details
-
-- **Bucket Name**: `coderx`
-- **Region**: `us-east-1`
-- **Format**: CSV and Parquet files organized by data mart folder
-
 ### Authentication
 
 You'll receive:
 - **Access Key ID**: Your AWS access key
 - **Secret Access Key**: Your AWS secret key
+- **S3 Bucket Info**: The address of your AWS s3 bucket
 
 Keep these credentials secure and never commit them to version control.
 
@@ -75,7 +70,7 @@ fs = s3fs.S3FileSystem(
 
 # Read parquet file directly
 df = pd.read_parquet(
-    's3://coderx/drugs/drugs.parquet',
+    'YOUR_S3_BUCKET/drugs/drugs.parquet',
     filesystem=fs
 )
 

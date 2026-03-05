@@ -93,6 +93,7 @@
   border-radius: 4px;
   text-decoration: none;
   transition: all 0.2s ease;
+  cursor: pointer;
 }
 
 .primaryButton:hover {
@@ -1237,9 +1238,11 @@
   color: #ffffff;
   font-size: 1rem;
   font-weight: 500;
+  border: none;
   border-radius: 4px;
   text-decoration: none;
   transition: all 0.2s ease;
+  cursor: pointer;
 }
 
 .ctaPrimary:hover {
@@ -1261,6 +1264,7 @@
   border-radius: 4px;
   text-decoration: none;
   transition: all 0.2s ease;
+  cursor: pointer;
 }
 
 .ctaSecondary:hover {
@@ -1317,6 +1321,11 @@
   
   .servicesGrid,
   .servicesGridSecondary {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .whoThisIsForGrid {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
@@ -1402,6 +1411,11 @@
   
   .statsInner {
     grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .whoThisIsForGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
   }
   
   .stats,

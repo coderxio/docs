@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import Head from '@docusaurus/Head';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
+
+declare global {
+  interface Window {
+    Cal?: (...args: any[]) => void;
+  }
+}
 
 import styles from './index.module.css';
 
@@ -162,11 +168,15 @@ function HomepageHeader() {
             pharmacists, designed for analytics.
           </p>
           <div className={styles.heroActions}>
-            <Link className={styles.primaryButton} to="/getting-started">
-              Get started
-            </Link>
-            <Link className={styles.secondaryButton} to="/docs">
-              View docs
+            <button
+              data-cal-link="coderx/30-min"
+              data-cal-config='{"layout":"month_view"}'
+              className={styles.primaryButton}
+            >
+              Book a Demo
+            </button>
+            <Link className={styles.secondaryButton} to="/pricing">
+              View Pricing
             </Link>
           </div>
           <p className={styles.heroPricing}>
@@ -197,7 +207,7 @@ function HomepageHeader() {
 function WhoThisIsForSection() {
   const audiences = [
     {
-      title: 'Healthcare analytics',
+      title: 'Healthcare data analysts',
       description: 'Turn complex drug data into actionable insights. No RxNorm expertise required—just query and analyze.',
     },
     {
@@ -205,12 +215,12 @@ function WhoThisIsForSection() {
       description: 'Get enterprise-grade drug data at a fraction of the cost—no vendor lock-in, no complex contracts, just clean data that works.',
     },
     {
-      title: 'Pharmacy researchers',
-      description: 'Stop wrestling with raw government files. Spend your time on insights, not parsing XML and learning RxNorm hierarchies.',
-    },
-    {
       title: 'Healthcare developers',
       description: 'Build medication features faster with reliable, well-structured data. Query-ready tables mean less code, fewer bugs.',
+    },
+    {
+      title: 'Pharmacy researchers',
+      description: 'Stop wrestling with raw government files. Spend your time on insights, not parsing XML and learning RxNorm hierarchies.',
     },
   ];
 
@@ -636,11 +646,15 @@ function CTASection() {
           at $5,500/year.
         </p>
         <div className={styles.ctaActions}>
-          <Link className={styles.ctaPrimary} to="/getting-started">
-            Get started
-          </Link>
-          <Link className={styles.ctaSecondary} to="/docs">
-            View docs
+          <button
+            data-cal-link="coderx/30-min"
+            data-cal-config='{"layout":"month_view"}'
+            className={styles.ctaPrimary}
+          >
+            Book a Demo
+          </button>
+          <Link className={styles.ctaSecondary} to="/pricing">
+            View Pricing
           </Link>
         </div>
       </div>
@@ -650,6 +664,48 @@ function CTASection() {
 
 export default function Home() {
   const {siteConfig} = useDocusaurusContext();
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const existingScript = document.querySelector('script[src="https://app.cal.com/embed/embed.js"]');
+    if (!existingScript) {
+      (function (C: any, A: string, L: string) {
+        const p = (a: any, ar: any) => { a.q.push(ar); };
+        const d = C.document;
+        C.Cal = C.Cal || function (...args: any[]) {
+          const cal = C.Cal;
+          if (!cal.loaded) {
+            cal.ns = {};
+            cal.q = cal.q || [];
+            const s = d.createElement('script');
+            s.src = A;
+            s.async = true;
+            d.head.appendChild(s);
+            cal.loaded = true;
+          }
+          if (args[0] === L) {
+            const api: any = (...a: any[]) => { p(api, a); };
+            const namespace = args[1];
+            api.q = api.q || [];
+            typeof namespace === 'string'
+              ? (cal.ns[namespace] = api) && p(api, args)
+              : p(cal, args);
+            return;
+          }
+          p(cal, args);
+        };
+      })(window, 'https://app.cal.com/embed/embed.js', 'init');
+
+      window.Cal!('init', { origin: 'https://cal.com' });
+      window.Cal!('ui', {
+        styles: { branding: { brandColor: '#d52d34' } },
+        hideEventTypeDetails: false,
+        layout: 'month_view',
+      });
+    }
+  }, []);
+
   return (
     <Layout
       title={`${siteConfig.title} — Drug Data, Simplified`}

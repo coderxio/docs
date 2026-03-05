@@ -24,7 +24,7 @@ const featureSections = [
       },
       {
         name: 'Drugs',
-        description: 'Including structured dose forms',
+        description: 'All brand and generic drugs',
         basic: CHECK,
         premium: CHECK,
       },
@@ -95,7 +95,7 @@ const featureSections = [
     features: [
       {
         name: 'Weekly Updates',
-        description: 'Weekly data refreshes, but some data sources update monthly or quarterly',
+        description: 'Up-to-date data delivered to an s3 bucket weekly',
         basic: CHECK,
         premium: CHECK,
       },
