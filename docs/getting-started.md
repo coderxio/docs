@@ -100,7 +100,6 @@ Files are updated weekly, with new dated snapshots added while the latest file i
 
 - **[Concepts](/concepts)** - Learn about the data models
 - **[Tutorials](/tutorials)** - Step-by-step guides
-- **[Data Schema](/erd)** - Explore the database schema
 
 ## Support
 

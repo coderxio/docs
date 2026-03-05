@@ -3,11 +3,7 @@ title: Intro
 sidebar_position: 1
 ---
 
-# CodeRx Docs
-
-Welcome to the CodeRx docs. This comprehensive resource provides detailed information about pharmaceutical data, including drugs, ingredients, NDCs, and related concepts.
-
-## What is The CodeRx Drug Database?
+# What is The CodeRx Drug Database?
 
 The CodeRx Drug Database is a comprehensive pharmaceutical data platform that provides structured access to drug information, including:
 
