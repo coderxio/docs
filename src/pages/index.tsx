@@ -194,6 +194,47 @@ function HomepageHeader() {
   );
 }
 
+function WhoThisIsForSection() {
+  const audiences = [
+    {
+      title: 'Healthcare analytics',
+      description: 'Turn complex drug data into actionable insights. No RxNorm expertise required—just query and analyze.',
+    },
+    {
+      title: 'Health tech startups',
+      description: 'Get enterprise-grade drug data at a fraction of the cost—no vendor lock-in, no complex contracts, just clean data that works.',
+    },
+    {
+      title: 'Pharmacy researchers',
+      description: 'Stop wrestling with raw government files. Spend your time on insights, not parsing XML and learning RxNorm hierarchies.',
+    },
+    {
+      title: 'Healthcare developers',
+      description: 'Build medication features faster with reliable, well-structured data. Query-ready tables mean less code, fewer bugs.',
+    },
+  ];
+
+  return (
+    <section className={styles.whoThisIsFor}>
+      <div className={styles.whoThisIsForInner}>
+        <div className={styles.whoThisIsForHeader}>
+          <Heading as="h2" className={styles.whoThisIsForTitle}>
+            Built for teams like yours
+          </Heading>
+        </div>
+        <div className={styles.whoThisIsForGrid}>
+          {audiences.map((audience, index) => (
+            <div key={index} className={styles.whoThisIsForCard}>
+              <span className={styles.whoThisIsForCardTitle}>{audience.title}</span>
+              <span className={styles.whoThisIsForCardDesc}>{audience.description}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function DataSourcesSection() {
   const sources = [
     { name: 'RxNorm', description: 'Clinical & brand terminology with ingredient hierarchies' },
@@ -618,6 +659,7 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <HomepageHeader />
+        <WhoThisIsForSection />
         <ProductIntroSection />
         <StatsSection />
         <DataSourcesSection />
