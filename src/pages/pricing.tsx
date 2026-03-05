@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
+import Link from '@docusaurus/Link';
 import styles from './pricing.module.css';
 
 declare global {
@@ -211,7 +212,11 @@ export default function Pricing() {
             </p>
             <button
               data-cal-link="coderx/30-min"
-              data-cal-config='{"layout":"month_view"}'
+              data-cal-config={JSON.stringify({
+                layout: 'month_view',
+                'metadata[plan]': 'Basic',
+                notes: 'Interested in: Basic',
+              })}
               className={styles.pricingButtonOutline}
             >
               Book a Demo
@@ -234,7 +239,11 @@ export default function Pricing() {
             </p>
             <button
               data-cal-link="coderx/30-min"
-              data-cal-config='{"layout":"month_view"}'
+              data-cal-config={JSON.stringify({
+                layout: 'month_view',
+                'metadata[plan]': 'Premium',
+                notes: 'Interested in: Premium',
+              })}
               className={styles.pricingButton}
             >
               Book a Demo
@@ -294,13 +303,18 @@ export default function Pricing() {
           <p className={styles.ctaSubtitle}>
             Book a 30-minute demo and we'll walk you through the data and help you choose.
           </p>
-          <button
-            data-cal-link="coderx/30-min"
-            data-cal-config='{"layout":"month_view"}'
-            className={styles.ctaButton}
-          >
-            Book a Demo
-          </button>
+          <div className={styles.ctaButtons}>
+            <button
+              data-cal-link="coderx/30-min"
+              data-cal-config='{"layout":"month_view"}'
+              className={styles.ctaButton}
+            >
+              Book a Demo
+            </button>
+            <Link to="/contact-us" className={styles.ctaButtonSecondary}>
+              Contact Us
+            </Link>
+          </div>
         </div>
 
       </div>

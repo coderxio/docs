@@ -285,24 +285,32 @@
 .ctaSection {
   margin-top: 4rem;
   padding: 3rem 2rem;
-  background: #f9f9f9;
+  background: #0a0a0a;
   border-radius: 16px;
   text-align: center;
-  border: 1px solid #e5e5e5;
+  border: 1px solid #262626;
 }
 
 .ctaTitle {
   font-size: 1.75rem;
   font-weight: 700;
-  color: #0a0a0a;
+  color: #ffffff;
   margin-bottom: 0.75rem;
 }
 
 .ctaSubtitle {
   font-size: 1.05rem;
-  color: #525252;
+  color: #a3a3a3;
   margin-bottom: 1.75rem;
   line-height: 1.6;
+}
+
+.ctaButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
 }
 
 .ctaButton {
@@ -327,6 +335,29 @@
   text-decoration: none;
   transform: translateY(-2px);
   box-shadow: 0 4px 16px rgba(213, 45, 52, 0.3);
+}
+
+.ctaButtonSecondary {
+  display: inline-block;
+  padding: 0.9rem 2.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 4px;
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid #404040;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.ctaButtonSecondary:hover {
+  background: #1a1a1a;
+  border-color: #525252;
+  color: #ffffff;
+  text-decoration: none;
 }
 
 /* ============================================
@@ -463,6 +494,17 @@
 [data-theme='dark'] .ctaSection {
   background: #141414;
   border-color: #262626;
+}
+
+[data-theme='dark'] .ctaButtonSecondary {
+  color: #ffffff;
+  border-color: #404040;
+}
+
+[data-theme='dark'] .ctaButtonSecondary:hover {
+  background: #1a1a1a;
+  border-color: #525252;
+  color: #ffffff;
 }
 
 [data-theme='dark'] .dashIcon {

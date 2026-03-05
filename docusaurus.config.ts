@@ -212,6 +212,10 @@ const config: Config = {
           title: 'More',
           items: [
             {
+              label: 'Contact Us',
+              to: '/contact-us',
+            },
+            {
               label: 'Blog',
               to: '/blog',
             },
