@@ -70,7 +70,7 @@ fs = s3fs.S3FileSystem(
 
 # Read parquet file directly
 df = pd.read_parquet(
-    'YOUR_S3_BUCKET/drugs/drugs.parquet',
+    'YOUR_S3_BUCKET/basic/drugs/drugs.parquet',
     filesystem=fs
 )
 
@@ -81,7 +81,9 @@ print(f"Total drugs: {len(df)}")
 
 ## Data Mart Structure
 
-Your S3 bucket contains the following data marts, each organized in its own folder:
+Your S3 bucket contains the following data marts, organized into `basic/` and `premium/` folders:
+
+### Basic
 
 - **[drugs](/concepts/drugs)**/ - Drug products with names, RXCUIs, dose forms
 - **[packages](/concepts/packages)**/ - NDC packages with pricing and pack sizes  
@@ -90,9 +92,13 @@ Your S3 bucket contains the following data marts, each organized in its own fold
 - **[excipients](/concepts/excipients)**/ - Inactive ingredients with safety data
 - **[synonyms](/concepts/synonyms)**/ - Drug name synonyms and aliases
 
+### Premium
+
+Premium data marts are available with a Premium subscription. See the [subscription plans](#subscription-plan) for details.
+
 Each data mart folder contains:
-- **Latest snapshot**: `{data_mart}/{data_mart}.csv` or `{data_mart}/{data_mart}.parquet` (e.g., `drugs/drugs.parquet`)
-- **Dated snapshots**: `{data_mart}/{data_mart}_YYYY-MM-DD.csv` or `{data_mart}/{data_mart}_YYYY-MM-DD.parquet` (e.g., `drugs/drugs_2026-01-16.parquet`)
+- **Latest snapshot**: `{tier}/{data_mart}/{data_mart}.csv` or `{tier}/{data_mart}/{data_mart}.parquet` (e.g., `basic/drugs/drugs.parquet`)
+- **Dated snapshots**: `{tier}/{data_mart}/{data_mart}_YYYY-MM-DD.csv` or `{tier}/{data_mart}/{data_mart}_YYYY-MM-DD.parquet` (e.g., `basic/drugs/drugs_2026-01-16.parquet`)
 
 Files are updated weekly, with new dated snapshots added while the latest file is always updated to point to the most recent data.
 
