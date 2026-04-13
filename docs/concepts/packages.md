@@ -43,7 +43,9 @@ Packages provide a comprehensive view of how National Drug Codes (NDCs) map to s
 | `dollar_change` | Dollar amount change from the previous NADAC price to this price. Positive values indicate price increases, negative values indicate decreases. | |
 | `percent_change` | Percentage change from the previous NADAC price to this price. Positive values indicate price increases, negative values indicate decreases. | |
 | `change_type` | Indicator for price direction: 1 if the price increased, 0 if the price decreased. Useful for counting price increases over time. | |
-| `active` | Boolean flag indicating if the NDC is currently active in RxNorm | |
+| `is_deactivated` | Boolean flag indicating if this NDC has been deactivated in RxNorm historical data. Null if the NDC has no historical records. | |
+| `deactivation_date` | The date this NDC was deactivated, based on the end date of its most recent historical record in RxNorm. Null if the NDC is not deactivated or has no historical records. | |
+| `active` | Boolean flag indicating if the NDC is currently active in RxNorm. | |
 | `prescribable` | Boolean flag indicating if the NDC is prescribable according to RxNorm. | |
 
 ## Key Features
