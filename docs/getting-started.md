@@ -11,13 +11,15 @@ Get started with CodeRx in minutes. Subscribe today and get instant access to ou
 
 Subscribe to CodeRx and get instant access to our comprehensive drug database. Explore weekly-updated data marts and integrate with your existing workflows.
 
-### Subscription Plan
+### Subscription Plans
 
-We offer two annual pricing plans:
+We offer three annual plans:
 
-- **Basic**: $5,500/year — Get access to comprehensive drug data marts with weekly updates, complete RxNorm mappings, rich drug knowledge graphs, and direct access to data marts hosted on AWS S3. Includes packages, drugs, ingredients, excipients, synonyms, and ATC classification.
+- **Silver**: Includes the core data marts, weekly updates, and AWS S3 delivery for teams building reliable pharmacy analytics workflows.
 
-- **Premium**: $15,000/year — Everything in Basic, plus indications, CMS pricing (ASP / NDC to HCPCS mappings / NADAC pricing with 5+ years historical changes), CMS plans (Medicare Part D plan information including formularies, tiers, and pricing), NCPDP mappings, packaging data, and label images. Includes priority support from the CodeRx team.
+- **Gold**: Adds Pricing, Plans, Packaging, and priority support for organizations that need broader coverage and faster operational execution.
+
+- **Platinum**: Unlocks Indications, E-prescribing mappings, and Label Images for advanced clinical use cases and production-grade medication intelligence.
 
 :::tip Ready to Get Started?
 **Subscribe to CodeRx today.** Get instant access to our comprehensive drug database with weekly updates, complete RxNorm mappings, and rich drug knowledge graphs. Annual billing available.
@@ -81,9 +83,9 @@ print(f"Total drugs: {len(df)}")
 
 ## Data Mart Structure
 
-Your S3 bucket contains the following data marts, organized into `basic/` and `premium/` folders:
+Your S3 bucket contains the following data marts, organized into `silver/`, `gold/`, and `platinum/` folders:
 
-### Basic
+### Silver
 
 - **[drugs](/concepts/drugs)**/ - Drug products with names, RXCUIs, dose forms
 - **[packages](/concepts/packages)**/ - NDC packages with pricing and pack sizes  
@@ -92,13 +94,15 @@ Your S3 bucket contains the following data marts, organized into `basic/` and `p
 - **[excipients](/concepts/excipients)**/ - Inactive ingredients with safety data
 - **[synonyms](/concepts/synonyms)**/ - Drug name synonyms and aliases
 
-### Premium
+### Gold & Platinum
 
-Premium data marts are available with a Premium subscription. See the [subscription plans](#subscription-plan) for details.
+Gold and Platinum data marts are available with the corresponding subscription tiers. See the [subscription plans](#subscription-plans) for details.
+
+### Version Control
 
 Each data mart folder contains:
-- **Latest snapshot**: `{tier}/{data_mart}/{data_mart}.csv` or `{tier}/{data_mart}/{data_mart}.parquet` (e.g., `basic/drugs/drugs.parquet`)
-- **Dated snapshots**: `{tier}/{data_mart}/{data_mart}_YYYY-MM-DD.csv` or `{tier}/{data_mart}/{data_mart}_YYYY-MM-DD.parquet` (e.g., `basic/drugs/drugs_2026-01-16.parquet`)
+- **Latest snapshot**: `{tier}/{data_mart}/{data_mart}.csv` or `{tier}/{data_mart}/{data_mart}.parquet` (e.g., `silver/drugs/drugs.parquet`)
+- **Dated snapshots**: `{tier}/{data_mart}/{data_mart}_YYYY-MM-DD.csv` or `{tier}/{data_mart}/{data_mart}_YYYY-MM-DD.parquet` (e.g., `silver/drugs/drugs_2026-01-16.parquet`)
 
 Files are updated weekly, with new dated snapshots added while the latest file is always updated to point to the most recent data.
 

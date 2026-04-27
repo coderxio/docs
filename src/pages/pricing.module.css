@@ -34,9 +34,9 @@
 
 .pricingOptions {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1.5rem;
-  max-width: 780px;
+  max-width: 1100px;
   margin: 0 auto 4rem;
 }
 
@@ -227,7 +227,7 @@
 /* Feature rows */
 .comparisonRow {
   display: grid;
-  grid-template-columns: 1fr 120px 120px;
+  grid-template-columns: 1fr 120px 120px 120px;
   align-items: center;
   border-bottom: 1px solid #e5e5e5;
 }
@@ -379,12 +379,12 @@
   }
 
   .pricingOptions {
-    grid-template-columns: 1fr;
-    max-width: 440px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 760px;
   }
 
   .comparisonRow {
-    grid-template-columns: 1fr 90px 90px;
+    grid-template-columns: 1fr 90px 90px 90px;
   }
 
   .comparisonTierCell {
@@ -395,6 +395,11 @@
 @media screen and (max-width: 768px) {
   .container {
     padding: 3rem 1.25rem;
+  }
+
+  .pricingOptions {
+    grid-template-columns: 1fr;
+    max-width: 440px;
   }
 
   .title {
@@ -414,7 +419,7 @@
   }
 
   .comparisonRow {
-    grid-template-columns: 1fr 72px 72px;
+    grid-template-columns: 1fr 72px 72px 72px;
   }
 
   .ctaSection {
