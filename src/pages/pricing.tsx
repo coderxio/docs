@@ -242,7 +242,7 @@ export default function Pricing() {
               <span className={styles.pricingCardBadge}>Most Popular</span>
             </div>
             <p className={styles.pricingCardDescription}>
-              Adds Pricing, Plans, Packaging, and priority support for organizations that need broader coverage and faster operational execution.
+              Adds Pricing, Packaging, Label Images, and priority support for organizations that need broader coverage and faster operational execution.
             </p>
             <button
               data-cal-link="coderx/30-min"
@@ -263,7 +263,7 @@ export default function Pricing() {
               <h2 className={styles.pricingCardTitle}>Platinum</h2>
             </div>
             <p className={styles.pricingCardDescription}>
-              Unlocks Indications, E-prescribing mappings, and Label Images for advanced clinical use cases and production-grade medication intelligence.
+              Unlocks Indications, Plans, and E-prescribing mappings for advanced clinical use cases and production-grade medication intelligence.
             </p>
             <button
               data-cal-link="coderx/30-min"
