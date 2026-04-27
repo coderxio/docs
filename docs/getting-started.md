@@ -17,9 +17,9 @@ We offer three annual plans:
 
 - **Silver**: Includes the core data marts, weekly updates, and AWS S3 delivery for teams building reliable pharmacy analytics workflows.
 
-- **Gold**: Adds Pricing, Plans, Packaging, and priority support for organizations that need broader coverage and faster operational execution.
+- **Gold**: Adds Pricing, Packaging, Label Images, and priority support for organizations that need broader coverage and faster operational execution.
 
-- **Platinum**: Unlocks Indications, E-prescribing mappings, and Label Images for advanced clinical use cases and production-grade medication intelligence.
+- **Platinum**: Unlocks Indications, Plans, and E-prescribing mappings for advanced clinical use cases and production-grade medication intelligence.
 
 :::tip Ready to Get Started?
 **Subscribe to CodeRx today.** Get instant access to our comprehensive drug database with weekly updates, complete RxNorm mappings, and rich drug knowledge graphs. Annual billing available.
