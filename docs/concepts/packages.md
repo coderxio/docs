@@ -26,24 +26,12 @@ Packages provide a comprehensive view of how National Drug Codes (NDCs) map to s
 | `clinical_drug_name` | Clinical product name associated with this NDC. From the drugs model. | |
 | `clinical_drug_type` | Clinical product term type. From the drugs model. | |
 | `package_description` | FDA package description describing size and type of packaging (e.g., '4 BOTTLES in 1 CARTON/100 TABLETS in 1 BOTTLE'). | |
-| `pack_size` | Total product count in the package (e.g., 100 for 100 tablets). | |
-| `unit_of_measure` | Unit of measure for pack size (e.g., 'TABLET', 'ML', 'GM'). | |
 | `start_marketing_date` | Date when the labeler started marketing this package. | |
 | `end_marketing_date` | Date when the package will no longer be available on the market. Null if still being manufactured. | |
 | `marketing_category` | Marketing category name (e.g., 'NDA', 'ANDA', 'OTC Monograph'). | |
 | `application_number` | FDA application number (NDA, ANDA, or BLA number). For OTC Monograph products, this will be the CFR citation (e.g., 'part 341'). | |
 | `labeler_name` | Name of the company/labeler. | |
 | `dea_schedule` | DEA schedule classification (CI, CII, CIII, CIV, CV). Null for non-controlled substances. | |
-| `nadac_per_unit` | National Average Drug Acquisition Cost per unit. The pricing unit is specified in the pricing_unit field. | |
-| `pricing_unit` | Unit of measurement for the NADAC price. Typically 'ML' (milliliters), 'GM' (grams), or 'EA' (each). | |
-| `price_start_date` | The effective start date for this NADAC price. Indicates when this pricing became active. | |
-| `price_end_date` | The effective end date for this NADAC price. Indicates when this pricing was superseded by a new price. Null if this is the current price. | |
-| `is_first_price` | Boolean flag indicating if this is the first recorded NADAC price for this NDC. | |
-| `is_last_price` | Boolean flag indicating if this is the most recent NADAC price for this NDC. | |
-| `dollar_change` | Dollar amount change from the previous NADAC price to this price. Positive values indicate price increases, negative values indicate decreases. | |
-| `percent_change` | Percentage change from the previous NADAC price to this price. Positive values indicate price increases, negative values indicate decreases. | |
-| `change_type` | Indicator for price direction: 1 if the price increased, 0 if the price decreased. Useful for counting price increases over time. | |
-| `is_deactivated` | Boolean flag indicating if this NDC has been deactivated in RxNorm historical data. Null if the NDC has no historical records. | |
 | `deactivation_date` | The date this NDC was deactivated, based on the end date of its most recent historical record in RxNorm. Null if the NDC is not deactivated or has no historical records. | |
 | `active` | Boolean flag indicating if the NDC is currently active in RxNorm. | |
 | `prescribable` | Boolean flag indicating if the NDC is prescribable according to RxNorm. | |
