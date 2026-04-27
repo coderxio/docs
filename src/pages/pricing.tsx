@@ -20,74 +20,86 @@ const featureSections = [
       {
         name: 'Packages (NDCs)',
         description: 'Mappings from NDC to drug, brand vs generic, available brand names, labeler information',
-        basic: CHECK,
-        premium: CHECK,
+        silver: CHECK,
+        gold: CHECK,
+        platinum: CHECK,
       },
       {
         name: 'Drugs',
         description: 'All brand and generic drugs with open standard identifiers',
-        basic: CHECK,
-        premium: CHECK,
+        silver: CHECK,
+        gold: CHECK,
+        platinum: CHECK,
       },
       {
         name: 'Ingredients',
         description: 'Including structured ingredient strength',
-        basic: CHECK,
-        premium: CHECK,
+        silver: CHECK,
+        gold: CHECK,
+        platinum: CHECK,
       },
       {
         name: 'Excipients',
         description: 'Including suggested flags for gluten, dyes, and preservatives',
-        basic: CHECK,
-        premium: CHECK,
+        silver: CHECK,
+        gold: CHECK,
+        platinum: CHECK,
+      },
+      {
+        name: 'Classes',
+        description: 'Four level classification hierarchy for drugs',
+        silver: CHECK,
+        gold: CHECK,
+        platinum: CHECK,
       },
       {
         name: 'Synonyms',
         description: 'Useful for LLM training / fuzzy matching / search enhancement',
-        basic: CHECK,
-        premium: CHECK,
+        silver: CHECK,
+        gold: CHECK,
+        platinum: CHECK,
       },
       {
-        name: 'ATC Classification',
-        description: 'Four level classification hierarchy for drugs',
-        basic: CHECK,
-        premium: CHECK,
-      },
-      {
-        name: 'Indications',
-        description: 'ICD-10 codes representing conditions drugs may treat or may prevent',
-        basic: DASH,
-        premium: CHECK,
-      },
-      {
-        name: 'CMS Pricing',
+        name: 'Pricing',
         description: 'ASP / NDC to HCPCS (type 2) mappings / NADAC pricing / 5+ years historical changes',
-        basic: DASH,
-        premium: CHECK,
-      },
-      {
-        name: 'CMS Plans',
-        description: 'Medicare Part D plan information, including formularies, tiers, and pricing',
-        basic: DASH,
-        premium: CHECK,
-      },
-      {
-        name: 'NCPDP Mappings',
-        description: 'NCI code mappings / representative NDCs — useful for e-prescribing and interoperability',
-        basic: DASH,
-        premium: CHECK,
+        silver: DASH,
+        gold: CHECK,
+        platinum: CHECK,
       },
       {
         name: 'Packaging',
-        description: 'Pack size / unit of measure / inner-outer NDCs',
-        basic: DASH,
-        premium: CHECK,
+        description: 'Pack size / unit of use / unit dose / inner-outer NDCs',
+        silver: DASH,
+        gold: CHECK,
+        platinum: CHECK,
       },
       {
         name: 'Label Images',
         description: 'NDC-level label image mappings',
-        basic: DASH,
-        premium: CHECK,
+        silver: DASH,
+        gold: CHECK,
+        platinum: CHECK,
+      },
+      {
+        name: 'Indications',
+        description: 'ICD-10 codes representing conditions drugs may treat or may prevent',
+        silver: DASH,
+        gold: DASH,
+        platinum: CHECK,
+      },
+      {
+        name: 'Plans',
+        description: 'Medicare Part D plan information, including formularies, tiers, and reimbursement',
+        silver: DASH,
+        gold: DASH,
+        platinum: CHECK,
+      },
+      {
+        name: 'E-prescribing',
+        description: 'NCI code mappings / representative NDCs — useful for e-prescribing and interoperability',
+        silver: DASH,
+        gold: DASH,
+        platinum: CHECK,
       },
     ],
   },
@@ -97,20 +109,23 @@ const featureSections = [
       {
         name: 'Weekly Updates',
         description: 'Up-to-date data delivered to an s3 bucket weekly',
-        basic: CHECK,
-        premium: CHECK,
+        silver: CHECK,
+        gold: CHECK,
+        platinum: CHECK,
       },
       {
         name: 'AWS S3 Access',
         description: 'Direct S3 bucket access to all data marts in CSV and Parquet formats',
-        basic: CHECK,
-        premium: CHECK,
+        silver: CHECK,
+        gold: CHECK,
+        platinum: CHECK,
       },
       {
         name: 'Complete Documentation',
         description: 'Schema docs, tutorials, and data source guides for every data mart',
-        basic: CHECK,
-        premium: CHECK,
+        silver: CHECK,
+        gold: CHECK,
+        platinum: CHECK,
       },
     ],
   },
@@ -120,14 +135,16 @@ const featureSections = [
       {
         name: 'Email Support',
         description: 'Access to support email and the CodeRx Slack community',
-        basic: CHECK,
-        premium: CHECK,
+        silver: CHECK,
+        gold: CHECK,
+        platinum: CHECK,
       },
       {
         name: 'Priority Support',
         description: 'Dedicated response SLA and direct access to the CodeRx team',
-        basic: DASH,
-        premium: CHECK,
+        silver: DASH,
+        gold: CHECK,
+        platinum: CHECK,
       },
     ],
   },
@@ -180,42 +197,37 @@ export default function Pricing() {
   return (
     <Layout
       title="Pricing"
-      description="Choose the CodeRx plan that fits your team. Basic or Premium — both include weekly drug data updates, AWS S3 access, and complete documentation.">
+      description="Choose the CodeRx plan that fits your team. Silver, Gold, or Platinum — all include weekly drug data updates, AWS S3 access, and complete documentation.">
       <div className={styles.container}>
 
         {/* Header */}
         <div className={styles.header}>
           <Heading as="h1" className={styles.title}>
-            Simple, Transparent Pricing
+            Compare CodeRx Plans
           </Heading>
           <p className={styles.subtitle}>
-            Get access to CodeRx's comprehensive drug database with weekly updates,
-            complete RxNorm mappings, NADAC pricing, and rich drug knowledge graphs.
+            Explore tiered access to comprehensive drug data marts, documentation,
+            support, and advanced feature sets designed for pharmacy analytics workflows.
           </p>
         </div>
 
         {/* Pricing Cards */}
         <div className={styles.pricingOptions}>
 
-          {/* Basic */}
+          {/* Silver */}
           <div className={styles.pricingCard}>
             <div className={styles.pricingCardHeader}>
-              <h2 className={styles.pricingCardTitle}>Basic</h2>
-            </div>
-            <div className={styles.pricingCardPrice}>
-              <span className={styles.priceAmount}>$5,500</span>
-              <span className={styles.pricePeriod}>/year</span>
+              <h2 className={styles.pricingCardTitle}>Silver</h2>
             </div>
             <p className={styles.pricingCardDescription}>
-              Packages, drugs, ingredients, excipients, synonyms, ATC classification, and DEA schedules — 
-              with weekly updates via AWS S3. Everything you need to get started with drug data.
+              Includes the core data marts, weekly updates, and AWS S3 delivery for teams building reliable pharmacy analytics workflows.
             </p>
             <button
               data-cal-link="coderx/30-min"
               data-cal-config={JSON.stringify({
                 layout: 'month_view',
-                'metadata[plan]': 'Basic',
-                notes: 'Interested in: Basic',
+                'metadata[plan]': 'Silver',
+                notes: 'Interested in: Silver',
               })}
               className={styles.pricingButtonOutline}
             >
@@ -223,28 +235,44 @@ export default function Pricing() {
             </button>
           </div>
 
-          {/* Premium */}
+          {/* Gold */}
           <div className={`${styles.pricingCard} ${styles.pricingCardFeatured}`}>
             <div className={styles.pricingCardHeader}>
-              <h2 className={styles.pricingCardTitle}>Premium</h2>
+              <h2 className={styles.pricingCardTitle}>Gold</h2>
               <span className={styles.pricingCardBadge}>Most Popular</span>
             </div>
-            <div className={styles.pricingCardPrice}>
-              <span className={styles.priceAmount}>$15,000</span>
-              <span className={styles.pricePeriod}>/year</span>
-            </div>
             <p className={styles.pricingCardDescription}>
-              Everything in Basic, plus indications, CMS pricing, CMS plans, NCPDP mappings, 
-              packaging, and label images. Includes priority support from the CodeRx team.
+              Adds Pricing, Plans, Packaging, and priority support for organizations that need broader coverage and faster operational execution.
             </p>
             <button
               data-cal-link="coderx/30-min"
               data-cal-config={JSON.stringify({
                 layout: 'month_view',
-                'metadata[plan]': 'Premium',
-                notes: 'Interested in: Premium',
+                'metadata[plan]': 'Gold',
+                notes: 'Interested in: Gold',
               })}
               className={styles.pricingButton}
+            >
+              Book a Demo
+            </button>
+          </div>
+
+          {/* Platinum */}
+          <div className={styles.pricingCard}>
+            <div className={styles.pricingCardHeader}>
+              <h2 className={styles.pricingCardTitle}>Platinum</h2>
+            </div>
+            <p className={styles.pricingCardDescription}>
+              Unlocks Indications, E-prescribing mappings, and Label Images for advanced clinical use cases and production-grade medication intelligence.
+            </p>
+            <button
+              data-cal-link="coderx/30-min"
+              data-cal-config={JSON.stringify({
+                layout: 'month_view',
+                'metadata[plan]': 'Platinum',
+                notes: 'Interested in: Platinum',
+              })}
+              className={styles.pricingButtonOutline}
             >
               Book a Demo
             </button>
@@ -261,8 +289,9 @@ export default function Pricing() {
             {/* Table header */}
             <div className={`${styles.comparisonRow} ${styles.comparisonHeader}`}>
               <div className={styles.comparisonFeatureCell}>Feature</div>
-              <div className={styles.comparisonTierCell}>Basic</div>
-              <div className={`${styles.comparisonTierCell} ${styles.comparisonTierCellFeatured}`}>Premium</div>
+              <div className={styles.comparisonTierCell}>Silver</div>
+              <div className={`${styles.comparisonTierCell} ${styles.comparisonTierCellFeatured}`}>Gold</div>
+              <div className={styles.comparisonTierCell}>Platinum</div>
             </div>
 
             {featureSections.map((section) => (
@@ -280,13 +309,18 @@ export default function Pricing() {
                       <span className={styles.comparisonFeatureDesc}>{feature.description}</span>
                     </div>
                     <div className={styles.comparisonTierCell}>
-                      <span className={feature.basic === CHECK ? styles.checkIcon : styles.dashIcon}>
-                        {feature.basic}
+                      <span className={feature.silver === CHECK ? styles.checkIcon : styles.dashIcon}>
+                        {feature.silver}
                       </span>
                     </div>
                     <div className={`${styles.comparisonTierCell} ${styles.comparisonTierCellFeatured}`}>
-                      <span className={feature.premium === CHECK ? styles.checkIcon : styles.dashIcon}>
-                        {feature.premium}
+                      <span className={feature.gold === CHECK ? styles.checkIcon : styles.dashIcon}>
+                        {feature.gold}
+                      </span>
+                    </div>
+                    <div className={styles.comparisonTierCell}>
+                      <span className={feature.platinum === CHECK ? styles.checkIcon : styles.dashIcon}>
+                        {feature.platinum}
                       </span>
                     </div>
                   </div>

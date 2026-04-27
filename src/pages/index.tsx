@@ -46,7 +46,7 @@ function DrugDataVisual() {
       examples: [
         { label: 'NDC', value: '55111-121-90' },
         { label: 'Pack Size', value: '90 count bottle' },
-        { label: 'COST (NADAC)', value: '$0.02546 / tablet' },
+        { label: 'COST (NADAC)', value: 'NADAC data included' },
       ],
       color: 'var(--ifm-color-secondary)',
       gradient: 'linear-gradient(135deg, var(--ifm-color-secondary) 0%, var(--ifm-color-secondary-dark) 100%)',
@@ -179,9 +179,6 @@ function HomepageHeader() {
               View Pricing
             </Link>
           </div>
-          <p className={styles.heroPricing}>
-            Starting at <strong>$5,500</strong>/year
-          </p>
         </div>
         <DrugDataVisual />
       </div>
@@ -405,7 +402,6 @@ function ComparisonSection() {
       <div className={styles.comparisonCard}>
         <div className={styles.comparisonCardHeader}>
           <span className={styles.comparisonCardTitle}>CodeRx Drug Database</span>
-          <span className={styles.comparisonCardPrice}>$5,500<span>/year</span></span>
         </div>
         <ul className={styles.comparisonList}>
           <li className={styles.comparisonItemPositive}>Easy to get started</li>
@@ -419,7 +415,6 @@ function ComparisonSection() {
       <div className={clsx(styles.comparisonCard, styles.comparisonCardDim)}>
         <div className={styles.comparisonCardHeader}>
           <span className={styles.comparisonCardTitle}>Other Databases</span>
-          <span className={styles.comparisonCardPrice}>~$100K<span>/year</span></span>
         </div>
         <ul className={styles.comparisonList}>
           <li className={styles.comparisonItemNegative}>Complex vendor contracting</li>
@@ -438,7 +433,6 @@ function ComparisonSection() {
       <div className={styles.comparisonCard}>
         <div className={styles.comparisonCardHeader}>
           <span className={styles.comparisonCardTitle}>CodeRx Drug Database</span>
-          <span className={styles.comparisonCardPrice}>$5,500<span>/year</span></span>
         </div>
         <ul className={styles.comparisonList}>
           <li className={styles.comparisonItemPositive}>Purpose-built data marts, ready to query</li>
@@ -452,7 +446,6 @@ function ComparisonSection() {
       <div className={clsx(styles.comparisonCard, styles.comparisonCardDim)}>
         <div className={styles.comparisonCardHeader}>
           <span className={styles.comparisonCardTitle}>Raw Open Data</span>
-          <span className={styles.comparisonCardPrice}>Free<span></span></span>
         </div>
         <ul className={styles.comparisonList}>
           <li className={styles.comparisonItemNegative}>Requires expertise in SABs, TTYs, XML</li>
@@ -489,7 +482,7 @@ function ComparisonSection() {
           </Heading>
           <p className={styles.comparisonSubtitle}>
             {activeTab === 'databases' 
-              ? 'Enterprise-grade drug data without the enterprise price tag'
+              ? 'Enterprise-grade drug data with a modern developer experience'
               : 'Straightforward pharmacy-ready tables without complex data parsing'}
           </p>
         </div>
@@ -642,8 +635,8 @@ function CTASection() {
         </Heading>
         <p className={styles.ctaDescription}>
           Built by pharmacists, designed for analytics. Get comprehensive 
-          drug data marts that integrate with your pharmacy applications—starting 
-          at $5,500/year.
+          drug data marts that integrate with your pharmacy applications across
+          Silver, Gold, and Platinum plans.
         </p>
         <div className={styles.ctaActions}>
           <button
