@@ -54,6 +54,7 @@ const config: Config = {
         language: ['en'],
         highlightSearchTermsOnTargetPage: true,
         explicitSearchResultPath: true,
+        ignoreFiles: [/premium\//],
       },
     ],
     [
