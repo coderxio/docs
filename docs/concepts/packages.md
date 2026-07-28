@@ -41,7 +41,7 @@ Packages provide a comprehensive view of how National Drug Codes (NDCs) map to s
 | `is_src_fda_unfinished` | Boolean flag indicating if this NDC appears in FDA Unfinished drug listings (active pharmaceutical ingredients, drugs for further processing, and bulk drug substances for compounding). An NDC may be present in multiple sources; this flag is independent of the other is_src_* flags. From all_ndcs_to_sources. | |
 | `is_src_fda_compounded` | Boolean flag indicating if this NDC appears in the FDA Compounding NDC Directory (human drug products compounded by outsourcing facilities). An NDC may be present in multiple sources; this flag is independent of the other is_src_* flags. From all_ndcs_to_sources. | |
 | `deactivation_date` | The date this NDC was deactivated, based on the end date of its most recent historical record in RxNorm. Null if the NDC is not deactivated or has no historical records. | |
-| `active` | Boolean flag indicating if the NDC is currently active in RxNorm. | |
+| `active` | Boolean flag indicating if the NDC is currently active in RxNorm.  | |
 | `prescribable` | Boolean flag indicating if the NDC is prescribable according to RxNorm. | |
 
 ## Key Features
