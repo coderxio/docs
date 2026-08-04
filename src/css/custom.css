@@ -94,55 +94,6 @@ html {
   transform: translateY(-3px);
 }
 
-/* Product and Pricing navbar links - always default color, never red */
-/* Maximum specificity to override Docusaurus active link styles */
-.navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="product-intro"],
-.navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="comparison"],
-.navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="product-intro"]:hover,
-.navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="comparison"]:hover,
-.navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="product-intro"]:focus,
-.navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="comparison"]:focus,
-.navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="product-intro"]:active,
-.navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="comparison"]:active,
-.navbar .navbar__inner .navbar__items .navbar__item a.navbar__link.navbar__link--active[href*="product-intro"],
-.navbar .navbar__inner .navbar__items .navbar__item a.navbar__link.navbar__link--active[href*="comparison"],
-.navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="product-intro"][aria-current="page"],
-.navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="comparison"][aria-current="page"] {
-  color: #ffffff !important;
-}
-
-/* Light mode - use dark color for light theme navbar links */
-:root:not([data-theme='dark']) .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="product-intro"],
-:root:not([data-theme='dark']) .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="comparison"],
-:root:not([data-theme='dark']) .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="product-intro"]:hover,
-:root:not([data-theme='dark']) .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="comparison"]:hover,
-:root:not([data-theme='dark']) .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="product-intro"]:focus,
-:root:not([data-theme='dark']) .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="comparison"]:focus,
-:root:not([data-theme='dark']) .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="product-intro"]:active,
-:root:not([data-theme='dark']) .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="comparison"]:active,
-:root:not([data-theme='dark']) .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link.navbar__link--active[href*="product-intro"],
-:root:not([data-theme='dark']) .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link.navbar__link--active[href*="comparison"],
-:root:not([data-theme='dark']) .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="product-intro"][aria-current="page"],
-:root:not([data-theme='dark']) .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="comparison"][aria-current="page"] {
-  color: #242526 !important;
-}
-
-/* Dark mode - use white for dark theme navbar links */
-[data-theme='dark'] .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="product-intro"],
-[data-theme='dark'] .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="comparison"],
-[data-theme='dark'] .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="product-intro"]:hover,
-[data-theme='dark'] .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="comparison"]:hover,
-[data-theme='dark'] .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="product-intro"]:focus,
-[data-theme='dark'] .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="comparison"]:focus,
-[data-theme='dark'] .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="product-intro"]:active,
-[data-theme='dark'] .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="comparison"]:active,
-[data-theme='dark'] .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link.navbar__link--active[href*="product-intro"],
-[data-theme='dark'] .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link.navbar__link--active[href*="comparison"],
-[data-theme='dark'] .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="product-intro"][aria-current="page"],
-[data-theme='dark'] .navbar .navbar__inner .navbar__items .navbar__item a.navbar__link[href*="comparison"][aria-current="page"] {
-  color: #ffffff !important;
-}
-
 /* Mermaid ER Diagram - Yellow color scheme */
 /* Target all entity rectangles in ER diagrams */
 .mermaid svg .er rect,

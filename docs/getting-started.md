@@ -7,6 +7,10 @@ sidebar_position: 2
 
 Get started with CodeRx in minutes. Subscribe today and get instant access to our comprehensive drug database, weekly-updated data marts, and powerful integration tools.
 
+:::info Want to try before you subscribe?
+[**CodeRx Open**](/coderx-open) is a free, annually updated version of the database covering active, prescribable drugs, their NDCs, and drug classes. [Request free access →](/open)
+:::
+
 ## Subscribe to CodeRx
 
 Subscribe to CodeRx and get instant access to our comprehensive drug database. Explore weekly-updated data marts and integrate with your existing workflows.

@@ -66,12 +66,17 @@ const config: Config = {
             to: '/concepts/',
           },
           {
+            // Older blog posts link here offering free data marts
             from: '/data-marts',
-            to: '/concepts/',
+            to: '/open',
           },
           {
             from: '/source-data',
             to: '/concepts/',
+          },
+          {
+            from: ['/free', '/open-access'],
+            to: '/open',
           },
         ],
       },
@@ -148,7 +153,7 @@ const config: Config = {
       },
       items: [
         {
-          href: '/#product-intro',
+          to: '/product',
           label: 'Product',
           position: 'left',
         },
@@ -179,6 +184,23 @@ const config: Config = {
     footer: {
       style: 'dark',
       links: [
+        {
+          title: 'Product',
+          items: [
+            {
+              label: 'Overview',
+              to: '/product',
+            },
+            {
+              label: 'Pricing',
+              to: '/pricing',
+            },
+            {
+              label: 'CodeRx Open (free)',
+              to: '/open',
+            },
+          ],
+        },
         {
           title: 'Docs',
           items: [

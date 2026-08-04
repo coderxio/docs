@@ -1,0 +1,781 @@
+/**
+ * CodeRx Open — free tier landing page
+ * Shares the visual language of the homepage (index.module.css)
+ */
+
+.main {
+  background: #f5f5f5;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* ============================================
+   HERO
+   ============================================ */
+
+.hero {
+  padding: 5rem 4rem 4rem;
+  background: #f5f5f5;
+}
+
+.heroInner {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.9rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #d4d4d4;
+  border-radius: 999px;
+  background: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #525252;
+}
+
+.eyebrowDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #22c55e;
+}
+
+.heroTitle {
+  font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 4rem;
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: #0a0a0a;
+  margin-bottom: 1.5rem;
+}
+
+.heroTitleAccent {
+  font-style: italic;
+  color: var(--ifm-color-primary);
+}
+
+.heroDescription {
+  font-size: 1.2rem;
+  line-height: 1.7;
+  color: #525252;
+  max-width: 640px;
+  margin: 0 auto 2.5rem;
+}
+
+.heroActions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.primaryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 2rem;
+  background: #0a0a0a;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.primaryButton:hover {
+  background: #262626;
+  color: #ffffff;
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
+.secondaryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 2rem;
+  background: transparent;
+  color: #0a0a0a;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border: 1px solid #d4d4d4;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.secondaryButton:hover {
+  background: #ffffff;
+  border-color: #a3a3a3;
+  color: #0a0a0a;
+  text-decoration: none;
+}
+
+.heroNote {
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: #737373;
+}
+
+/* ============================================
+   SHARED SECTION CHROME
+   ============================================ */
+
+.section {
+  padding: 5rem 4rem;
+}
+
+.sectionLight {
+  background: #ffffff;
+}
+
+.sectionMuted {
+  background: #f5f5f5;
+}
+
+.sectionInner {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.sectionTitle {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #0a0a0a;
+  margin-bottom: 0.75rem;
+}
+
+.sectionSubtitle {
+  font-size: 1.1rem;
+  color: #525252;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+/* ============================================
+   WHAT'S INCLUDED
+   ============================================ */
+
+.includedGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.includedCard {
+  background: #ffffff;
+  border: 1px solid #e5e5e5;
+  border-radius: 16px;
+  padding: 2rem;
+}
+
+.includedCardTitle {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #0a0a0a;
+  margin-bottom: 0.5rem;
+}
+
+.includedCardDesc {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #525252;
+  margin-bottom: 1.25rem;
+}
+
+.includedList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.includedList li {
+  padding: 0.4rem 0;
+  font-size: 0.9rem;
+  color: #404040;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+
+.includedList li::before {
+  content: '✓';
+  color: #22c55e;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.includedFootnote {
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 0.95rem;
+  color: #737373;
+}
+
+/* ============================================
+   OPEN VS PAID PLANS
+   ============================================ */
+
+.comparisonGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.comparisonCard {
+  background: #f5f5f5;
+  border-radius: 16px;
+  padding: 2rem;
+  border: 2px solid transparent;
+}
+
+.comparisonCardFeatured {
+  background: #ffffff;
+  border-color: var(--ifm-color-primary);
+}
+
+.comparisonCardHeader {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.comparisonCardTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #0a0a0a;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.comparisonCardTag {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--ifm-color-primary);
+}
+
+.comparisonCardTagMuted {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #737373;
+}
+
+.comparisonList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem;
+}
+
+.comparisonList li {
+  padding: 0.6rem 0;
+  font-size: 0.95rem;
+  color: #262626;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.itemPositive::before {
+  content: '✓';
+  color: #22c55e;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.itemNeutral::before {
+  content: '–';
+  color: #a3a3a3;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.cardLink {
+  display: inline-block;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--ifm-color-primary);
+  text-decoration: none;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.cardLink:hover {
+  text-decoration: underline;
+}
+
+/* ============================================
+   AUDIENCE
+   ============================================ */
+
+.audienceGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.audienceCard {
+  background: #ffffff;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.audienceTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0a0a0a;
+  margin-bottom: 0.4rem;
+}
+
+.audienceDesc {
+  font-size: 0.925rem;
+  line-height: 1.6;
+  color: #525252;
+  margin: 0;
+}
+
+/* ============================================
+   REQUEST FORM
+   ============================================ */
+
+.request {
+  padding: 5rem 4rem;
+  background: #0a0a0a;
+}
+
+.requestInner {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.requestHeader {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.requestTitle {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.requestSubtitle {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #a3a3a3;
+}
+
+.formCard {
+  background: #ffffff;
+  border: 1px solid transparent;
+  border-radius: 16px;
+  padding: 2.5rem;
+}
+
+.privacyNote {
+  margin-top: 1.25rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #737373;
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  font-size: 0.925rem;
+  color: #0a0a0a;
+}
+
+.required {
+  color: #ef4444;
+  margin-left: 0.25rem;
+}
+
+.input,
+.textarea,
+.select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid #e5e5e5;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: var(--ifm-font-family-base);
+  background: #ffffff;
+  color: #0a0a0a;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: #a3a3a3;
+}
+
+.select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23888' d='M1.41 0L6 4.58 10.59 0 12 1.41l-6 6-6-6z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+  cursor: pointer;
+}
+
+.input:hover:not(:disabled),
+.textarea:hover:not(:disabled),
+.select:hover:not(:disabled) {
+  border-color: #d4d4d4;
+}
+
+.input:focus,
+.textarea:focus,
+.select:focus {
+  outline: none;
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 0 0 3px rgba(var(--ifm-color-primary-rgb), 0.12);
+}
+
+.input:disabled,
+.textarea:disabled,
+.select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.fieldError {
+  border-color: #ef4444;
+}
+
+.fieldError:focus {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12);
+}
+
+.error {
+  display: block;
+  color: #dc2626;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+.successMessage {
+  background: #f0fdf4;
+  border: 1px solid #22c55e;
+  color: #15803d;
+  padding: 1rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+.errorMessage {
+  background: #fef2f2;
+  border: 1px solid #ef4444;
+  color: #b91c1c;
+  padding: 1rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+.submitButton {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  background: #0a0a0a;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.submitButton:hover:not(:disabled) {
+  background: #262626;
+  transform: translateY(-1px);
+}
+
+.submitButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ============================================
+   FAQ
+   ============================================ */
+
+.faqList {
+  display: grid;
+  gap: 1rem;
+}
+
+.faqItem {
+  background: #ffffff;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.faqQuestion {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #0a0a0a;
+  margin-bottom: 0.5rem;
+}
+
+.faqAnswer {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #525252;
+  margin: 0;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media screen and (max-width: 996px) {
+  .hero {
+    padding: 3.5rem 1.5rem 3rem;
+  }
+
+  .heroTitle {
+    font-size: 3rem;
+  }
+
+  .section,
+  .request {
+    padding: 3.5rem 1.5rem;
+  }
+
+  .includedGrid,
+  .comparisonGrid,
+  .audienceGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .formCard {
+    padding: 1.75rem;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .heroTitle {
+    font-size: 2.5rem;
+  }
+
+  .heroDescription {
+    font-size: 1.05rem;
+  }
+
+  .heroActions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .requestTitle {
+    font-size: 1.75rem;
+  }
+}
+
+/* ============================================
+   DARK MODE OVERRIDES
+   ============================================ */
+
+[data-theme='dark'] .main,
+[data-theme='dark'] .hero {
+  background: #0a0a0a;
+}
+
+[data-theme='dark'] .eyebrow {
+  background: #1a1a1a;
+  border-color: #2a2a2a;
+  color: #a3a3a3;
+}
+
+[data-theme='dark'] .heroTitle {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .heroDescription {
+  color: #a3a3a3;
+}
+
+[data-theme='dark'] .heroNote {
+  color: #737373;
+}
+
+[data-theme='dark'] .primaryButton {
+  background: #ffffff;
+  color: #0a0a0a;
+}
+
+[data-theme='dark'] .primaryButton:hover {
+  background: #e5e5e5;
+  color: #0a0a0a;
+}
+
+[data-theme='dark'] .secondaryButton {
+  color: #ffffff;
+  border-color: #404040;
+}
+
+[data-theme='dark'] .secondaryButton:hover {
+  background: #1a1a1a;
+  border-color: #525252;
+  color: #ffffff;
+}
+
+[data-theme='dark'] .sectionLight {
+  background: #171717;
+}
+
+[data-theme='dark'] .sectionMuted {
+  background: #0a0a0a;
+}
+
+[data-theme='dark'] .sectionTitle {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .sectionSubtitle {
+  color: #a3a3a3;
+}
+
+[data-theme='dark'] .includedCard,
+[data-theme='dark'] .audienceCard,
+[data-theme='dark'] .faqItem {
+  background: #1a1a1a;
+  border-color: #2a2a2a;
+}
+
+[data-theme='dark'] .includedCardTitle,
+[data-theme='dark'] .audienceTitle,
+[data-theme='dark'] .faqQuestion {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .includedCardDesc,
+[data-theme='dark'] .audienceDesc,
+[data-theme='dark'] .faqAnswer {
+  color: #a3a3a3;
+}
+
+[data-theme='dark'] .includedList li {
+  color: #a3a3a3;
+}
+
+[data-theme='dark'] .includedFootnote {
+  color: #737373;
+}
+
+[data-theme='dark'] .comparisonCard {
+  background: #0a0a0a;
+}
+
+[data-theme='dark'] .comparisonCardFeatured {
+  background: #1a1a1a;
+}
+
+[data-theme='dark'] .comparisonCardHeader {
+  border-bottom-color: #262626;
+}
+
+[data-theme='dark'] .comparisonCardTitle {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .comparisonList li {
+  color: #a3a3a3;
+}
+
+[data-theme='dark'] .request {
+  background: #171717;
+}
+
+[data-theme='dark'] .formCard {
+  background: #1a1a1a;
+  border-color: #2a2a2a;
+}
+
+[data-theme='dark'] .label {
+  color: #ffffff;
+}
+
+[data-theme='dark'] .input,
+[data-theme='dark'] .textarea,
+[data-theme='dark'] .select {
+  background-color: #0a0a0a;
+  border-color: #2a2a2a;
+  color: #ffffff;
+}
+
+/* Caret is a background image, so only the color may be overridden here —
+   the `background` shorthand would erase it. */
+[data-theme='dark'] .select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23a3a3a3' d='M1.41 0L6 4.58 10.59 0 12 1.41l-6 6-6-6z'/%3E%3C/svg%3E");
+}
+
+[data-theme='dark'] .input::placeholder,
+[data-theme='dark'] .textarea::placeholder {
+  color: #737373;
+}
+
+[data-theme='dark'] .input:hover:not(:disabled),
+[data-theme='dark'] .textarea:hover:not(:disabled),
+[data-theme='dark'] .select:hover:not(:disabled) {
+  border-color: #404040;
+}
+
+[data-theme='dark'] .submitButton {
+  background: #ffffff;
+  color: #0a0a0a;
+}
+
+[data-theme='dark'] .submitButton:hover:not(:disabled) {
+  background: #e5e5e5;
+}
+
+[data-theme='dark'] .successMessage {
+  background: rgba(34, 197, 94, 0.1);
+  color: #4ade80;
+}
+
+[data-theme='dark'] .errorMessage {
+  background: rgba(239, 68, 68, 0.1);
+  color: #f87171;
+}
+
+[data-theme='dark'] .error {
+  color: #f87171;
+}

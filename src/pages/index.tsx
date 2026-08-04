@@ -179,6 +179,12 @@ function HomepageHeader() {
               View Pricing
             </Link>
           </div>
+          <p className={styles.heroPricing}>
+            Just exploring?{' '}
+            <Link className={styles.heroPricingLink} to="/open">
+              Start free with CodeRx Open
+            </Link>
+          </p>
         </div>
         <DrugDataVisual />
       </div>
@@ -492,6 +498,51 @@ function ComparisonSection() {
   );
 }
 
+function OpenSection() {
+  return (
+    <section id="coderx-open" className={styles.open}>
+      <div className={styles.openInner}>
+        <div className={styles.openContent}>
+          <span className={styles.openLabel}>Free tier</span>
+          <Heading as="h2" className={styles.openTitle}>
+            Try it first with CodeRx Open
+          </Heading>
+          <p className={styles.openDescription}>
+            CodeRx Open is a free, annually updated snapshot of the database:
+            every active, prescribable drug, its NDCs, and its drug classes.
+            Same schema, same docs, no contract—so you can prove out your use
+            case before you talk to us.
+          </p>
+          <div className={styles.openActions}>
+            <Link className={styles.openPrimary} to="/open">
+              Get CodeRx Open
+            </Link>
+            <Link className={styles.openSecondary} to="/open#included">
+              What's included
+            </Link>
+          </div>
+        </div>
+        <div className={styles.openPanel}>
+          <div className={styles.openPanelHeader}>
+            <span className={styles.openPanelTitle}>CodeRx Open</span>
+            <span className={styles.openPanelPrice}>Free</span>
+          </div>
+          <ul className={styles.openPanelList}>
+            <li>Drugs, NDCs & classes</li>
+            <li>Active, prescribable products</li>
+            <li>CSV & Parquet downloads</li>
+            <li>Full public documentation</li>
+          </ul>
+          <p className={styles.openPanelNote}>
+            Updated once per year. Weekly updates and the full set of data marts
+            come with a subscription.
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function ProcessSection() {
   const [expandedIndex, setExpandedIndex] = React.useState<number | null>(0);
   
@@ -650,6 +701,11 @@ function CTASection() {
             View Pricing
           </Link>
         </div>
+        <p className={styles.ctaFootnote}>
+          Not ready for a subscription?{' '}
+          <Link to="/open">Get CodeRx Open free</Link> and query real drug data
+          today.
+        </p>
       </div>
     </section>
   );
@@ -708,13 +764,14 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <HomepageHeader />
-        <WhoThisIsForSection />
         <ProductIntroSection />
+        <WhoThisIsForSection />
         <StatsSection />
         <DataSourcesSection />
         <ArrowDivider />
         <DataMartsSection />
         <ComparisonSection />
+        <OpenSection />
         <ProcessSection />
         <CTASection />
       </main>
