@@ -54,8 +54,8 @@ const plans: Plan[] = [
         description: 'Classification hierarchy for therapeutic grouping',
       },
       {
-        name: 'CSV & Parquet',
-        description: 'Download and query with the tools you already use',
+        name: 'Community support',
+        description: 'Join the CodeRx Slack to ask questions and share findings',
       },
     ],
     cta: { kind: 'link', label: 'Get it Free', to: '/open' },
@@ -85,7 +85,7 @@ const plans: Plan[] = [
       },
       {
         name: 'Email support',
-        description: 'Support email plus the CodeRx Slack community',
+        description: 'Direct line to our team, on top of the Slack community',
       },
     ],
     cta: { kind: 'demo', label: 'Book a Demo', plan: 'Silver' },
