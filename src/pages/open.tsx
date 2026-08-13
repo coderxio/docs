@@ -76,7 +76,7 @@ function IncludedSection() {
       items: ['Drug names & RXCUIs', 'Dose forms & strengths', 'Brand-to-generic links'],
     },
     {
-      title: 'NDCs',
+      title: 'Packages',
       description:
         'National Drug Codes mapped to their drug products, no manual joining required.',
       items: ['NDC-to-drug mappings', 'Package descriptions', 'Labeler information'],
@@ -115,7 +115,7 @@ function IncludedSection() {
           ))}
         </div>
         <p className={styles.includedFootnote}>
-          Same schema and documentation as the paid plans—
+          Same schema and documentation as Enterprise—
           <Link to="/concepts">browse the data models</Link> before you request
           access.
         </p>
@@ -130,12 +130,12 @@ function OpenVsPaidSection() {
       <div className={styles.sectionInner}>
         <div className={styles.sectionHeader}>
           <Heading as="h2" className={styles.sectionTitle}>
-            Open vs. a Subscription
+            Open vs. Enterprise
           </Heading>
           <p className={styles.sectionSubtitle}>
             CodeRx Open is a yearly snapshot of a subset of the data. When you
-            need current data or the full picture, a subscription picks up where
-            it leaves off.
+            need current data or the full picture, Enterprise picks up where it
+            leaves off.
           </p>
         </div>
         <div className={styles.comparisonGrid}>
@@ -145,12 +145,12 @@ function OpenVsPaidSection() {
               <span className={styles.comparisonCardTag}>Free</span>
             </div>
             <ul className={styles.comparisonList}>
-              <li className={styles.itemPositive}>Drugs, NDCs & classes</li>
+              <li className={styles.itemPositive}>Drugs, packages & classes</li>
               <li className={styles.itemPositive}>Active, prescribable products</li>
               <li className={styles.itemPositive}>CSV & Parquet downloads</li>
               <li className={styles.itemPositive}>Full public documentation</li>
               <li className={styles.itemNeutral}>Updated once per year</li>
-              <li className={styles.itemNeutral}>No ingredients, excipients or synonyms</li>
+              <li className={styles.itemNeutral}>Limited columns; no advanced marts</li>
             </ul>
             <Link className={styles.cardLink} to="#request">
               Request free access →
@@ -159,18 +159,18 @@ function OpenVsPaidSection() {
           <div className={clsx(styles.comparisonCard, styles.comparisonCardFeatured)}>
             <div className={styles.comparisonCardHeader}>
               <span className={styles.comparisonCardTitle}>
-                Silver, Gold & Platinum
+                Enterprise
               </span>
               <span className={styles.comparisonCardTagMuted}>
-                Paid subscription
+                Annual subscription
               </span>
             </div>
             <ul className={styles.comparisonList}>
               <li className={styles.itemPositive}>Everything in CodeRx Open</li>
               <li className={styles.itemPositive}>Weekly updates & dated snapshots</li>
-              <li className={styles.itemPositive}>Ingredients, excipients & synonyms</li>
+              <li className={styles.itemPositive}>All tables and all columns</li>
               <li className={styles.itemPositive}>Pricing, packaging & label images</li>
-              <li className={styles.itemPositive}>Indications, plans & e-prescribing</li>
+              <li className={styles.itemPositive}>Indications, Part D plans & J-codes</li>
               <li className={styles.itemPositive}>Direct S3 access & support</li>
             </ul>
             <Link className={styles.cardLink} to="/pricing">
@@ -475,7 +475,7 @@ function FaqSection() {
     {
       question: 'How often is CodeRx Open updated?',
       answer:
-        'Once per year. If you need data that keeps pace with FDA, RxNorm, and pricing changes, every paid plan refreshes weekly.',
+        'Once per year. If you need data that keeps pace with FDA, RxNorm, and pricing changes, Enterprise refreshes weekly.',
     },
     {
       question: 'What format is the data in?',

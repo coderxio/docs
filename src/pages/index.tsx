@@ -528,14 +528,14 @@ function OpenSection() {
             <span className={styles.openPanelPrice}>Free</span>
           </div>
           <ul className={styles.openPanelList}>
-            <li>Drugs, NDCs & classes</li>
+            <li>Drugs, packages & classes</li>
             <li>Active, prescribable products</li>
             <li>CSV & Parquet downloads</li>
             <li>Full public documentation</li>
           </ul>
           <p className={styles.openPanelNote}>
             Updated once per year. Weekly updates and the full set of data marts
-            come with a subscription.
+            come with Enterprise.
           </p>
         </div>
       </div>
@@ -685,9 +685,9 @@ function CTASection() {
           Ready to simplify<br />your drug data?
         </Heading>
         <p className={styles.ctaDescription}>
-          Built by pharmacists, designed for analytics. Get comprehensive 
-          drug data marts that integrate with your pharmacy applications across
-          Silver, Gold, and Platinum plans.
+          Built by pharmacists, designed for analytics. Get comprehensive
+          drug data marts that integrate with your pharmacy applications —
+          start free with Open, or go all-in with Enterprise.
         </p>
         <div className={styles.ctaActions}>
           <button

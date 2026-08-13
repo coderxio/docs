@@ -26,24 +26,23 @@ Tell us a bit about your use case and we'll email you the download link.
 
 Data is delivered as CSV and Parquet files, using the same schema and column
 names documented throughout these docs. Anything you learn against CodeRx Open
-carries over directly to a paid plan.
+carries over directly to Enterprise.
 
-## What's different from a subscription
+## What's different from Enterprise
 
-CodeRx Open is a subset of the Silver plan, scoped so you can evaluate and
+CodeRx Open is a limited yearly snapshot, scoped so you can evaluate and
 prototype without a subscription:
 
-- **Updated once per year.** Every paid plan refreshes weekly and includes
-  dated snapshots so you can track changes over time.
+- **Updated once per year.** Enterprise refreshes weekly and includes dated
+  snapshots so you can track changes over time.
 - **Active, prescribable products only.** Obsolete, unapproved, and
   non-prescribable products are filtered out.
-- **Three data marts.** Ingredients, excipients, and synonyms are included in
-  Silver but not in CodeRx Open.
-- **No Gold or Platinum data.** Pricing, packaging, label images, indications,
-  plans, and e-prescribing mappings are not included.
+- **Three data marts, limited columns.** Ingredients, excipients, synonyms,
+  pricing, packaging details, label images, indications, Part D plans, and
+  e-prescribing mappings are Enterprise-only.
 
-See [Pricing](/pricing) to compare the Silver, Gold, and Platinum plans, or
-[Getting Started](/getting-started) for how subscription access works.
+See [Pricing](/pricing) to compare Open and Enterprise, or
+[Getting Started](/getting-started) for how Enterprise access works.
 
 ## Working with the data
 

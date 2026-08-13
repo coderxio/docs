@@ -17,32 +17,43 @@ interface Mart {
   title: string;
   description: string;
   items: string[];
-  /** Only the core marts link out; premium documentation is unlisted */
+  /** Public concept docs only; Enterprise-only mart docs are unlisted */
   href?: string;
 }
 
-const coreMarts: Mart[] = [
+const enterpriseMarts: Mart[] = [
+  {
+    title: 'Drugs',
+    description:
+      'The full drug history — currently marketed and obsolete, approved and unapproved, prescribable and not — with every documented column.',
+    items: [
+      'RXCUIs & names across term types',
+      'Dose forms and strengths',
+      'Brand-to-generic relationships',
+    ],
+    href: '/concepts/drugs',
+  },
   {
     title: 'Packages',
     description:
-      'Every NDC mapped to its drug product, so you never hand-join an NDC directory again.',
+      'Every NDC mapped to its drug product: NDC11, NDC10, and NDC9 formats, marketing dates, labeler, application number, DEA schedule, and more.',
     items: [
-      'NDC11, NDC10 and NDC9 formats',
-      'Marketing dates & marketing category',
-      'Labeler, application number, DEA schedule',
+      'NDC-to-drug mappings',
+      'Marketing dates and status',
+      'Labeler, application, and schedule',
     ],
     href: '/concepts/packages',
   },
   {
-    title: 'Drugs',
+    title: 'Classes',
     description:
-      'Brand and clinical products in one table, already linked to each other.',
+      'Every classification scheme and the full class-to-drug mapping, so you can group products however your analysis needs.',
     items: [
-      'RXCUIs & prescribable names',
-      'Dose forms and ingredient composition',
-      'Brand-to-generic relationships',
+      'Class-to-drug mappings',
+      'Multiple classification schemes',
+      'Therapeutic grouping at every hierarchy level',
     ],
-    href: '/concepts/drugs',
+    href: '/concepts/classes',
   },
   {
     title: 'Ingredients',
@@ -67,17 +78,6 @@ const coreMarts: Mart[] = [
     href: '/concepts/excipients',
   },
   {
-    title: 'Classes',
-    description:
-      'Multiple classification systems for rolling products up therapeutically.',
-    items: [
-      'Class-to-drug mappings',
-      'Several classification schemes',
-      'Therapeutic and mechanism grouping',
-    ],
-    href: '/concepts/classes',
-  },
-  {
     title: 'Synonyms',
     description:
       'Alternative names aggregated from every source, for search that finds things.',
@@ -88,9 +88,6 @@ const coreMarts: Mart[] = [
     ],
     href: '/concepts/synonyms',
   },
-];
-
-const goldMarts: Mart[] = [
   {
     title: 'Pricing',
     description:
@@ -131,9 +128,6 @@ const goldMarts: Mart[] = [
       'RxNorm drug mappings per program',
     ],
   },
-];
-
-const platinumMarts: Mart[] = [
   {
     title: 'Indications',
     description:
@@ -187,13 +181,13 @@ where d.clinical_drug_id = 617312
   and d.active
   and d.prescribable;`;
 
-function ProductHero() {
+function EnterpriseHero() {
   return (
     <header className={styles.hero}>
       <div className={styles.heroInner}>
         <span className={styles.eyebrow}>
           <span className={styles.eyebrowDot} />
-          The CodeRx Drug Database
+          CodeRx Enterprise
         </span>
         <Heading as="h1" className={styles.heroTitle}>
           Drug data that's{' '}
@@ -213,14 +207,10 @@ function ProductHero() {
           >
             Book a Demo
           </button>
-          <Link className={styles.secondaryButton} to="#core">
+          <Link className={styles.secondaryButton} to="#marts">
             Explore the data marts
           </Link>
         </div>
-        <p className={styles.heroNote}>
-          Want to try it first?{' '}
-          <Link to="/open">Start free with CodeRx Open</Link>.
-        </p>
       </div>
     </header>
   );
@@ -245,26 +235,30 @@ function MartCard({ mart }: { mart: Mart }) {
   );
 }
 
-function CoreSection() {
+function MartsSection() {
   return (
-    <section id="core" className={clsx(styles.section, styles.sectionLight)}>
+    <section id="marts" className={clsx(styles.section, styles.sectionLight)}>
       <div className={styles.sectionInner}>
         <div className={styles.sectionHeader}>
-          <span className={styles.sectionTag}>Included in every plan</span>
+          <span className={styles.sectionTag}>What's included</span>
           <Heading as="h2" className={styles.sectionTitle}>
-            The Core Data Marts
+            The full database
           </Heading>
           <p className={styles.sectionSubtitle}>
-            Six foundational marts that answer the drug data questions most
-            teams start with. Every subscription includes all of them, refreshed
-            weekly and fully documented.
+            Every table, every column, refreshed weekly. Drugs, packages,
+            classes, ingredients, pricing, packaging, J-codes, Part D plans,
+            indications, and more — built the same way, documented the same way.
           </p>
         </div>
         <div className={styles.martGrid}>
-          {coreMarts.map((mart) => (
+          {enterpriseMarts.map((mart) => (
             <MartCard key={mart.title} mart={mart} />
           ))}
         </div>
+        <p className={styles.premiumFootnote}>
+          Documentation for additional marts is shared with customers.{' '}
+          <Link to="/contact-us">Ask us for a walkthrough</Link>.
+        </p>
       </div>
     </section>
   );
@@ -298,67 +292,6 @@ function QuerySection() {
             <CodeBlock language="sql">{sampleQuery}</CodeBlock>
           </div>
         </div>
-      </div>
-    </section>
-  );
-}
-
-function PremiumSection() {
-  return (
-    <section
-      id="premium"
-      className={clsx(styles.section, styles.sectionLight)}
-    >
-      <div className={styles.sectionInner}>
-        <div className={styles.sectionHeader}>
-          <span className={styles.sectionTag}>Gold & Platinum</span>
-          <Heading as="h2" className={styles.sectionTitle}>
-            Premium Data Marts
-          </Heading>
-          <p className={styles.sectionSubtitle}>
-            When the core marts aren't enough, higher plans add pricing,
-            packaging, safety programs, and clinical mappings — built the same
-            way, documented the same way.
-          </p>
-        </div>
-
-        <div className={styles.tierBlock}>
-          <div className={styles.tierHeader}>
-            <span className={clsx(styles.tierBadge, styles.tierBadgeGold)}>
-              Gold
-            </span>
-            <span className={styles.tierHeaderText}>
-              Everything in Silver, plus commercial and operational data
-            </span>
-          </div>
-          <div className={styles.martGrid}>
-            {goldMarts.map((mart) => (
-              <MartCard key={mart.title} mart={mart} />
-            ))}
-          </div>
-        </div>
-
-        <div className={styles.tierBlock}>
-          <div className={styles.tierHeader}>
-            <span className={clsx(styles.tierBadge, styles.tierBadgePlatinum)}>
-              Platinum
-            </span>
-            <span className={styles.tierHeaderText}>
-              Everything in Gold, plus clinical and interoperability data
-            </span>
-          </div>
-          <div className={styles.martGrid}>
-            {platinumMarts.map((mart) => (
-              <MartCard key={mart.title} mart={mart} />
-            ))}
-          </div>
-        </div>
-
-        <p className={styles.premiumFootnote}>
-          Documentation for the premium marts is shared with customers.{' '}
-          <Link to="/pricing">Compare what each plan includes</Link> or{' '}
-          <Link to="/contact-us">ask us for a walkthrough</Link>.
-        </p>
       </div>
     </section>
   );
@@ -409,7 +342,7 @@ function DeliverySection() {
   );
 }
 
-function ProductCta() {
+function EnterpriseCta() {
   return (
     <section className={styles.cta}>
       <div className={styles.ctaInner}>
@@ -432,17 +365,12 @@ function ProductCta() {
             Compare plans
           </Link>
         </div>
-        <p className={styles.ctaFootnote}>
-          Not ready for a subscription?{' '}
-          <Link to="/open">CodeRx Open is free</Link> and includes drugs, NDCs,
-          and classes.
-        </p>
       </div>
     </section>
   );
 }
 
-export default function ProductPage() {
+export default function EnterprisePage() {
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
@@ -494,16 +422,15 @@ export default function ProductPage() {
 
   return (
     <Layout
-      title="Product — The CodeRx Drug Database"
-      description="The CodeRx Drug Database unifies RxNorm, FDA, DailyMed, NADAC, CMS and NCPDP into documented, query-ready data marts. Explore the core marts plus premium pricing, packaging, REMS, indications, and e-prescribing data."
+      title="Enterprise — The CodeRx Drug Database"
+      description="The CodeRx Drug Database unifies RxNorm, FDA, DailyMed, NADAC, CMS and NCPDP into documented, query-ready data marts. Weekly updates delivered to your S3 bucket as CSV and Parquet."
     >
       <main className={styles.main}>
-        <ProductHero />
-        <CoreSection />
+        <EnterpriseHero />
+        <MartsSection />
         <QuerySection />
-        <PremiumSection />
         <DeliverySection />
-        <ProductCta />
+        <EnterpriseCta />
       </main>
     </Layout>
   );

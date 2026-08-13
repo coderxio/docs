@@ -16,8 +16,8 @@ The CodeRx Drug Database is a comprehensive pharmaceutical data platform that pr
 
 Explore our documentation to learn how to work with pharmaceutical data:
 
-- **[CodeRx Open](/coderx-open)** - Start free with active drugs, NDCs, and classes
-- **[Getting Started](/getting-started)** - Subscribe and access the full database
+- **[CodeRx Open](/coderx-open)** - Start free with active drugs, packages, and classes
+- **[Getting Started](/getting-started)** - Subscribe to Enterprise and access the full database
 - **[Concepts](/concepts)** - Understand the core data models and concepts
 - **[Tutorials](/tutorials)** - Step-by-step guides for common tasks
   - Working with Packages

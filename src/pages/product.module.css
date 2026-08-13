@@ -1,6 +1,5 @@
 /**
- * Product — detailed CodeRx Drug Database page
- * Shares the visual language of the CodeRx Open page (open.module.css)
+ * Enterprise — detailed CodeRx Drug Database page
  */
 
 .main {
@@ -318,50 +317,8 @@
 }
 
 /* ============================================
-   PREMIUM TIERS
+   ENTERPRISE
    ============================================ */
-
-.tierBlock {
-  margin-bottom: 3.5rem;
-}
-
-.tierBlock:last-of-type {
-  margin-bottom: 0;
-}
-
-.tierHeader {
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
-  flex-wrap: wrap;
-  padding-bottom: 1rem;
-  margin-bottom: 1.75rem;
-  border-bottom: 1px solid #e5e5e5;
-}
-
-.tierBadge {
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  padding: 0.35rem 0.7rem;
-  border-radius: 6px;
-}
-
-.tierBadgeGold {
-  background: #fdf3d7;
-  color: #8a6300;
-}
-
-.tierBadgePlatinum {
-  background: #eceef2;
-  color: #4b5563;
-}
-
-.tierHeaderText {
-  font-size: 0.95rem;
-  color: #525252;
-}
 
 .premiumFootnote {
   margin: 3rem 0 0;
@@ -595,28 +552,13 @@
 
 [data-theme='dark'] .martDesc,
 [data-theme='dark'] .deliveryDesc,
-[data-theme='dark'] .queryDesc,
-[data-theme='dark'] .tierHeaderText {
+[data-theme='dark'] .queryDesc {
   color: #a3a3a3;
 }
 
 [data-theme='dark'] .martList li,
 [data-theme='dark'] .queryPoints li {
   color: #a3a3a3;
-}
-
-[data-theme='dark'] .tierHeader {
-  border-bottom-color: #2a2a2a;
-}
-
-[data-theme='dark'] .tierBadgeGold {
-  background: rgba(234, 179, 8, 0.15);
-  color: #fbbf24;
-}
-
-[data-theme='dark'] .tierBadgePlatinum {
-  background: rgba(148, 163, 184, 0.15);
-  color: #cbd5e1;
 }
 
 [data-theme='dark'] .cta {

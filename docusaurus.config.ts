@@ -153,8 +153,13 @@ const config: Config = {
       },
       items: [
         {
+          to: '/open',
+          label: 'Open',
+          position: 'left',
+        },
+        {
           to: '/product',
-          label: 'Product',
+          label: 'Enterprise',
           position: 'left',
         },
         {
@@ -188,7 +193,7 @@ const config: Config = {
           title: 'Product',
           items: [
             {
-              label: 'Overview',
+              label: 'Enterprise',
               to: '/product',
             },
             {
