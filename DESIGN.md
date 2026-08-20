@@ -137,7 +137,7 @@ Status colors (`--coderx-positive`, `--coderx-negative`) sit deliberately outsid
 | Color | Role |
 |---|---|
 | **Red `#d52d34`** | Brand signal: logo accents, italic hero emphasis (“Simplified”), featured borders, final CTAs on dark bands, Cal.com brand color, important highlights |
-| **Yellow `#fbcb41`** | Warm secondary: labels, icon accents, Open’s staleness note, diagram fills, changelog / construction motifs, optimistic contrast |
+| **Yellow `#fbcb41`** | Warm secondary: “Introducing” labels, icon accents, diagram fills, changelog / construction motifs, optimistic contrast |
 | **Ink `#0a0a0a`** | Primary text, dark section backgrounds, hero primary buttons on light canvases |
 | **Canvas `#f5f5f5`** | Default light page background (cool neutral — not cream) |
 | **Paper `#ffffff`** | Cards, tables, docs surfaces |
@@ -236,7 +236,7 @@ The wordmark’s **x** often carries a prescription-style flourish — preserve 
 
 The site uses simple geometric glyphs as brand texture (not emoji):
 
-- `◈` `◇` `○` — hero badges (`weekly updates`, `analytics-ready`, `open standards`)
+- `◈` `◇` `○` — hero badges (`weekly updates`, `pharmacy-ready`, `open standards`)
 - `◆` — product highlight bullets on dark bands
 
 Prefer these (or similar minimal geometry) over emoji in product UI and formal marketing. Emoji are acceptable sparingly on LinkedIn / Substack when the founder voice is clearly social.
@@ -261,7 +261,7 @@ CodeRx interfaces should feel like:
 - Make the transformation obvious: raw XML / government files → unified query-ready marts
 - Restrained polish: 12–16px card radius, soft shadows, 1px borders, cool neutrals
 - Scanability first — value should be obvious in seconds
-- On marketing heroes: brand + one headline + one supporting sentence. No buttons. The next section is the proof visual (SQL + result rows).
+- On marketing heroes: brand + one headline + one supporting sentence + CTA group + one dominant product visual
 
 ### Motion
 
