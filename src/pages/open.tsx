@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import Layout from '@theme/Layout';
@@ -76,6 +76,16 @@ function RequestForm() {
     'idle'
   );
   const [submitMessage, setSubmitMessage] = useState('');
+
+  useEffect(() => {
+    if (submitStatus !== 'success') {
+      return;
+    }
+    document.getElementById('request')?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+  }, [submitStatus]);
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
@@ -177,10 +187,10 @@ function RequestForm() {
               Your CodeRx Open dataset is on its way.
             </Heading>
             <p className={styles.thankYouBody}>
-              Check your inbox for the download link, documentation, and a few
-              notes on how to use the data. If you don’t see it in a few
-              minutes, check your spam folder or contact{' '}
-              <a href="mailto:joey@coderx.io">joey@coderx.io</a>.
+              We’ll email you the download link, documentation, and a few notes
+              on how to use the data within 24 hours—likely sooner. If you don’t
+              see it, check your spam folder or contact{' '}
+              <a href="mailto:hello@coderx.io">hello@coderx.io</a>.
             </p>
           </div>
         ) : (

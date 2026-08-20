@@ -150,7 +150,7 @@ const config: Config = {
     // Replace with your project's social card
     image: 'img/coderx-social-card.png',
     colorMode: {
-      defaultMode: 'dark',
+      defaultMode: 'light',
       respectPrefersColorScheme: false,
     },
     navbar: {
