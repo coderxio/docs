@@ -21,7 +21,7 @@ We offer two plans:
 
 - **[CodeRx Open](/coderx-open)**: A free yearly snapshot of drugs, packages, and classes — currently prescribable products only, with a limited column set.
 
-- **Enterprise**: The full CodeRx Drug Database. Every table, every column, weekly updates, and AWS S3 delivery — including pricing, packaging, J-codes, Part D plans, indications, and more.
+- **[Enterprise](/pricing)**: The full CodeRx Drug Database. Every table, every column, weekly updates, and AWS S3 delivery — including pricing, packaging, J-codes, Part D plans, indications, and more.
 
 :::tip Ready to Get Started?
 **Subscribe to CodeRx Enterprise today.** Get instant access to our comprehensive drug database with weekly updates, complete RxNorm mappings, and rich drug knowledge graphs. Annual billing available.

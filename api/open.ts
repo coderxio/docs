@@ -1,20 +1,42 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 interface OpenRequestFormData {
+  firstName: string;
+  lastName: string;
   name: string;
   email: string;
   company: string;
-  companySize: string;
   useCase: string;
+  problem: string;
 }
 
-const COMPANY_SIZES = new Set([
-  '1-10',
-  '11-50',
-  '51-200',
-  '201-1000',
-  '1000+',
+const USE_CASES = new Set([
+  'Population health and utilization',
+  'Payer coverage and mix',
+  'Claims analytics',
+  'Medication feature in a product',
+  'Replace a proprietary drug database',
+  'Formulary and benefit design',
+  'Healthcare AI or data product',
+  'Academic or clinical research',
+  'Other',
 ]);
+
+function asString(value: unknown): string {
+  return typeof value === 'string' ? value.trim() : '';
+}
+
+function asUseCases(value: unknown): string[] {
+  const raw = Array.isArray(value) ? value : [value];
+  const unique: string[] = [];
+  for (const item of raw) {
+    const useCase = asString(item);
+    if (useCase && !unique.includes(useCase)) {
+      unique.push(useCase);
+    }
+  }
+  return unique;
+}
 
 function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -34,12 +56,12 @@ function formatEmailHtml(data: OpenRequestFormData): string {
     <p>Someone requested access to the free CodeRx Open drug database.</p>
     <hr>
     <p><strong>Name:</strong> ${escapeHtml(data.name)}</p>
-    <p><strong>Email:</strong> ${escapeHtml(data.email)}</p>
+    <p><strong>Work email:</strong> ${escapeHtml(data.email)}</p>
     <p><strong>Company:</strong> ${escapeHtml(data.company)}</p>
-    <p><strong>Company size:</strong> ${escapeHtml(data.companySize)}</p>
+    <p><strong>Intended use case:</strong> ${escapeHtml(data.useCase)}</p>
     <hr>
-    <h3>Use case</h3>
-    <p>${escapeHtml(data.useCase).replace(/\n/g, '<br>')}</p>
+    <h3>What drug data problem are you trying to solve?</h3>
+    <p>${escapeHtml(data.problem).replace(/\n/g, '<br>')}</p>
   `;
 }
 
@@ -50,12 +72,12 @@ New CodeRx Open Request
 Someone requested access to the free CodeRx Open drug database.
 
 Name: ${data.name}
-Email: ${data.email}
+Work email: ${data.email}
 Company: ${data.company}
-Company size: ${data.companySize}
+Intended use case: ${data.useCase}
 
-Use case:
-${data.useCase}
+What drug data problem are you trying to solve?
+${data.problem}
   `.trim();
 }
 
@@ -179,13 +201,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const { name, email, company, companySize, useCase } =
-      req.body as OpenRequestFormData;
+    const body = (req.body ?? {}) as Record<string, unknown>;
+    const firstName = asString(body.firstName);
+    const lastName = asString(body.lastName);
+    const email = asString(body.email);
+    const company = asString(body.company);
+    const useCases = asUseCases(body.useCase);
+    const problem = asString(body.problem);
 
-    if (!name || !email || !company || !companySize || !useCase) {
+    if (!firstName || !lastName || !email || !company || !useCases.length || !problem) {
       return res.status(400).json({
         error:
-          'Missing required fields: name, email, company, companySize, and useCase are required',
+          'Missing required fields: firstName, lastName, email, company, useCase, and problem are required',
       });
     }
 
@@ -193,20 +220,22 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(400).json({ error: 'Invalid email address' });
     }
 
-    if (!COMPANY_SIZES.has(companySize)) {
-      return res.status(400).json({ error: 'Invalid company size' });
+    if (!useCases.every((useCase) => USE_CASES.has(useCase))) {
+      return res.status(400).json({ error: 'Invalid use case' });
     }
 
-    if (useCase.length > 10000) {
-      return res.status(400).json({ error: 'Use case is too long' });
+    if (problem.length > 10000) {
+      return res.status(400).json({ error: 'Problem description is too long' });
     }
 
     const payload: OpenRequestFormData = {
-      name: name.trim(),
-      email: email.trim(),
-      company: company.trim(),
-      companySize,
-      useCase: useCase.trim(),
+      firstName,
+      lastName,
+      name: `${firstName} ${lastName}`,
+      email,
+      company,
+      useCase: useCases.join(', '),
+      problem,
     };
 
     // Webhook first so leads land in the CRM even if email delivery is down

@@ -78,10 +78,17 @@ const config: Config = {
             from: ['/free', '/open-access'],
             to: '/open',
           },
+          {
+            // The standalone product page was folded into the homepage
+            from: '/product',
+            to: '/',
+          },
         ],
       },
     ],
   ],
+
+  clientModules: [require.resolve('./src/clientModules/cal.ts')],
 
   themes: ['@docusaurus/theme-mermaid'],
 
@@ -143,7 +150,8 @@ const config: Config = {
     // Replace with your project's social card
     image: 'img/coderx-social-card.png',
     colorMode: {
-      respectPrefersColorScheme: true,
+      defaultMode: 'dark',
+      respectPrefersColorScheme: false,
     },
     navbar: {
       logo: {
@@ -152,16 +160,6 @@ const config: Config = {
         srcDark: 'img/coderx_text_logo_white.svg',
       },
       items: [
-        {
-          to: '/open',
-          label: 'Open',
-          position: 'left',
-        },
-        {
-          to: '/product',
-          label: 'Enterprise',
-          position: 'left',
-        },
         {
           to: '/pricing',
           label: 'Pricing',
@@ -180,9 +178,12 @@ const config: Config = {
         },
         {to: '/blog', label: 'Blog', position: 'right'},
         {
-          href: 'https://github.com/coderxio',
-          label: 'GitHub',
+          // Primary conversion action, persistent on every page. Raw HTML is
+          // required so the Cal.com embed can find its data attributes.
+          type: 'html',
           position: 'right',
+          value:
+            '<button type="button" class="navbarDemoButton" data-cal-link="coderx/30-min" data-cal-config=\'{"layout":"month_view"}\'>Book a Demo</button>',
         },
       ],
     },
@@ -193,8 +194,8 @@ const config: Config = {
           title: 'Product',
           items: [
             {
-              label: 'Enterprise',
-              to: '/product',
+              label: 'The CodeRx Drug Database',
+              to: '/',
             },
             {
               label: 'Pricing',
@@ -233,6 +234,10 @@ const config: Config = {
             {
               label: 'Substack',
               href: 'https://coderxio.substack.com/',
+            },
+            {
+              label: 'LinkedIn',
+              href: 'https://linkedin.com/company/coderx',
             },
           ],
         },

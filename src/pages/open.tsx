@@ -7,30 +7,35 @@ import Heading from '@theme/Heading';
 import styles from './open.module.css';
 
 interface FormData {
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
   company: string;
-  companySize: string;
-  useCase: string;
+  useCase: string[];
+  problem: string;
 }
 
 type FormErrors = Partial<Record<keyof FormData, string>>;
 
-const COMPANY_SIZE_OPTIONS = [
-  { value: '', label: 'Select company size' },
-  { value: '1-10', label: '1–10 employees' },
-  { value: '11-50', label: '11–50 employees' },
-  { value: '51-200', label: '51–200 employees' },
-  { value: '201-1000', label: '201–1,000 employees' },
-  { value: '1000+', label: '1,000+ employees' },
+const USE_CASE_OPTIONS = [
+  { value: 'Population health and utilization', label: 'Population health and utilization' },
+  { value: 'Payer coverage and mix', label: 'Payer coverage and mix' },
+  { value: 'Claims analytics', label: 'Claims analytics' },
+  { value: 'Medication feature in a product', label: 'Medication feature in a product' },
+  { value: 'Replace a proprietary drug database', label: 'Replace a proprietary drug database' },
+  { value: 'Formulary and benefit design', label: 'Formulary and benefit design' },
+  { value: 'Healthcare AI or data product', label: 'Healthcare AI or data product' },
+  { value: 'Academic or clinical research', label: 'Academic or clinical research' },
+  { value: 'Other', label: 'Other' },
 ];
 
 const emptyForm: FormData = {
-  name: '',
+  firstName: '',
+  lastName: '',
   email: '',
   company: '',
-  companySize: '',
-  useCase: '',
+  useCase: [],
+  problem: '',
 };
 
 function OpenHero() {
@@ -39,7 +44,7 @@ function OpenHero() {
       <div className={styles.heroInner}>
         <span className={styles.eyebrow}>
           <span className={styles.eyebrowDot} />
-          Free · Updated annually
+          Free · Updated once a year
         </span>
         <Heading as="h1" className={styles.heroTitle}>
           CodeRx <span className={styles.heroTitleAccent}>Open</span>
@@ -51,19 +56,326 @@ function OpenHero() {
           contract.
         </p>
         <div className={styles.heroActions}>
-          <Link className={styles.primaryButton} to="#request">
-            Request free access
+          <Link className={styles.heroPrimary} to="#request">
+            Get CodeRx Open
           </Link>
-          <Link className={styles.secondaryButton} to="#included">
-            See what's included
+          <Link className={styles.heroSecondary} to="/pricing">
+            Compare plans
           </Link>
         </div>
-        <p className={styles.heroNote}>
-          Tell us a bit about your use case and we'll send you the download
-          link.
-        </p>
       </div>
     </header>
+  );
+}
+
+function RequestForm() {
+  const [formData, setFormData] = useState<FormData>(emptyForm);
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>(
+    'idle'
+  );
+  const [submitMessage, setSubmitMessage] = useState('');
+
+  const validateForm = (): boolean => {
+    const newErrors: FormErrors = {};
+
+    if (!formData.firstName.trim()) {
+      newErrors.firstName = 'First name is required';
+    }
+    if (!formData.lastName.trim()) {
+      newErrors.lastName = 'Last name is required';
+    }
+    if (!formData.email.trim()) {
+      newErrors.email = 'Work email is required';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+    if (!formData.company.trim()) {
+      newErrors.company = 'Company is required';
+    }
+    if (formData.useCase.length === 0) {
+      newErrors.useCase = 'Select at least one intended use case';
+    }
+    if (!formData.problem.trim()) {
+      newErrors.problem = 'Please tell us what you are trying to solve';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    if (errors[name as keyof FormErrors]) {
+      setErrors((prev) => ({ ...prev, [name]: undefined }));
+    }
+  };
+
+  const handleUseCaseToggle = (value: string) => {
+    setFormData((prev) => {
+      const selected = prev.useCase.includes(value)
+        ? prev.useCase.filter((item) => item !== value)
+        : [...prev.useCase, value];
+      return { ...prev, useCase: selected };
+    });
+    if (errors.useCase) {
+      setErrors((prev) => ({ ...prev, useCase: undefined }));
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+    setSubmitMessage('');
+
+    try {
+      const response = await fetch('/api/open', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        setFormData(emptyForm);
+      } else {
+        setSubmitStatus('error');
+        setSubmitMessage(
+          data.error || 'Something went wrong. Please try again later.'
+        );
+      }
+    } catch {
+      setSubmitStatus('error');
+      setSubmitMessage(
+        'Failed to submit. Please check your connection and try again.'
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <section id="request" className={styles.request}>
+      <div className={styles.requestInner}>
+        {submitStatus === 'success' ? (
+          <div className={styles.thankYouCard}>
+            <Heading as="h2" className={styles.thankYouTitle}>
+              Your CodeRx Open dataset is on its way.
+            </Heading>
+            <p className={styles.thankYouBody}>
+              Check your inbox for the download link, documentation, and a few
+              notes on how to use the data. If you don’t see it in a few
+              minutes, check your spam folder or contact{' '}
+              <a href="mailto:joey@coderx.io">joey@coderx.io</a>.
+            </p>
+          </div>
+        ) : (
+          <>
+            <div className={styles.requestHeader}>
+              <Heading as="h2" className={styles.requestTitle}>
+                Get CodeRx Open
+              </Heading>
+              <p className={styles.requestSubtitle}>
+                Tell us a little about who you are and what you’re building.
+                We’ll email you the CodeRx Open dataset.
+              </p>
+            </div>
+
+            <div className={styles.formCard}>
+              <form onSubmit={handleSubmit}>
+                <div className={styles.formRow}>
+                  <div className={styles.formGroup}>
+                    <label htmlFor="firstName" className={styles.label}>
+                      First name <span className={styles.required}>*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="firstName"
+                      name="firstName"
+                      value={formData.firstName}
+                      onChange={handleChange}
+                      className={clsx(
+                        styles.input,
+                        errors.firstName && styles.fieldError
+                      )}
+                      placeholder="Jane"
+                      disabled={isSubmitting}
+                      autoComplete="given-name"
+                    />
+                    {errors.firstName && (
+                      <span className={styles.error}>{errors.firstName}</span>
+                    )}
+                  </div>
+
+                  <div className={styles.formGroup}>
+                    <label htmlFor="lastName" className={styles.label}>
+                      Last name <span className={styles.required}>*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="lastName"
+                      name="lastName"
+                      value={formData.lastName}
+                      onChange={handleChange}
+                      className={clsx(
+                        styles.input,
+                        errors.lastName && styles.fieldError
+                      )}
+                      placeholder="Doe"
+                      disabled={isSubmitting}
+                      autoComplete="family-name"
+                    />
+                    {errors.lastName && (
+                      <span className={styles.error}>{errors.lastName}</span>
+                    )}
+                  </div>
+                </div>
+
+                <div className={styles.formRow}>
+                  <div className={styles.formGroup}>
+                    <label htmlFor="email" className={styles.label}>
+                      Work email <span className={styles.required}>*</span>
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      className={clsx(
+                        styles.input,
+                        errors.email && styles.fieldError
+                      )}
+                      placeholder="you@company.com"
+                      disabled={isSubmitting}
+                      autoComplete="email"
+                    />
+                    {errors.email && (
+                      <span className={styles.error}>{errors.email}</span>
+                    )}
+                  </div>
+
+                  <div className={styles.formGroup}>
+                    <label htmlFor="company" className={styles.label}>
+                      Company <span className={styles.required}>*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="company"
+                      name="company"
+                      value={formData.company}
+                      onChange={handleChange}
+                      className={clsx(
+                        styles.input,
+                        errors.company && styles.fieldError
+                      )}
+                      placeholder="Your company or organization"
+                      disabled={isSubmitting}
+                      autoComplete="organization"
+                    />
+                    {errors.company && (
+                      <span className={styles.error}>{errors.company}</span>
+                    )}
+                  </div>
+                </div>
+
+                <fieldset className={styles.formGroup}>
+                  <legend className={styles.label}>
+                    Intended use case <span className={styles.required}>*</span>
+                  </legend>
+                  <div
+                    className={clsx(
+                      styles.checkboxGrid,
+                      errors.useCase && styles.checkboxGridError
+                    )}
+                  >
+                    {USE_CASE_OPTIONS.map((option) => {
+                      const checked = formData.useCase.includes(option.value);
+                      return (
+                        <label
+                          key={option.value}
+                          className={clsx(
+                            styles.checkboxOption,
+                            checked && styles.checkboxOptionChecked
+                          )}
+                        >
+                          <input
+                            type="checkbox"
+                            name="useCase"
+                            value={option.value}
+                            checked={checked}
+                            onChange={() => handleUseCaseToggle(option.value)}
+                            disabled={isSubmitting}
+                          />
+                          {option.label}
+                        </label>
+                      );
+                    })}
+                  </div>
+                  {errors.useCase && (
+                    <span className={styles.error}>{errors.useCase}</span>
+                  )}
+                </fieldset>
+
+                <div className={styles.formGroup}>
+                  <label htmlFor="problem" className={styles.label}>
+                    What drug data problem are you trying to solve?{' '}
+                    <span className={styles.required}>*</span>
+                  </label>
+                  <textarea
+                    id="problem"
+                    name="problem"
+                    value={formData.problem}
+                    onChange={handleChange}
+                    rows={3}
+                    className={clsx(
+                      styles.textarea,
+                      errors.problem && styles.fieldError
+                    )}
+                    placeholder="Helps us point you at the right marts — and tells us what to build next."
+                    disabled={isSubmitting}
+                  />
+                  {errors.problem && (
+                    <span className={styles.error}>{errors.problem}</span>
+                  )}
+                </div>
+
+                {submitStatus === 'error' && (
+                  <div className={styles.errorMessage}>{submitMessage}</div>
+                )}
+
+                <button
+                  type="submit"
+                  className={styles.submitButton}
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? 'Submitting...' : 'Get CodeRx Open'}
+                </button>
+              </form>
+            </div>
+
+            <p className={styles.privacyNote}>
+              We'll only use your details to send your download link and
+              occasional CodeRx updates. No spam, unsubscribe anytime.
+            </p>
+          </>
+        )}
+      </div>
+    </section>
   );
 }
 
@@ -73,19 +385,31 @@ function IncludedSection() {
       title: 'Drugs',
       description:
         'Unified drug products filtered to what is actively marketed and prescribable.',
-      items: ['Drug names & RXCUIs', 'Dose forms & strengths', 'Brand-to-generic links'],
+      items: [
+        'Drug names & RXCUIs',
+        'Dose forms & strengths',
+        'Brand-to-generic links',
+      ],
     },
     {
       title: 'Packages',
       description:
         'National Drug Codes mapped to their drug products, no manual joining required.',
-      items: ['NDC-to-drug mappings', 'Package descriptions', 'Labeler information'],
+      items: [
+        'NDC-to-drug mappings',
+        'Package descriptions',
+        'Labeler information',
+      ],
     },
     {
       title: 'Classes',
       description:
         'Drug classifications so you can aggregate products therapeutically.',
-      items: ['Class-to-drug mappings', 'Multiple hierarchy levels', 'Therapeutic grouping'],
+      items: [
+        'Class-to-drug mappings',
+        'Multiple hierarchy levels',
+        'Therapeutic grouping',
+      ],
     },
   ];
 
@@ -124,18 +448,17 @@ function IncludedSection() {
   );
 }
 
-function OpenVsPaidSection() {
+function OutgrowSection() {
   return (
     <section className={clsx(styles.section, styles.sectionLight)}>
       <div className={styles.sectionInner}>
         <div className={styles.sectionHeader}>
           <Heading as="h2" className={styles.sectionTitle}>
-            Open vs. Enterprise
+            What You'll Outgrow
           </Heading>
           <p className={styles.sectionSubtitle}>
-            CodeRx Open is a yearly snapshot of a subset of the data. When you
-            need current data or the full picture, Enterprise picks up where it
-            leaves off.
+            Open is deliberately limited. These are the walls you will hit, and
+            what happens on the other side of them.
           </p>
         </div>
         <div className={styles.comparisonGrid}>
@@ -146,32 +469,46 @@ function OpenVsPaidSection() {
             </div>
             <ul className={styles.comparisonList}>
               <li className={styles.itemPositive}>Drugs, packages & classes</li>
-              <li className={styles.itemPositive}>Active, prescribable products</li>
-              <li className={styles.itemPositive}>CSV & Parquet downloads</li>
-              <li className={styles.itemPositive}>Full public documentation</li>
-              <li className={styles.itemNeutral}>Updated once per year</li>
-              <li className={styles.itemNeutral}>Limited columns; no advanced marts</li>
+              <li className={styles.itemPositive}>CSV & Parquet download</li>
+              <li className={styles.itemNeutral}>
+                Active, prescribable drugs only
+              </li>
+              <li className={styles.itemNeutral}>
+                One refresh per year, then it drifts
+              </li>
+              <li className={styles.itemLimit}>
+                No pricing, ingredients or dose forms
+              </li>
+              <li className={styles.itemLimit}>Limited columns on every mart</li>
             </ul>
-            <Link className={styles.cardLink} to="#request">
-              Request free access →
-            </Link>
           </div>
-          <div className={clsx(styles.comparisonCard, styles.comparisonCardFeatured)}>
+          <div
+            className={clsx(
+              styles.comparisonCard,
+              styles.comparisonCardFeatured
+            )}
+          >
             <div className={styles.comparisonCardHeader}>
-              <span className={styles.comparisonCardTitle}>
-                Enterprise
-              </span>
+              <span className={styles.comparisonCardTitle}>Enterprise</span>
               <span className={styles.comparisonCardTagMuted}>
                 Annual subscription
               </span>
             </div>
             <ul className={styles.comparisonList}>
               <li className={styles.itemPositive}>Everything in CodeRx Open</li>
-              <li className={styles.itemPositive}>Weekly updates & dated snapshots</li>
+              <li className={styles.itemPositive}>
+                Weekly updates & dated snapshots
+              </li>
               <li className={styles.itemPositive}>All tables and all columns</li>
-              <li className={styles.itemPositive}>Pricing, packaging & label images</li>
-              <li className={styles.itemPositive}>Indications, Part D plans & J-codes</li>
-              <li className={styles.itemPositive}>Direct S3 access & support</li>
+              <li className={styles.itemPositive}>
+                Pricing, packaging & label images
+              </li>
+              <li className={styles.itemPositive}>
+                Indications, Part D plans & J-codes
+              </li>
+              <li className={styles.itemPositive}>
+                Direct S3 access & dedicated support
+              </li>
             </ul>
             <Link className={styles.cardLink} to="/pricing">
               Compare plans →
@@ -228,254 +565,23 @@ function AudienceSection() {
   );
 }
 
-function RequestForm() {
-  const [formData, setFormData] = useState<FormData>(emptyForm);
-  const [errors, setErrors] = useState<FormErrors>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>(
-    'idle'
-  );
-  const [submitMessage, setSubmitMessage] = useState('');
-
-  const validateForm = (): boolean => {
-    const newErrors: FormErrors = {};
-
-    if (!formData.name.trim()) {
-      newErrors.name = 'Name is required';
-    }
-
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
-    }
-
-    if (!formData.company.trim()) {
-      newErrors.company = 'Company is required';
-    }
-
-    if (!formData.companySize) {
-      newErrors.companySize = 'Company size is required';
-    }
-
-    if (!formData.useCase.trim()) {
-      newErrors.useCase = 'Use case is required';
-    } else if (formData.useCase.trim().length < 10) {
-      newErrors.useCase = 'Please tell us a bit more about your use case';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    if (errors[name as keyof FormErrors]) {
-      setErrors((prev) => ({ ...prev, [name]: undefined }));
-    }
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!validateForm()) {
-      return;
-    }
-
-    setIsSubmitting(true);
-    setSubmitStatus('idle');
-    setSubmitMessage('');
-
-    try {
-      const response = await fetch('/api/open', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setSubmitStatus('success');
-        setSubmitMessage(
-          "Thanks! We'll email you the CodeRx Open download link shortly."
-        );
-        setFormData(emptyForm);
-      } else {
-        setSubmitStatus('error');
-        setSubmitMessage(
-          data.error || 'Something went wrong. Please try again later.'
-        );
-      }
-    } catch {
-      setSubmitStatus('error');
-      setSubmitMessage(
-        'Failed to submit. Please check your connection and try again.'
-      );
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  return (
-    <section id="request" className={styles.request}>
-      <div className={styles.requestInner}>
-        <div className={styles.requestHeader}>
-          <Heading as="h2" className={styles.requestTitle}>
-            Request Free Access
-          </Heading>
-          <p className={styles.requestSubtitle}>
-            Tell us who you are and what you're building. We'll send the
-            download link to your email.
-          </p>
-        </div>
-
-        <div className={styles.formCard}>
-          <form onSubmit={handleSubmit}>
-            <div className={styles.formGroup}>
-              <label htmlFor="name" className={styles.label}>
-                Name <span className={styles.required}>*</span>
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                className={clsx(styles.input, errors.name && styles.fieldError)}
-                placeholder="Your name"
-                disabled={isSubmitting}
-                autoComplete="name"
-              />
-              {errors.name && <span className={styles.error}>{errors.name}</span>}
-            </div>
-
-            <div className={styles.formGroup}>
-              <label htmlFor="email" className={styles.label}>
-                Email <span className={styles.required}>*</span>
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className={clsx(styles.input, errors.email && styles.fieldError)}
-                placeholder="you@company.com"
-                disabled={isSubmitting}
-                autoComplete="email"
-              />
-              {errors.email && (
-                <span className={styles.error}>{errors.email}</span>
-              )}
-            </div>
-
-            <div className={styles.formGroup}>
-              <label htmlFor="company" className={styles.label}>
-                Company <span className={styles.required}>*</span>
-              </label>
-              <input
-                type="text"
-                id="company"
-                name="company"
-                value={formData.company}
-                onChange={handleChange}
-                className={clsx(styles.input, errors.company && styles.fieldError)}
-                placeholder="Your company or organization"
-                disabled={isSubmitting}
-                autoComplete="organization"
-              />
-              {errors.company && (
-                <span className={styles.error}>{errors.company}</span>
-              )}
-            </div>
-
-            <div className={styles.formGroup}>
-              <label htmlFor="companySize" className={styles.label}>
-                Company size <span className={styles.required}>*</span>
-              </label>
-              <select
-                id="companySize"
-                name="companySize"
-                value={formData.companySize}
-                onChange={handleChange}
-                className={clsx(
-                  styles.input,
-                  styles.select,
-                  errors.companySize && styles.fieldError
-                )}
-                disabled={isSubmitting}
-              >
-                {COMPANY_SIZE_OPTIONS.map((option) => (
-                  <option key={option.value || 'placeholder'} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
-              {errors.companySize && (
-                <span className={styles.error}>{errors.companySize}</span>
-              )}
-            </div>
-
-            <div className={styles.formGroup}>
-              <label htmlFor="useCase" className={styles.label}>
-                Use case <span className={styles.required}>*</span>
-              </label>
-              <textarea
-                id="useCase"
-                name="useCase"
-                value={formData.useCase}
-                onChange={handleChange}
-                rows={5}
-                className={clsx(styles.textarea, errors.useCase && styles.fieldError)}
-                placeholder="What are you building or researching? How would you use the data?"
-                disabled={isSubmitting}
-              />
-              {errors.useCase && (
-                <span className={styles.error}>{errors.useCase}</span>
-              )}
-            </div>
-
-            {submitStatus === 'success' && (
-              <div className={styles.successMessage}>{submitMessage}</div>
-            )}
-
-            {submitStatus === 'error' && (
-              <div className={styles.errorMessage}>{submitMessage}</div>
-            )}
-
-            <button
-              type="submit"
-              className={styles.submitButton}
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? 'Submitting...' : 'Get CodeRx Open'}
-            </button>
-          </form>
-        </div>
-
-        <p className={styles.privacyNote}>
-          We'll only use your details to send your download link and occasional
-          CodeRx updates. No spam, unsubscribe anytime.
-        </p>
-      </div>
-    </section>
-  );
-}
-
 function FaqSection() {
   const faqs = [
     {
+      question: 'Is this the same as The CodeRx Drug Database?',
+      answer: (
+        <>
+          Open is the free tier of the CodeRx Drug Database—not the full
+          product. Three marts, limited columns, updated once a year. There is
+          also an Enterprise tier with weekly updates and every column.{' '}
+          <Link to="/pricing">Compare plans</Link>.
+        </>
+      ),
+    },
+    {
       question: 'How often is CodeRx Open updated?',
       answer:
-        'Once per year. If you need data that keeps pace with FDA, RxNorm, and pricing changes, Enterprise refreshes weekly.',
+        'Once per year. Drug data changes constantly—NDCs are added and retired every week—so a yearly snapshot is best treated as a fixed reference for prototyping. If you need data that keeps pace, Enterprise refreshes weekly.',
     },
     {
       question: 'What format is the data in?',
@@ -483,14 +589,21 @@ function FaqSection() {
         'CSV and Parquet files, organized by data mart—the same structure and column names documented throughout these docs.',
     },
     {
-      question: 'Can I use it commercially?',
-      answer:
-        "Yes. CodeRx Open is built from public data sources. Tell us about your use case in the form and we'll flag anything you should know.",
+      question: 'How do I query it once I have the files?',
+      answer: (
+        <>
+          Load the CSV or Parquet files into whatever data warehouse you
+          already use, or open them as spreadsheets. Open includes a limited
+          set of columns; those that are present match Enterprise, so the{' '}
+          <Link to="/tutorials">tutorials</Link> and{' '}
+          <Link to="/concepts">data model docs</Link> apply as-is.
+        </>
+      ),
     },
     {
-      question: 'Why do I have to fill out a form?',
+      question: 'Why do I have to give you my email?',
       answer:
-        "It helps us understand who's using the data and what to build next. It also means we can let you know when the annual refresh lands.",
+        "So we can send you the download link, and let you know when the annual refresh lands. It also helps us understand who's using the data and what to build next.",
     },
   ];
 
@@ -524,7 +637,7 @@ export default function OpenPage() {
       <main className={styles.main}>
         <OpenHero />
         <IncludedSection />
-        <OpenVsPaidSection />
+        <OutgrowSection />
         <AudienceSection />
         <RequestForm />
         <FaqSection />

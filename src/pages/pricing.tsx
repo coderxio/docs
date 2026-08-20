@@ -1,81 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
 import Link from '@docusaurus/Link';
 import {
   enterprisePlan,
-  featureRows,
+  featureGroups,
   openPlan,
   type PlanCell,
 } from '../data/plans';
 import styles from './pricing.module.css';
 
-declare global {
-  interface Window {
-    Cal?: (...args: any[]) => void;
-  }
-}
-
-function initCal() {
-  if (typeof window === 'undefined') return;
-
-  const existingScript = document.querySelector(
-    'script[src="https://app.cal.com/embed/embed.js"]',
-  );
-  if (existingScript) return;
-
-  (function (C: any, A: string, L: string) {
-    const p = (a: any, ar: any) => {
-      a.q.push(ar);
-    };
-    const d = C.document;
-    C.Cal =
-      C.Cal ||
-      function (...args: any[]) {
-        const cal = C.Cal;
-        if (!cal.loaded) {
-          cal.ns = {};
-          cal.q = cal.q || [];
-          const s = d.createElement('script');
-          s.src = A;
-          s.async = true;
-          d.head.appendChild(s);
-          cal.loaded = true;
-        }
-        if (args[0] === L) {
-          const api: any = (...a: any[]) => {
-            p(api, a);
-          };
-          const namespace = args[1];
-          api.q = api.q || [];
-          typeof namespace === 'string'
-            ? (cal.ns[namespace] = api) && p(api, args)
-            : p(cal, args);
-          return;
-        }
-        p(cal, args);
-      };
-  })(window, 'https://app.cal.com/embed/embed.js', 'init');
-
-  window.Cal!('init', { origin: 'https://cal.com' });
-  window.Cal!('ui', {
-    styles: { branding: { brandColor: '#d52d34' } },
-    hideEventTypeDetails: false,
-    layout: 'month_view',
-  });
-}
-
 function PlanCellValue({ cell }: { cell: PlanCell }) {
-  if (cell.kind === 'text') {
-    return <span className={styles.cellText}>{cell.value}</span>;
-  }
   if (cell.kind === 'yes') {
     return (
       <span className={styles.cellYes} aria-label="Included">
         ✓
       </span>
     );
+  }
+  if (cell.kind === 'text') {
+    return <span className={styles.cellText}>{cell.value}</span>;
   }
   return (
     <span className={styles.cellNo} aria-label="Not included">
@@ -84,11 +29,12 @@ function PlanCellValue({ cell }: { cell: PlanCell }) {
   );
 }
 
-function PlanHeader({
+function PlanCard({
   name,
   badge,
   tag,
   description,
+  highlights,
   featured,
   cta,
 }: {
@@ -96,6 +42,7 @@ function PlanHeader({
   badge?: string;
   tag: string;
   description: string;
+  highlights: string[];
   featured?: boolean;
   cta:
     | { kind: 'link'; label: string; to: string }
@@ -106,9 +53,7 @@ function PlanHeader({
     : styles.pricingButtonOutline;
 
   return (
-    <div
-      className={clsx(styles.planHeader, featured && styles.planHeaderFeatured)}
-    >
+    <div className={clsx(styles.planCard, featured && styles.planCardFeatured)}>
       <div className={styles.planHeaderTop}>
         <h2 className={styles.planName}>{name}</h2>
         {badge && (
@@ -124,6 +69,11 @@ function PlanHeader({
       </div>
       <span className={styles.planTag}>{tag}</span>
       <p className={styles.planDescription}>{description}</p>
+      <ul className={styles.planHighlights}>
+        {highlights.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
       {cta.kind === 'link' ? (
         <Link to={cta.to} className={buttonClass}>
           {cta.label}
@@ -146,18 +96,6 @@ function PlanHeader({
 }
 
 export default function Pricing() {
-  const [expandedIds, setExpandedIds] = useState<string[]>([]);
-
-  useEffect(() => {
-    initCal();
-  }, []);
-
-  const toggleRow = (id: string) => {
-    setExpandedIds((prev) =>
-      prev.includes(id) ? prev.filter((rowId) => rowId !== id) : [...prev, id],
-    );
-  };
-
   return (
     <Layout
       title="Pricing"
@@ -174,70 +112,56 @@ export default function Pricing() {
           </p>
         </div>
 
-        <div className={styles.table}>
-          <div className={styles.tableHead}>
-            <div className={styles.featuresLabel}>Features</div>
-            <PlanHeader {...openPlan} />
-            <PlanHeader {...enterprisePlan} />
+        <div className={styles.planCards}>
+          <PlanCard {...openPlan} />
+          <PlanCard {...enterprisePlan} />
+        </div>
+
+        <div className={styles.table} role="table" aria-label="Plan features">
+          <div className={styles.tableHead} role="row">
+            <div className={styles.featuresLabel} role="columnheader">
+              Features
+            </div>
+            <div className={styles.planColLabel} role="columnheader">
+              Open
+            </div>
+            <div
+              className={clsx(styles.planColLabel, styles.planColLabelFeatured)}
+              role="columnheader"
+            >
+              Enterprise
+            </div>
           </div>
 
-          {featureRows.map((row) => {
-            const isExpanded = expandedIds.includes(row.id);
-            return (
-              <div
-                key={row.id}
-                className={clsx(styles.row, isExpanded && styles.rowExpanded)}
-              >
-                <div className={styles.rowMain}>
-                  <button
-                    type="button"
-                    className={styles.featureToggle}
-                    aria-expanded={isExpanded}
-                    onClick={() => toggleRow(row.id)}
-                  >
+          {featureGroups.map((group) => (
+            <div
+              key={group.id}
+              className={styles.group}
+            >
+              {group.label && (
+                <div className={styles.groupHeader} role="rowheader">
+                  {group.label}
+                </div>
+              )}
+              {group.rows.map((row) => (
+                <div key={row.id} className={styles.row} role="row">
+                  <div className={styles.feature} role="cell">
                     <span className={styles.featureName}>{row.name}</span>
-                    <span
-                      className={clsx(
-                        styles.chevron,
-                        isExpanded && styles.chevronOpen,
-                      )}
-                      aria-hidden="true"
-                    >
-                      <svg
-                        width="12"
-                        height="12"
-                        viewBox="0 0 12 12"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M2.5 4.5L6 8L9.5 4.5"
-                          stroke="currentColor"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </span>
-                  </button>
-                  <div className={styles.cell}>
+                    <p className={styles.featureDetail}>{row.detail}</p>
+                  </div>
+                  <div className={styles.cell} role="cell">
                     <PlanCellValue cell={row.open} />
                   </div>
-                  <div className={clsx(styles.cell, styles.cellFeatured)}>
+                  <div
+                    className={clsx(styles.cell, styles.cellFeatured)}
+                    role="cell"
+                  >
                     <PlanCellValue cell={row.enterprise} />
                   </div>
                 </div>
-                <div
-                  className={clsx(
-                    styles.detail,
-                    isExpanded && styles.detailOpen,
-                  )}
-                >
-                  <p className={styles.detailText}>{row.detail}</p>
-                </div>
-              </div>
-            );
-          })}
+              ))}
+            </div>
+          ))}
         </div>
 
         <p className={styles.progressionNote}>
