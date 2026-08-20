@@ -1,154 +1,62 @@
-import React, { useEffect } from 'react';
-import clsx from 'clsx';
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 import Link from '@docusaurus/Link';
 import Head from '@docusaurus/Head';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
-
-declare global {
-  interface Window {
-    Cal?: (...args: any[]) => void;
-  }
-}
+import CodeBlock from '@theme/CodeBlock';
+import ThemedImage from '@theme/ThemedImage';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 
 import styles from './index.module.css';
 
-// SVG Icons
-import PackageIcon from '../assets/icons/package.svg';
-import DrugIcon from '../assets/icons/drug.svg';
-import IngredientIcon from '../assets/icons/ingredient.svg';
-import ClassIcon from '../assets/icons/class.svg';
-import ExcipientIcon from '../assets/icons/excipient.svg';
-import SynonymIcon from '../assets/icons/synonym.svg';
-import ArrowDownIcon from '../assets/icons/arrow-down.svg';
+function HashScrollHandler() {
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (!hash) {
+      return undefined;
+    }
 
-function DrugDataVisual() {
-  const [activeIndex, setActiveIndex] = React.useState(0);
-  
-  const dataTypes = [
-    {
-      type: 'Drugs',
-      icon: DrugIcon,
-      description: 'Unified drug products',
-      examples: [
-        { label: 'Name', value: 'atorvastatin 10 mg oral tablet' },
-        { label: 'ID (RXCUI)', value: '617312' },
-        { label: 'Brand Names', value: 'Lipitor' },
-      ],
-      color: 'var(--ifm-color-primary)',
-      gradient: 'linear-gradient(135deg, var(--ifm-color-primary) 0%, var(--ifm-color-primary-dark) 100%)',
-    },
-    {
-      type: 'Packages',
-      icon: PackageIcon,
-      description: 'NDC packages & pricing',
-      examples: [
-        { label: 'NDC', value: '55111-121-90' },
-        { label: 'Pack Size', value: '90 count bottle' },
-        { label: 'COST (NADAC)', value: 'NADAC data included' },
-      ],
-      color: 'var(--ifm-color-secondary)',
-      gradient: 'linear-gradient(135deg, var(--ifm-color-secondary) 0%, var(--ifm-color-secondary-dark) 100%)',
-    },
-    {
-      type: 'Ingredients',
-      icon: IngredientIcon,
-      description: 'Active & inactive components',
-      examples: [
-        { label: 'Name', value: 'atorvastatin' },
-        { label: 'Strength', value: '10 mg' },
-        { label: 'Precise', value: 'atorvastatin calcium' },
-      ],
-      color: '#10b981',
-      gradient: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-    },
-  ];
-  
-  React.useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % dataTypes.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [dataTypes.length]);
-  
+    const scrollToHash = () => {
+      const target = document.getElementById(hash.slice(1));
+      if (target) {
+        target.scrollIntoView({behavior: 'smooth', block: 'start'});
+      }
+    };
+
+    const frame = window.requestAnimationFrame(scrollToHash);
+    return () => window.cancelAnimationFrame(frame);
+  }, []);
+
+  return null;
+}
+
+function BookDemoButton({
+  className,
+  variant = 'primary',
+}: {
+  className?: string;
+  variant?: 'primary' | 'heroPrimary';
+}) {
+  const buttonClass =
+    className ??
+    (variant === 'heroPrimary' ? styles.heroPrimary : styles.ctaPrimary);
+
   return (
-    <div className={styles.dataVisualContainer}>
-      <div className={styles.dataCardsWrapper}>
-        {dataTypes.map((dataType, index) => {
-          const IconComponent = dataType.icon;
-          const isActive = index === activeIndex;
-          const offset = index - activeIndex;
-          
-          return (
-            <div
-              key={dataType.type}
-              className={clsx(
-                styles.dataCard,
-                isActive && styles.dataCardActive
-              )}
-              onClick={() => !isActive && setActiveIndex(index)}
-              style={{
-                '--card-color': dataType.color,
-                '--card-gradient': dataType.gradient,
-                zIndex: dataTypes.length - Math.abs(offset),
-                transform: isActive 
-                  ? 'scale(1) translateX(0) translateZ(0)'
-                  : offset < 0
-                  ? `scale(${1 - Math.abs(offset) * 0.15}) translateX(${-180 * Math.abs(offset)}px) translateZ(${-100 * Math.abs(offset)}px)`
-                  : `scale(${1 - Math.abs(offset) * 0.15}) translateX(${180 * Math.abs(offset)}px) translateZ(${-100 * Math.abs(offset)}px)`,
-                opacity: isActive ? 1 : Math.max(0.2, 1 - Math.abs(offset) * 0.3),
-                cursor: isActive ? 'default' : 'pointer',
-              } as React.CSSProperties}
-            >
-              <div className={styles.dataCardHeader}>
-                <div className={styles.dataCardIcon} style={{ background: dataType.gradient }}>
-                  <IconComponent className={styles.dataCardIconSvg} />
-                </div>
-                <div className={styles.dataCardTitleWrapper}>
-                  <h3 className={styles.dataCardTitle}>{dataType.type}</h3>
-                  <p className={styles.dataCardDescription}>{dataType.description}</p>
-                </div>
-              </div>
-              <div className={styles.dataCardExamples}>
-                {dataType.examples.map((example, i) => (
-                  <div 
-                    key={i} 
-                    className={clsx(styles.dataExample, isActive && styles.dataExampleActive)} 
-                    style={{ 
-                      animationDelay: isActive ? `${i * 0.1 + 0.2}s` : '0s',
-                    }}
-                  >
-                    <span className={styles.dataExampleLabel}>{example.label}</span>
-                    <span className={styles.dataExampleValue}>{example.value}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          );
-        })}
-      </div>
-      
-      {/* Indicator dots */}
-      <div className={styles.dataCardIndicators}>
-        {dataTypes.map((dataType, index) => (
-          <button
-            key={index}
-            className={clsx(
-              styles.dataCardIndicator,
-              index === activeIndex && styles.dataCardIndicatorActive
-            )}
-            onClick={() => setActiveIndex(index)}
-            aria-label={`Show ${dataType.type} data`}
-            style={
-              index === activeIndex
-                ? ({ '--indicator-color': dataType.color } as React.CSSProperties)
-                : undefined
-            }
-          />
-        ))}
-      </div>
-    </div>
+    <button
+      type="button"
+      data-cal-link="coderx/30-min"
+      data-cal-config='{"layout":"month_view"}'
+      className={buttonClass}
+    >
+      Book a Demo
+    </button>
   );
 }
 
@@ -156,119 +64,199 @@ function HomepageHeader() {
   return (
     <header className={styles.hero}>
       <div className={styles.heroInner}>
-        <div className={styles.heroContent}>
+        <div className={styles.heroCopy}>
           <Heading as="h1" className={styles.heroTitle}>
-            Drug Data,<br />
+            Drug Data,
+            <br />
             <span className={styles.highlight}>Simplified</span>
           </Heading>
           <p className={styles.heroDescription}>
-            Stop choosing between hard-to-use raw government data and 
-            expensive proprietary databases. CodeRx transforms RxNorm, FDA, 
-            DailyMed, and NADAC into ready-to-query data marts—built by 
-            pharmacists, designed for analytics.
+            CodeRx makes open drug data easy to use, at a fraction of the
+            cost of proprietary drug databases.
           </p>
           <div className={styles.heroActions}>
-            <button
-              data-cal-link="coderx/30-min"
-              data-cal-config='{"layout":"month_view"}'
-              className={styles.primaryButton}
-            >
-              Book a Demo
-            </button>
-            <Link className={styles.secondaryButton} to="/pricing">
+            <BookDemoButton variant="heroPrimary" />
+            <Link className={styles.heroSecondary} to="/pricing">
               View Pricing
             </Link>
           </div>
+          <div className={styles.heroBadges}>
+            <div className={styles.badge}>
+              <span className={styles.badgeIcon}>◈</span>
+              <span>reproducible weekly snapshots</span>
+            </div>
+            <div className={styles.badge}>
+              <span className={styles.badgeIcon}>◇</span>
+              <span>NDC + RxCUI, no proprietary lock-in</span>
+            </div>
+            <div className={styles.badge}>
+              <span className={styles.badgeIcon}>○</span>
+              <span>built by pharmacists who run the pipelines</span>
+            </div>
+          </div>
         </div>
-        <DrugDataVisual />
-      </div>
-      
-      <div className={styles.heroBadges}>
-        <div className={styles.badge}>
-          <span className={styles.badgeIcon}>◈</span>
-          <span>weekly updates</span>
-        </div>
-        <div className={styles.badge}>
-          <span className={styles.badgeIcon}>◇</span>
-          <span>pharmacy-ready</span>
-        </div>
-        <div className={styles.badge}>
-          <span className={styles.badgeIcon}>○</span>
-          <span>open standards</span>
+        <div className={styles.heroMarkWrap} aria-hidden="true">
+          <div className={styles.heroMark}>
+            <ThemedImage
+              alt=""
+              sources={{
+                light: useBaseUrl('/img/CodeRx Pill Logo Black.svg'),
+                dark: useBaseUrl('/img/CodeRx Pill Logo White.png'),
+              }}
+              width={420}
+              height={420}
+            />
+          </div>
         </div>
       </div>
     </header>
   );
 }
 
-function WhoThisIsForSection() {
-  const audiences = [
+const productJoinPath = [
+  'packages',
+  'drugs',
+  'ingredients',
+  'classes',
+  'prices',
+];
+
+function ProductSection() {
+  const points = [
     {
-      title: 'Healthcare data analysts',
-      description: 'Turn complex drug data into actionable insights. No RxNorm expertise required—just query and analyze.',
+      title: 'One unified schema',
+      description:
+        'Six public sources reconciled into a single model. A package row joins to drugs, ingredients, classes, and prices without a mapping layer you have to maintain.',
     },
     {
-      title: 'Health tech startups',
-      description: 'Get enterprise-grade drug data at a fraction of the cost—no vendor lock-in, no complex contracts, just clean data that works.',
+      title: 'Purpose-built data marts',
+      description:
+        'Semantic drug concepts organized around pharmacy questions — not RxNorm RRF tables, not SPL XML, not a proprietary vocabulary you cannot leave.',
     },
     {
-      title: 'Healthcare developers',
-      description: 'Build medication features faster with reliable, well-structured data. Query-ready tables mean less code, fewer bugs.',
-    },
-    {
-      title: 'Pharmacy researchers',
-      description: 'Stop wrestling with raw government files. Spend your time on insights, not parsing XML and learning RxNorm hierarchies.',
+      title: 'Open identifiers',
+      description:
+        'NDC and RxCUI throughout, refreshed weekly, documented before you buy. Load CSV and Parquet into the warehouse you already run.',
     },
   ];
 
   return (
-    <section className={styles.whoThisIsFor}>
-      <div className={styles.whoThisIsForInner}>
-        <div className={styles.whoThisIsForHeader}>
-          <Heading as="h2" className={styles.whoThisIsForTitle}>
-            Built for Teams Like Yours
-          </Heading>
-        </div>
-        <div className={styles.whoThisIsForGrid}>
-          {audiences.map((audience, index) => (
-            <div key={index} className={styles.whoThisIsForCard}>
-              <span className={styles.whoThisIsForCardTitle}>{audience.title}</span>
-              <span className={styles.whoThisIsForCardDesc}>{audience.description}</span>
-            </div>
-          ))}
+    <section className={styles.product} id="database">
+      <div className={styles.productFrame}>
+        <div className={styles.productInner}>
+          <div className={styles.productCopy}>
+            <Heading as="h2" className={styles.productTitle}>
+              The CodeRx Drug Database
+            </Heading>
+            <p className={styles.productDesc}>
+              Six public sources unified into query-ready data marts. Drugs,
+              packages, ingredients, classes, and prices — already joined on
+              NDC and RxCUI, documented, and refreshed weekly.
+            </p>
+            <ol
+              className={styles.productPath}
+              aria-label="Pre-joined tables: packages, drugs, ingredients, classes, prices"
+            >
+              {productJoinPath.map((table, index) => (
+                <li key={table} className={styles.productPathStep}>
+                  {index > 0 && (
+                    <span className={styles.productPathJoin} aria-hidden="true">
+                      →
+                    </span>
+                  )}
+                  <span className={styles.productPathTable}>{table}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+          <ol className={styles.productPoints}>
+            {points.map((point, index) => (
+              <li key={point.title} className={styles.productPoint}>
+                <span className={styles.productPointIndex} aria-hidden="true">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+                <div>
+                  <h3 className={styles.productPointTitle}>{point.title}</h3>
+                  <p className={styles.productPointDesc}>{point.description}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
         </div>
       </div>
     </section>
   );
 }
 
-function DataSourcesSection() {
-  const sources = [
-    { name: 'RxNorm', description: 'Clinical & brand terminology with ingredient hierarchies' },
-    { name: 'FDA NDC', description: 'Product listings, marketing dates & regulatory info' },
-    { name: 'RxClass', description: 'Classification systems for therapeutic aggregation' },
-    { name: 'DailyMed', description: 'Structured product labeling & inactive ingredients' },
-    { name: 'NADAC', description: 'National pricing with historical trends' },
-    { name: 'FDA UNII', description: 'Standardized excipient identifiers' },
-  ];
+const buyerPersonas: {
+  id: string;
+  title: string;
+  tag: string;
+  description: string;
+  helps: string[];
+}[] = [
+  {
+    id: 'analytics-leaders',
+    title: 'Analytics & data leaders',
+    tag: 'Claims, utilization, medication analytics',
+    description:
+      'Stop rebuilding RxNorm joins every time FDA publishes. Marketed NDCs, brand versus generic, therapeutic classes, and NADAC/ASP history arrive on the same identifier — so medication work on claims stays in SQL, not a side pipeline.',
+    helps: [
+      'NDCs, clinical drugs, and classes pre-joined — no RxNorm RRF detour',
+      'Acquisition cost and Part B ASP on the package row your claims already use',
+      "Dated weekly snapshots so last quarter's board analysis still reproduces",
+    ],
+  },
+  {
+    id: 'health-ai-startups',
+    title: 'Healthcare AI & data startups',
+    tag: 'Real drug data without the enterprise tax',
+    description:
+      'You need a drug layer you can ship on — not a three-year contract and a proprietary ID you will spend the Series A extracting yourself out of. Weekly-refreshed marts on open standards, at a price that does not assume you are a health system.',
+    helps: [
+      'Open-standard IDs (NDC, RxCUI) — no GCN/GPI lock-in to unwind later',
+      'Schema and docs you can review before you sign; CSV and Parquet on S3',
+      'Pull into Snowflake, DuckDB, Postgres, or whatever your stack already runs',
+    ],
+  },
+];
 
+function PersonasSection() {
   return (
-    <section className={styles.dataSources}>
-      <div className={styles.dataSourcesInner}>
-        <div className={styles.dataSourcesHeader}>
-          <Heading as="h2" className={styles.dataSourcesTitle}>
-            Multi-Source Integration
+    <section
+      className={styles.personas}
+      id="who"
+      aria-labelledby="personas-heading"
+    >
+      <div className={styles.personasInner}>
+        <div className={styles.personasHeader}>
+          <Heading as="h2" id="personas-heading" className={styles.personasTitle}>
+            Built for pharmacy analytics
+            <br />
+            and health tech teams
           </Heading>
-          <p className={styles.dataSourcesSubtitle}>
-            Complex government data sources, unified and queryable
+          <p className={styles.personasSubtitle}>
+            Same weekly-refreshed marts — whether you are joining NDCs on
+            claims or shipping a medication feature before the next raise.
           </p>
         </div>
-        <div className={styles.dataSourcesGrid}>
-          {sources.map((source) => (
-            <div key={source.name} className={styles.dataSourceCard}>
-              <span className={styles.dataSourceName}>{source.name}</span>
-              <span className={styles.dataSourceDesc}>{source.description}</span>
-            </div>
+        <div className={styles.personaCards}>
+          {buyerPersonas.map((persona) => (
+            <article key={persona.id} className={styles.personaCard}>
+              <div className={styles.personaCardHeader}>
+                <h3 className={styles.personaName}>{persona.title}</h3>
+                <p className={styles.personaTag}>{persona.tag}</p>
+              </div>
+              <p className={styles.personaDesc}>{persona.description}</p>
+              <ul className={styles.personaHelps}>
+                {persona.helps.map((help) => (
+                  <li key={help}>{help}</li>
+                ))}
+              </ul>
+              <div className={styles.personaCardAction}>
+                <BookDemoButton />
+              </div>
+            </article>
           ))}
         </div>
       </div>
@@ -276,351 +264,362 @@ function DataSourcesSection() {
   );
 }
 
-function DataMartCard({ 
-  title, 
-  description, 
-  features,
-  variant,
-  icon
-}: { 
-  title: string; 
-  description: string; 
-  features: string[];
-  variant: 'primary' | 'secondary' | 'tertiary';
-  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
-}) {
-  const IconComponent = icon;
-  return (
-    <div className={clsx(styles.serviceCard, styles[`serviceCard${variant}`])}>
-      <div className={styles.serviceIcon}>
-        <IconComponent className={styles.serviceIconSvg} />
-      </div>
-      <Heading as="h3" className={styles.serviceTitle}>{title}</Heading>
-      <p className={styles.serviceDescription}>{description}</p>
-      <ul className={styles.serviceFeatures}>
-        {features.map((feature, i) => (
-          <li key={i}>{feature}</li>
-        ))}
-      </ul>
-    </div>
-  );
-}
+const sampleQuery = `-- Every marketed NDC for atorvastatin 10 mg oral tablets,
+-- with brand and labeler
+select
+    p.ndc11,
+    p.labeler_name,
+    d.prescribable_name,
+    d.is_brand
+from drugs d
+join packages p
+  on p.drug_id = d.drug_id
+where d.clinical_drug_id = '617312'
+  and p.active;`;
 
-function ArrowDivider() {
-  const ArrowComponent = ArrowDownIcon;
-  return (
-    <div className={styles.arrowDivider}>
-      <div className={styles.arrowDividerInner}>
-        <ArrowComponent className={styles.arrowIcon} />
-        <ArrowComponent className={styles.arrowIcon} />
-        <ArrowComponent className={styles.arrowIcon} />
-        <ArrowComponent className={styles.arrowIcon} />
-        <ArrowComponent className={styles.arrowIcon} />
-      </div>
-    </div>
-  );
-}
+const sampleResults = [
+  {
+    ndc11: '551110121090',
+    labeler_name: "Dr. Reddy's Laboratories",
+    prescribable_name: 'atorvastatin 10 mg oral tablet',
+    is_brand: 'false',
+  },
+  {
+    ndc11: '00071015523',
+    labeler_name: 'Viatris Specialty LLC',
+    prescribable_name: 'Lipitor 10 mg oral tablet',
+    is_brand: 'true',
+  },
+];
 
-function DataMartsSection() {
+function QuerySection() {
   return (
-    <section className={styles.services}>
-      <div className={styles.servicesHeader}>
-        <Heading as="h2" className={styles.servicesTitle}>
-          Purpose-Built Data Marts
-        </Heading>
-        <p className={styles.servicesSubtitle}>
-          Semantic drug concepts ready for pharmacy analytics—no transformation required
+    <section className={styles.query} id="query">
+      <div className={styles.queryInner}>
+        <div className={styles.queryLayout}>
+          <div className={styles.queryCopy}>
+            <Heading as="h2" className={styles.queryTitle}>
+              With CodeRx, it&apos;s a query
+            </Heading>
+            <p className={styles.queryDesc}>
+              Without CodeRx, this question is a data engineering project:
+              RxNorm relationship tables, FDA listings in three NDC formats,
+              XML to parse, identifiers that don&apos;t quite join, and a
+              cleanup job every time the files refresh. With CodeRx, it&apos;s
+              a simple query.
+            </p>
+            <ul className={styles.queryPoints}>
+              <li>No RxNorm RRF tables to reverse-engineer</li>
+              <li>No NDC format cleanup across sources</li>
+              <li>No weekly pipeline to re-run when FDA publishes</li>
+            </ul>
+            <div className={styles.queryActions}>
+              <BookDemoButton />
+            </div>
+          </div>
+          <div className={styles.queryProof}>
+            <div className={styles.queryCode}>
+              <CodeBlock language="sql">{sampleQuery}</CodeBlock>
+            </div>
+            <div className={styles.resultTableWrap}>
+              <table className={styles.resultTable}>
+                <caption className={styles.resultCaption}>
+                  Result · atorvastatin 10 mg oral tablet
+                </caption>
+                <thead>
+                  <tr>
+                    <th>ndc11</th>
+                    <th>labeler_name</th>
+                    <th>prescribable_name</th>
+                    <th>is_brand</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {sampleResults.map((row) => (
+                    <tr key={row.ndc11}>
+                      <td className={styles.resultMono}>{row.ndc11}</td>
+                      <td>{row.labeler_name}</td>
+                      <td>{row.prescribable_name}</td>
+                      <td className={styles.resultMono}>{row.is_brand}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <p className={styles.queryBridge}>
+          Most teams start with packages, drugs, and classes — Enterprise adds
+          pricing and the full pharmacy marts.{' '}
+          <Link className={styles.inlineLink} to="/concepts">
+            Full schema documentation →
+          </Link>
         </p>
       </div>
-      <div className={styles.servicesGrid}>
-        <DataMartCard
-          variant="primary"
-          title="Packages"
-          description="NDC-to-drug mappings with complete pricing data"
-          features={[
-            'Weekly NDC updates',
-            'Historical price changes',
-            'NADAC pricing integration',
-          ]}
-          icon={PackageIcon}
-        />
-        <DataMartCard
-          variant="secondary"
-          title="Drugs"
-          description="Unified view of brand and clinical products"
-          features={[
-            'Dose forms & strengths',
-            'Brand-to-generic relationships',
-            'Prescribable filtering',
-          ]}
-          icon={DrugIcon}
-        />
-        <DataMartCard
-          variant="tertiary"
-          title="Ingredients"
-          description="Detailed active and inactive ingredient data"
-          features={[
-            'Strength information',
-            'Component breakdowns',
-            'Precise classifications',
-          ]}
-          icon={IngredientIcon}
-        />
-      </div>
-      <div className={styles.servicesGridSecondary}>
-        <div className={styles.secondaryCard}>
-          <div className={styles.secondaryCardIcon}>
-            <ClassIcon className={styles.secondaryCardIconSvg} />
-          </div>
-          <span className={styles.secondaryCardTitle}>Classes</span>
-          <span className={styles.secondaryCardDesc}>Multiple classification systems for therapeutic aggregation</span>
-        </div>
-        <div className={styles.secondaryCard}>
-          <div className={styles.secondaryCardIcon}>
-            <ExcipientIcon className={styles.secondaryCardIconSvg} />
-          </div>
-          <span className={styles.secondaryCardTitle}>Excipients</span>
-          <span className={styles.secondaryCardDesc}>Inactive ingredient tracking with safety flags</span>
-        </div>
-        <div className={styles.secondaryCard}>
-          <div className={styles.secondaryCardIcon}>
-            <SynonymIcon className={styles.secondaryCardIconSvg} />
-          </div>
-          <span className={styles.secondaryCardTitle}>Synonyms</span>
-          <span className={styles.secondaryCardDesc}>Multi-source aggregation for improved matching</span>
-        </div>
-      </div>
     </section>
   );
 }
 
-function ComparisonSection() {
-  const [activeTab, setActiveTab] = React.useState<'databases' | 'rawdata'>('databases');
-  
-  const otherDatabasesComparison = (
-    <div className={styles.comparisonGrid}>
-      <div className={styles.comparisonCard}>
-        <div className={styles.comparisonCardHeader}>
-          <span className={styles.comparisonCardTitle}>CodeRx Drug Database</span>
-        </div>
-        <ul className={styles.comparisonList}>
-          <li className={styles.comparisonItemPositive}>Easy to get started</li>
-          <li className={styles.comparisonItemPositive}>Ready-to-use analytics data marts</li>
-          <li className={styles.comparisonItemPositive}>Terminology plus analytics</li>
-          <li className={styles.comparisonItemPositive}>Web-hosted, searchable docs</li>
-          <li className={styles.comparisonItemPositive}>Community-driven innovation</li>
-          <li className={styles.comparisonItemPositive}>Open standard drug identifiers</li>
-        </ul>
-      </div>
-      <div className={clsx(styles.comparisonCard, styles.comparisonCardDim)}>
-        <div className={styles.comparisonCardHeader}>
-          <span className={styles.comparisonCardTitle}>Other Databases</span>
-        </div>
-        <ul className={styles.comparisonList}>
-          <li className={styles.comparisonItemNegative}>Complex vendor contracting</li>
-          <li className={styles.comparisonItemNegative}>Data transformation required</li>
-          <li className={styles.comparisonItemNegative}>Terminology only</li>
-          <li className={styles.comparisonItemNegative}>PDF documentation</li>
-          <li className={styles.comparisonItemNegative}>Slow, vendor-controlled roadmap</li>
-          <li className={styles.comparisonItemNegative}>Locked into proprietary drug codes</li>
-        </ul>
-      </div>
-    </div>
+const rawSources = [
+  {
+    name: 'RxNorm',
+    description: 'Clinical and brand terminology with ingredient hierarchies',
+  },
+  {
+    name: 'FDA',
+    description:
+      'NDC product listings, marketing dates, and UNII substance identifiers',
+  },
+  {
+    name: 'RxClass',
+    description: 'Classification systems for therapeutic aggregation',
+  },
+  {
+    name: 'DailyMed',
+    description: 'Structured product labeling and inactive ingredients',
+  },
+  {
+    name: 'NADAC',
+    description: 'National acquisition cost with historical trends',
+  },
+  {
+    name: 'CMS',
+    description:
+      'Medicare Part B ASP pricing for HCPCS J-codes, current and historical',
+  },
+];
+
+function SourcesSection() {
+  const diagramRef = useRef<HTMLDivElement>(null);
+  const hubRef = useRef<HTMLDivElement>(null);
+  const nodeRefs = useRef<(HTMLLIElement | null)[]>([]);
+  const [streams, setStreams] = useState<
+    {d: string; delay: number; width: number}[]
+  >([]);
+  const [hubCenter, setHubCenter] = useState({x: 0, y: 0, r: 120});
+
+  const leftSources = rawSources.slice(0, 3);
+  const rightSources = rawSources.slice(3);
+
+  const measureStreams = useCallback(() => {
+    const diagram = diagramRef.current;
+    const hub = hubRef.current;
+    if (!diagram || !hub) {
+      return;
+    }
+
+    const dRect = diagram.getBoundingClientRect();
+    const hRect = hub.getBoundingClientRect();
+    const hubX = hRect.left + hRect.width / 2 - dRect.left;
+    const hubY = hRect.top + hRect.height / 2 - dRect.top;
+    setHubCenter({
+      x: hubX,
+      y: hubY,
+      // Fade starts in the gap before the wordmark, gone by the center
+      r: Math.max(hRect.width, hRect.height) * 1.35,
+    });
+
+    const next = nodeRefs.current
+      .filter((node): node is HTMLLIElement => node != null)
+      .map((node, index) => {
+        const nRect = node.getBoundingClientRect();
+        const nodeCenterX = nRect.left + nRect.width / 2 - dRect.left;
+        const nodeCenterY = nRect.top + nRect.height / 2 - dRect.top;
+        const isLeft = nodeCenterX < hubX;
+        const x1 = isLeft ? nRect.right - dRect.left : nRect.left - dRect.left;
+        const y1 = nodeCenterY;
+
+        const dx = hubX - x1;
+        const dy = hubY - y1;
+        const c1x = x1 + dx * 0.45;
+        const c1y = y1 + dy * 0.12;
+        const c2x = hubX - dx * 0.2;
+        const c2y = hubY - dy * 0.12;
+
+        return {
+          d: `M ${x1} ${y1} C ${c1x} ${c1y}, ${c2x} ${c2y}, ${hubX} ${hubY}`,
+          delay: (index % 3) * 0.14,
+          width: 2.4 + (index % 2) * 0.6,
+        };
+      });
+
+    setStreams(next);
+  }, []);
+
+  useLayoutEffect(() => {
+    measureStreams();
+
+    const diagram = diagramRef.current;
+    if (!diagram || typeof ResizeObserver === 'undefined') {
+      window.addEventListener('resize', measureStreams);
+      return () => window.removeEventListener('resize', measureStreams);
+    }
+
+    const observer = new ResizeObserver(() => measureStreams());
+    observer.observe(diagram);
+    window.addEventListener('resize', measureStreams);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', measureStreams);
+    };
+  }, [measureStreams]);
+
+  const renderSourceCard = (
+    source: (typeof rawSources)[number],
+    index: number,
+  ) => (
+    <li
+      key={source.name}
+      className={styles.sourceCard}
+      title={source.description}
+      ref={(el) => {
+        nodeRefs.current[index] = el;
+      }}
+    >
+      <span className={styles.sourceName}>{source.name}</span>
+      <span className={styles.sourceDesc}>{source.description}</span>
+    </li>
   );
-  
-  const rawDataComparison = (
-    <div className={styles.comparisonGrid}>
-      <div className={styles.comparisonCard}>
-        <div className={styles.comparisonCardHeader}>
-          <span className={styles.comparisonCardTitle}>CodeRx Drug Database</span>
-        </div>
-        <ul className={styles.comparisonList}>
-          <li className={styles.comparisonItemPositive}>Purpose-built data marts, ready to query</li>
-          <li className={styles.comparisonItemPositive}>Setup in minutes to hours</li>
-          <li className={styles.comparisonItemPositive}>Pre-integrated from multiple sources</li>
-          <li className={styles.comparisonItemPositive}>Clear, pharmacy-focused documentation</li>
-          <li className={styles.comparisonItemPositive}>Free annual updates included</li>
-          <li className={styles.comparisonItemPositive}>Built specifically for pharmacy applications</li>
-        </ul>
-      </div>
-      <div className={clsx(styles.comparisonCard, styles.comparisonCardDim)}>
-        <div className={styles.comparisonCardHeader}>
-          <span className={styles.comparisonCardTitle}>Raw Open Data</span>
-        </div>
-        <ul className={styles.comparisonList}>
-          <li className={styles.comparisonItemNegative}>Requires expertise in SABs, TTYs, XML</li>
-          <li className={styles.comparisonItemNegative}>Manual integration across sources</li>
-          <li className={styles.comparisonItemNegative}>Weeks to months of learning curve</li>
-          <li className={styles.comparisonItemNegative}>Technical docs for data scientists</li>
-          <li className={styles.comparisonItemNegative}>Free but significant time investment</li>
-          <li className={styles.comparisonItemNegative}>Raw data requires extensive transformation</li>
-        </ul>
-      </div>
-    </div>
-  );
-  
+
   return (
-    <section id="comparison" className={styles.comparison}>
-      <div className={styles.comparisonInner}>
-        <div className={styles.comparisonTabs}>
-          <button
-            className={clsx(styles.comparisonTab, activeTab === 'databases' && styles.comparisonTabActive)}
-            onClick={() => setActiveTab('databases')}
-          >
-            Versus Others
-          </button>
-          <button
-            className={clsx(styles.comparisonTab, activeTab === 'rawdata' && styles.comparisonTabActive)}
-            onClick={() => setActiveTab('rawdata')}
-          >
-            Versus Raw Data
-          </button>
-        </div>
-        <div className={styles.comparisonHeader}>
-          <Heading as="h2" className={styles.comparisonTitle}>
-            {activeTab === 'databases' ? 'The Affordable Alternative' : 'The Sustainable Alternative'}
+    <section className={styles.sources} id="sources">
+      <div className={styles.sourcesInner}>
+        <div className={styles.sourcesHeader}>
+          <Heading as="h2" className={styles.sourcesTitle}>
+            We know open drug data
+            <br />
+            <span className={styles.sourcesTitleAside}>
+              (so you don't have to)
+            </span>
           </Heading>
-          <p className={styles.comparisonSubtitle}>
-            {activeTab === 'databases' 
-              ? 'Enterprise-grade drug data with a modern developer experience'
-              : 'Straightforward pharmacy-ready tables without complex data parsing'}
+          <p className={styles.sourcesDesc}>
+            These marts are largely sourced from public data — then transformed
+            into something incredibly easy to work with. Much of it is not
+            available from any open source without considerable, specific,
+            validated transformation with every refresh. CodeRx coordinates and
+            manages all of that for you, and continues to develop new features.
           </p>
         </div>
-        {activeTab === 'databases' ? otherDatabasesComparison : rawDataComparison}
-      </div>
-    </section>
-  );
-}
-
-function ProcessSection() {
-  const [expandedIndex, setExpandedIndex] = React.useState<number | null>(0);
-  
-  const steps = [
-    {
-      number: '01',
-      title: 'Subscribe',
-      description: 'Get access to weekly-updated drug data marts at a fraction of enterprise database costs.',
-    },
-    {
-      number: '02',
-      title: 'Query',
-      description: 'Use straightforward SQL on semantic drug concepts—no RxNorm expertise required.',
-    },
-    {
-      number: '03',
-      title: 'Analyze',
-      description: 'Integrate with your pharmacy claims and medication data for actionable insights.',
-    },
-  ];
-
-  const toggleStep = (index: number) => {
-    setExpandedIndex((prev) => (prev === index ? null : index));
-  };
-
-  return (
-    <section className={styles.process}>
-      <div className={styles.processInner}>
-        <Heading as="h2" className={styles.processTitle}>How It Works</Heading>
-        <div className={styles.processSteps}>
-          {steps.map((step, index) => {
-            const isExpanded = expandedIndex === index;
-            return (
-              <div 
-                key={step.number} 
-                className={clsx(styles.processStep, isExpanded && styles.processStepExpanded)}
-                onClick={() => toggleStep(index)}
+        <div className={styles.sourcesDiagram} ref={diagramRef}>
+          <svg
+            className={styles.sourcesLines}
+            aria-hidden="true"
+            focusable="false"
+          >
+            <defs>
+              <radialGradient
+                id="sourcesStreamFade"
+                gradientUnits="userSpaceOnUse"
+                cx={hubCenter.x}
+                cy={hubCenter.y}
+                r={hubCenter.r}
               >
-                <div className={styles.processStepHeader}>
-                  <span className={styles.processNumber}>{step.number}</span>
-                  <span className={styles.processStepTitle}>{step.title}</span>
-                </div>
-                <div className={clsx(styles.processStepContent, isExpanded && styles.processStepContentExpanded)}>
-                  <p className={styles.processStepDescription}>{step.description}</p>
-                </div>
-              </div>
-            );
-          })}
+                <stop offset="0%" stopColor="#000" />
+                <stop offset="18%" stopColor="#000" />
+                <stop offset="55%" stopColor="#fff" />
+                <stop offset="100%" stopColor="#fff" />
+              </radialGradient>
+              <mask
+                id="sourcesStreamMask"
+                maskUnits="userSpaceOnUse"
+              >
+                <rect
+                  x="0"
+                  y="0"
+                  width="100%"
+                  height="100%"
+                  fill="url(#sourcesStreamFade)"
+                />
+              </mask>
+            </defs>
+            <g mask="url(#sourcesStreamMask)">
+              {streams.map((stream, i) => (
+                <path
+                  key={rawSources[i]?.name ?? i}
+                  className={styles.sourcesStream}
+                  d={stream.d}
+                  strokeWidth={stream.width}
+                  style={{animationDelay: `${stream.delay}s`}}
+                />
+              ))}
+            </g>
+          </svg>
+          <ul className={styles.sourcesCol}>
+            {leftSources.map((source, i) => renderSourceCard(source, i))}
+          </ul>
+          <div className={styles.sourcesHub} ref={hubRef}>
+            <img
+              className={styles.sourcesHubLogo}
+              src="/img/coderx_text_logo_white.svg"
+              alt="CodeRx"
+              width={280}
+              height={108}
+            />
+          </div>
+          <ul className={styles.sourcesCol}>
+            {rightSources.map((source, i) =>
+              renderSourceCard(source, i + leftSources.length),
+            )}
+          </ul>
+        </div>
+        <div className={styles.sectionCta}>
+          <BookDemoButton />
         </div>
       </div>
     </section>
   );
 }
 
-function ProductIntroSection() {
-  return (
-    <section id="product-intro" className={styles.productIntro}>
-      <div className={styles.productIntroBorder} />
-      <div className={styles.productIntroInner}>
-        <div className={styles.productIntroContent}>
-          <span className={styles.productLabel}>Introducing</span>
-          <Heading as="h2" className={styles.productTitle}>
-            The CodeRx Drug Database
-          </Heading>
-          <p className={styles.productDescription}>
-            A comprehensive, analytics-ready drug database that unifies data from 
-            RxNorm, FDA NDC, DailyMed, NADAC, and more into clean, queryable data marts. 
-            Built by pharmacists who understand the complexities of drug data, designed 
-            for developers and analysts who need reliable information without the overhead.
-          </p>
-          <div className={styles.productHighlightsWrapper}>
-            <div className={styles.productHighlights}>
-              <div className={styles.productHighlight}>
-                <span className={styles.highlightIcon}>◆</span>
-                <div>
-                  <span className={styles.highlightTitle}>Unified Schema</span>
-                  <span className={styles.highlightDesc}>Pre-joined tables with consistent identifiers</span>
-                </div>
-              </div>
-              <div className={styles.productHighlight}>
-                <span className={styles.highlightIcon}>◆</span>
-                <div>
-                  <span className={styles.highlightTitle}>Weekly Refresh</span>
-                  <span className={styles.highlightDesc}>Current with FDA, RxNorm, and pricing updates</span>
-                </div>
-              </div>
-              <div className={styles.productHighlight}>
-                <span className={styles.highlightIcon}>◆</span>
-                <div>
-                  <span className={styles.highlightTitle}>Query-Ready</span>
-                  <span className={styles.highlightDesc}>Standard SQL on semantic drug concepts</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className={styles.productVisual}>
-          <div className={styles.databaseIcon}>
-            <div className={styles.dbLayer}></div>
-            <div className={styles.dbLayer}></div>
-            <div className={styles.dbLayer}></div>
-          </div>
-        </div>
-      </div>
-      <div className={styles.productIntroBorder} />
-    </section>
-  );
-}
+const opsGroups = [
+  {
+    title: 'Drive population health',
+    pitch:
+      'Brand versus generic, therapeutic class, and indication on the same package row — so cohort definitions and utilization measures do not start with a terminology project.',
+    marts: [
+      'Brand vs generic',
+      'Therapeutic classes',
+      'Indications',
+      'Marketing status',
+    ],
+  },
+  {
+    title: 'Optimize coverage and mix',
+    pitch:
+      'Formulary, tier, and medical-benefit J-codes on the NDC your claims already use — so coverage and mix analysis does not live in three extracts.',
+    marts: ['Part D plans', 'HCPCS to NDC', 'ASP', 'NADAC'],
+  },
+];
 
-function StatsSection() {
+function PharmacyMartsSection() {
   return (
-    <section className={styles.stats}>
-      <div className={styles.statsInner}>
-        <div className={styles.statItem}>
-          <div className={styles.statValue}>6</div>
-          <div className={styles.statLabel}>Data Sources</div>
-        </div>
-        <div className={styles.statItem}>
-          <div className={styles.statValue}>Weekly</div>
-          <div className={styles.statLabel}>Updates</div>
-        </div>
-        <div className={styles.statItem}>
-          <div className={styles.statValue}>95%</div>
-          <div className={styles.statLabel}>Cost Savings</div>
-        </div>
-        <div className={styles.statItem}>
-          <div className={styles.statValue}>0</div>
-          <div className={styles.statLabel}>XML Parsing</div>
-        </div>
+    <section className={styles.ops} id="marts">
+      <div className={styles.opsHeader}>
+        <Heading as="h2" className={styles.opsHeading}>
+          Drug identity for claims, pre-joined
+        </Heading>
+        <p className={styles.opsSubtitle}>
+          A claim NDC does not carry class, indication, or coverage on its own.
+          These marts join that context to the same identifier — so population
+          health and payer work stays in your warehouse, not a new pipeline
+          every refresh.
+        </p>
+      </div>
+      <div className={styles.opsGrid}>
+        {opsGroups.map((group) => (
+          <div key={group.title} className={styles.opsCard}>
+            <h3 className={styles.opsTitle}>{group.title}</h3>
+            <p className={styles.opsPitch}>{group.pitch}</p>
+            <ul className={styles.opsMarts} aria-label={`${group.title} marts`}>
+              {group.marts.map((mart) => (
+                <li key={mart}>{mart}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+      <div className={styles.sectionCta}>
+        <BookDemoButton />
       </div>
     </section>
   );
@@ -631,12 +630,13 @@ function CTASection() {
     <section className={styles.cta}>
       <div className={styles.ctaInner}>
         <Heading as="h2" className={styles.ctaTitle}>
-          Ready to simplify<br />your drug data?
+          Ready to simplify
+          <br />
+          your drug data?
         </Heading>
         <p className={styles.ctaDescription}>
-          Built by pharmacists, designed for analytics. Get comprehensive 
-          drug data marts that integrate with your pharmacy applications across
-          Silver, Gold, and Platinum plans.
+          Book a 30-minute demo and we&apos;ll walk through the marts that
+          matter for your claims analytics or product roadmap.
         </p>
         <div className={styles.ctaActions}>
           <button
@@ -650,72 +650,34 @@ function CTASection() {
             View Pricing
           </Link>
         </div>
+        <p className={styles.ctaFootnote}>
+          Or feel free to{' '}
+          <Link to="/contact-us">contact us</Link> with a question.
+        </p>
       </div>
     </section>
   );
 }
 
 export default function Home() {
-  const {siteConfig} = useDocusaurusContext();
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-
-    const existingScript = document.querySelector('script[src="https://app.cal.com/embed/embed.js"]');
-    if (!existingScript) {
-      (function (C: any, A: string, L: string) {
-        const p = (a: any, ar: any) => { a.q.push(ar); };
-        const d = C.document;
-        C.Cal = C.Cal || function (...args: any[]) {
-          const cal = C.Cal;
-          if (!cal.loaded) {
-            cal.ns = {};
-            cal.q = cal.q || [];
-            const s = d.createElement('script');
-            s.src = A;
-            s.async = true;
-            d.head.appendChild(s);
-            cal.loaded = true;
-          }
-          if (args[0] === L) {
-            const api: any = (...a: any[]) => { p(api, a); };
-            const namespace = args[1];
-            api.q = api.q || [];
-            typeof namespace === 'string'
-              ? (cal.ns[namespace] = api) && p(api, args)
-              : p(cal, args);
-            return;
-          }
-          p(cal, args);
-        };
-      })(window, 'https://app.cal.com/embed/embed.js', 'init');
-
-      window.Cal!('init', { origin: 'https://cal.com' });
-      window.Cal!('ui', {
-        styles: { branding: { brandColor: '#d52d34' } },
-        hideEventTypeDetails: false,
-        layout: 'month_view',
-      });
-    }
-  }, []);
+  const { siteConfig } = useDocusaurusContext();
 
   return (
     <Layout
       title={`${siteConfig.title} — Drug Data, Simplified`}
-      description="CodeRx transforms complex government drug data sources into easy-to-use data marts purpose-built for pharmacy analytics. Built by pharmacists, designed for analytics.">
+      description="Query-ready drug data marts for pharmacy analytics teams and health tech startups — weekly refreshed on open identifiers. Book a demo to see the marts that fit your use case."
+    >
       <Head>
         <title>{`${siteConfig.title} - Drug Data, Simplified`}</title>
       </Head>
+      <HashScrollHandler />
       <main className={styles.main}>
         <HomepageHeader />
-        <WhoThisIsForSection />
-        <ProductIntroSection />
-        <StatsSection />
-        <DataSourcesSection />
-        <ArrowDivider />
-        <DataMartsSection />
-        <ComparisonSection />
-        <ProcessSection />
+        <ProductSection />
+        <PharmacyMartsSection />
+        <PersonasSection />
+        <QuerySection />
+        <SourcesSection />
         <CTASection />
       </main>
     </Layout>

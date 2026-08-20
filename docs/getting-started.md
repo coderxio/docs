@@ -7,22 +7,24 @@ sidebar_position: 2
 
 Get started with CodeRx in minutes. Subscribe today and get instant access to our comprehensive drug database, weekly-updated data marts, and powerful integration tools.
 
+:::info Want to try before you subscribe?
+[**CodeRx Open**](/coderx-open) is a free, annually updated version of the database covering active, prescribable drugs, their NDCs, and drug classes. [Request free access →](/open)
+:::
+
 ## Subscribe to CodeRx
 
 Subscribe to CodeRx and get instant access to our comprehensive drug database. Explore weekly-updated data marts and integrate with your existing workflows.
 
 ### Subscription Plans
 
-We offer three annual plans:
+We offer two plans:
 
-- **Silver**: Includes the core data marts, weekly updates, and AWS S3 delivery for teams building reliable pharmacy analytics workflows.
+- **[CodeRx Open](/coderx-open)**: A free yearly snapshot of drugs, packages, and classes — currently prescribable products only, with a limited column set.
 
-- **Gold**: Adds Pricing, Packaging, Label Images, and priority support for organizations that need broader coverage and faster operational execution.
-
-- **Platinum**: Unlocks Indications, Plans, and E-prescribing mappings for advanced clinical use cases and production-grade medication intelligence.
+- **[Enterprise](/pricing)**: The full CodeRx Drug Database. Every table, every column, weekly updates, and AWS S3 delivery — including pricing, packaging, J-codes, Part D plans, indications, and more.
 
 :::tip Ready to Get Started?
-**Subscribe to CodeRx today.** Get instant access to our comprehensive drug database with weekly updates, complete RxNorm mappings, and rich drug knowledge graphs. Annual billing available.
+**Subscribe to CodeRx Enterprise today.** Get instant access to our comprehensive drug database with weekly updates, complete RxNorm mappings, and rich drug knowledge graphs. Annual billing available.
 
 **[View Pricing & Book a Demo →](/pricing)**
 :::
@@ -72,7 +74,7 @@ fs = s3fs.S3FileSystem(
 
 # Read parquet file directly
 df = pd.read_parquet(
-    'YOUR_S3_BUCKET/basic/drugs/drugs.parquet',
+    'YOUR_S3_BUCKET/drugs/drugs.parquet',
     filesystem=fs
 )
 
@@ -83,26 +85,22 @@ print(f"Total drugs: {len(df)}")
 
 ## Data Mart Structure
 
-Your S3 bucket contains the following data marts, organized into `silver/`, `gold/`, and `platinum/` folders:
-
-### Silver
+Your Enterprise S3 bucket contains the full set of data marts, including:
 
 - **[drugs](/concepts/drugs)**/ - Drug products with names, RXCUIs, dose forms
-- **[packages](/concepts/packages)**/ - NDC packages with pricing and pack sizes  
+- **[packages](/concepts/packages)**/ - NDC packages with pack sizes and marketing detail
 - **[ingredients](/concepts/ingredients)**/ - Active and inactive ingredients
 - **[classes](/concepts/classes)**/ - Drug classification systems
 - **[excipients](/concepts/excipients)**/ - Inactive ingredients with safety data
 - **[synonyms](/concepts/synonyms)**/ - Drug name synonyms and aliases
 
-### Gold & Platinum
-
-Gold and Platinum data marts are available with the corresponding subscription tiers. See the [subscription plans](#subscription-plans) for details.
+Enterprise also includes pricing, packaging details, label images, REMS, indications, Part D plans, e-prescribing, and storage and handling. See the [subscription plans](#subscription-plans) and [Pricing](/pricing) for the full comparison.
 
 ### Version Control
 
 Each data mart folder contains:
-- **Latest snapshot**: `{tier}/{data_mart}/{data_mart}.csv` or `{tier}/{data_mart}/{data_mart}.parquet` (e.g., `silver/drugs/drugs.parquet`)
-- **Dated snapshots**: `{tier}/{data_mart}/{data_mart}_YYYY-MM-DD.csv` or `{tier}/{data_mart}/{data_mart}_YYYY-MM-DD.parquet` (e.g., `silver/drugs/drugs_2026-01-16.parquet`)
+- **Latest snapshot**: `{data_mart}/{data_mart}.csv` or `{data_mart}/{data_mart}.parquet` (e.g., `drugs/drugs.parquet`)
+- **Dated snapshots**: `{data_mart}/{data_mart}_YYYY-MM-DD.csv` or `{data_mart}/{data_mart}_YYYY-MM-DD.parquet` (e.g., `drugs/drugs_2026-01-16.parquet`)
 
 Files are updated weekly, with new dated snapshots added while the latest file is always updated to point to the most recent data.
 

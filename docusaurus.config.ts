@@ -66,17 +66,29 @@ const config: Config = {
             to: '/concepts/',
           },
           {
+            // Older blog posts link here offering free data marts
             from: '/data-marts',
-            to: '/concepts/',
+            to: '/open',
           },
           {
             from: '/source-data',
             to: '/concepts/',
           },
+          {
+            from: ['/free', '/open-access'],
+            to: '/open',
+          },
+          {
+            // The standalone product page was folded into the homepage
+            from: '/product',
+            to: '/',
+          },
         ],
       },
     ],
   ],
+
+  clientModules: [require.resolve('./src/clientModules/cal.ts')],
 
   themes: ['@docusaurus/theme-mermaid'],
 
@@ -138,7 +150,8 @@ const config: Config = {
     // Replace with your project's social card
     image: 'img/coderx-social-card.png',
     colorMode: {
-      respectPrefersColorScheme: true,
+      defaultMode: 'light',
+      respectPrefersColorScheme: false,
     },
     navbar: {
       logo: {
@@ -147,11 +160,6 @@ const config: Config = {
         srcDark: 'img/coderx_text_logo_white.svg',
       },
       items: [
-        {
-          href: '/#product-intro',
-          label: 'Product',
-          position: 'left',
-        },
         {
           to: '/pricing',
           label: 'Pricing',
@@ -170,15 +178,35 @@ const config: Config = {
         },
         {to: '/blog', label: 'Blog', position: 'right'},
         {
-          href: 'https://github.com/coderxio',
-          label: 'GitHub',
+          // Primary conversion action, persistent on every page. Raw HTML is
+          // required so the Cal.com embed can find its data attributes.
+          type: 'html',
           position: 'right',
+          value:
+            '<button type="button" class="navbarDemoButton" data-cal-link="coderx/30-min" data-cal-config=\'{"layout":"month_view"}\'>Book a Demo</button>',
         },
       ],
     },
     footer: {
       style: 'dark',
       links: [
+        {
+          title: 'Product',
+          items: [
+            {
+              label: 'The CodeRx Drug Database',
+              to: '/',
+            },
+            {
+              label: 'Pricing',
+              to: '/pricing',
+            },
+            {
+              label: 'CodeRx Open (free)',
+              to: '/open',
+            },
+          ],
+        },
         {
           title: 'Docs',
           items: [
@@ -206,6 +234,10 @@ const config: Config = {
             {
               label: 'Substack',
               href: 'https://coderxio.substack.com/',
+            },
+            {
+              label: 'LinkedIn',
+              href: 'https://linkedin.com/company/coderx',
             },
           ],
         },

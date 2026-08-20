@@ -1,346 +1,186 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import clsx from 'clsx';
 import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
 import Link from '@docusaurus/Link';
+import {
+  enterprisePlan,
+  featureGroups,
+  openPlan,
+  type PlanCell,
+} from '../data/plans';
 import styles from './pricing.module.css';
 
-declare global {
-  interface Window {
-    Cal?: (...args: any[]) => void;
+function PlanCellValue({ cell }: { cell: PlanCell }) {
+  if (cell.kind === 'yes') {
+    return (
+      <span className={styles.cellYes} aria-label="Included">
+        ✓
+      </span>
+    );
   }
+  if (cell.kind === 'text') {
+    return <span className={styles.cellText}>{cell.value}</span>;
+  }
+  return (
+    <span className={styles.cellNo} aria-label="Not included">
+      ✕
+    </span>
+  );
 }
 
-const CHECK = '✓';
-const DASH = '—';
+function PlanCard({
+  name,
+  badge,
+  tag,
+  description,
+  highlights,
+  featured,
+  cta,
+}: {
+  name: string;
+  badge?: string;
+  tag: string;
+  description: string;
+  highlights: string[];
+  featured?: boolean;
+  cta:
+    | { kind: 'link'; label: string; to: string }
+    | { kind: 'demo'; label: string; plan: string };
+}) {
+  const buttonClass = featured
+    ? styles.pricingButton
+    : styles.pricingButtonOutline;
 
-const featureSections = [
-  {
-    title: 'Data Marts',
-    features: [
-      {
-        name: 'Packages (NDCs)',
-        description: 'Mappings from NDC to drug, brand vs generic, available brand names, labeler information',
-        silver: CHECK,
-        gold: CHECK,
-        platinum: CHECK,
-      },
-      {
-        name: 'Drugs',
-        description: 'All brand and generic drugs with open standard identifiers',
-        silver: CHECK,
-        gold: CHECK,
-        platinum: CHECK,
-      },
-      {
-        name: 'Ingredients',
-        description: 'Including structured ingredient strength',
-        silver: CHECK,
-        gold: CHECK,
-        platinum: CHECK,
-      },
-      {
-        name: 'Excipients',
-        description: 'Including suggested flags for gluten, dyes, and preservatives',
-        silver: CHECK,
-        gold: CHECK,
-        platinum: CHECK,
-      },
-      {
-        name: 'Classes',
-        description: 'Four level classification hierarchy for drugs',
-        silver: CHECK,
-        gold: CHECK,
-        platinum: CHECK,
-      },
-      {
-        name: 'Synonyms',
-        description: 'Useful for LLM training / fuzzy matching / search enhancement',
-        silver: CHECK,
-        gold: CHECK,
-        platinum: CHECK,
-      },
-      {
-        name: 'Pricing',
-        description: 'ASP / NDC to HCPCS (type 2) mappings / NADAC pricing / 5+ years historical changes',
-        silver: DASH,
-        gold: CHECK,
-        platinum: CHECK,
-      },
-      {
-        name: 'Packaging',
-        description: 'Pack size / unit of use / unit dose / inner-outer NDCs',
-        silver: DASH,
-        gold: CHECK,
-        platinum: CHECK,
-      },
-      {
-        name: 'Label Images',
-        description: 'NDC-level label image mappings',
-        silver: DASH,
-        gold: CHECK,
-        platinum: CHECK,
-      },
-      {
-        name: 'Indications',
-        description: 'ICD-10 codes representing conditions drugs may treat or may prevent',
-        silver: DASH,
-        gold: DASH,
-        platinum: CHECK,
-      },
-      {
-        name: 'Plans',
-        description: 'Medicare Part D plan information, including formularies, tiers, and reimbursement',
-        silver: DASH,
-        gold: DASH,
-        platinum: CHECK,
-      },
-      {
-        name: 'E-prescribing',
-        description: 'NCI code mappings / representative NDCs — useful for e-prescribing and interoperability',
-        silver: DASH,
-        gold: DASH,
-        platinum: CHECK,
-      },
-    ],
-  },
-  {
-    title: 'Access & Delivery',
-    features: [
-      {
-        name: 'Weekly Updates',
-        description: 'Up-to-date data delivered to an s3 bucket weekly',
-        silver: CHECK,
-        gold: CHECK,
-        platinum: CHECK,
-      },
-      {
-        name: 'AWS S3 Access',
-        description: 'Direct S3 bucket access to all data marts in CSV and Parquet formats',
-        silver: CHECK,
-        gold: CHECK,
-        platinum: CHECK,
-      },
-      {
-        name: 'Complete Documentation',
-        description: 'Schema docs, tutorials, and data source guides for every data mart',
-        silver: CHECK,
-        gold: CHECK,
-        platinum: CHECK,
-      },
-    ],
-  },
-  {
-    title: 'Support',
-    features: [
-      {
-        name: 'Email Support',
-        description: 'Access to support email and the CodeRx Slack community',
-        silver: CHECK,
-        gold: CHECK,
-        platinum: CHECK,
-      },
-      {
-        name: 'Priority Support',
-        description: 'Dedicated response SLA and direct access to the CodeRx team',
-        silver: DASH,
-        gold: CHECK,
-        platinum: CHECK,
-      },
-    ],
-  },
-];
+  return (
+    <div className={clsx(styles.planCard, featured && styles.planCardFeatured)}>
+      <div className={styles.planHeaderTop}>
+        <h2 className={styles.planName}>{name}</h2>
+        {badge && (
+          <span
+            className={clsx(
+              styles.planBadge,
+              featured ? styles.planBadgeFeatured : styles.planBadgeNeutral,
+            )}
+          >
+            {badge}
+          </span>
+        )}
+      </div>
+      <span className={styles.planTag}>{tag}</span>
+      <p className={styles.planDescription}>{description}</p>
+      <ul className={styles.planHighlights}>
+        {highlights.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
+      {cta.kind === 'link' ? (
+        <Link to={cta.to} className={buttonClass}>
+          {cta.label}
+        </Link>
+      ) : (
+        <button
+          data-cal-link="coderx/30-min"
+          data-cal-config={JSON.stringify({
+            layout: 'month_view',
+            'metadata[plan]': cta.plan,
+            notes: `Interested in: ${cta.plan}`,
+          })}
+          className={buttonClass}
+        >
+          {cta.label}
+        </button>
+      )}
+    </div>
+  );
+}
 
 export default function Pricing() {
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-
-    // Load Cal.com embed script
-    const existingScript = document.querySelector('script[src="https://app.cal.com/embed/embed.js"]');
-    if (!existingScript) {
-      // Inline Cal.com init snippet
-      (function (C: any, A: string, L: string) {
-        const p = (a: any, ar: any) => { a.q.push(ar); };
-        const d = C.document;
-        C.Cal = C.Cal || function (...args: any[]) {
-          const cal = C.Cal;
-          if (!cal.loaded) {
-            cal.ns = {};
-            cal.q = cal.q || [];
-            const s = d.createElement('script');
-            s.src = A;
-            s.async = true;
-            d.head.appendChild(s);
-            cal.loaded = true;
-          }
-          if (args[0] === L) {
-            const api: any = (...a: any[]) => { p(api, a); };
-            const namespace = args[1];
-            api.q = api.q || [];
-            typeof namespace === 'string'
-              ? (cal.ns[namespace] = api) && p(api, args)
-              : p(cal, args);
-            return;
-          }
-          p(cal, args);
-        };
-      })(window, 'https://app.cal.com/embed/embed.js', 'init');
-
-      window.Cal!('init', { origin: 'https://cal.com' });
-      window.Cal!('ui', {
-        styles: { branding: { brandColor: '#d52d34' } },
-        hideEventTypeDetails: false,
-        layout: 'month_view',
-      });
-    }
-  }, []);
-
   return (
     <Layout
       title="Pricing"
-      description="Choose the CodeRx plan that fits your team. Silver, Gold, or Platinum — all include weekly drug data updates, AWS S3 access, and complete documentation.">
+      description="Compare CodeRx Open and Enterprise. Start free with a yearly snapshot, or get the full drug database with weekly updates."
+    >
       <div className={styles.container}>
-
-        {/* Header */}
         <div className={styles.header}>
           <Heading as="h1" className={styles.title}>
             Compare CodeRx Plans
           </Heading>
           <p className={styles.subtitle}>
-            Explore tiered access to comprehensive drug data marts, documentation,
-            support, and advanced feature sets designed for pharmacy analytics workflows.
+            Start free with CodeRx Open, then move to Enterprise when you need
+            the full database, weekly updates, and advanced analytics.
           </p>
         </div>
 
-        {/* Pricing Cards */}
-        <div className={styles.pricingOptions}>
-
-          {/* Silver */}
-          <div className={styles.pricingCard}>
-            <div className={styles.pricingCardHeader}>
-              <h2 className={styles.pricingCardTitle}>Silver</h2>
-            </div>
-            <p className={styles.pricingCardDescription}>
-              Includes the core data marts, weekly updates, and AWS S3 delivery for teams building reliable pharmacy analytics workflows.
-            </p>
-            <button
-              data-cal-link="coderx/30-min"
-              data-cal-config={JSON.stringify({
-                layout: 'month_view',
-                'metadata[plan]': 'Silver',
-                notes: 'Interested in: Silver',
-              })}
-              className={styles.pricingButtonOutline}
-            >
-              Book a Demo
-            </button>
-          </div>
-
-          {/* Gold */}
-          <div className={`${styles.pricingCard} ${styles.pricingCardFeatured}`}>
-            <div className={styles.pricingCardHeader}>
-              <h2 className={styles.pricingCardTitle}>Gold</h2>
-              <span className={styles.pricingCardBadge}>Most Popular</span>
-            </div>
-            <p className={styles.pricingCardDescription}>
-              Adds Pricing, Packaging, Label Images, and priority support for organizations that need broader coverage and faster operational execution.
-            </p>
-            <button
-              data-cal-link="coderx/30-min"
-              data-cal-config={JSON.stringify({
-                layout: 'month_view',
-                'metadata[plan]': 'Gold',
-                notes: 'Interested in: Gold',
-              })}
-              className={styles.pricingButton}
-            >
-              Book a Demo
-            </button>
-          </div>
-
-          {/* Platinum */}
-          <div className={styles.pricingCard}>
-            <div className={styles.pricingCardHeader}>
-              <h2 className={styles.pricingCardTitle}>Platinum</h2>
-            </div>
-            <p className={styles.pricingCardDescription}>
-              Unlocks Indications, Plans, and E-prescribing mappings for advanced clinical use cases and production-grade medication intelligence.
-            </p>
-            <button
-              data-cal-link="coderx/30-min"
-              data-cal-config={JSON.stringify({
-                layout: 'month_view',
-                'metadata[plan]': 'Platinum',
-                notes: 'Interested in: Platinum',
-              })}
-              className={styles.pricingButtonOutline}
-            >
-              Book a Demo
-            </button>
-          </div>
-
+        <div className={styles.planCards}>
+          <PlanCard {...openPlan} />
+          <PlanCard {...enterprisePlan} />
         </div>
 
-        {/* Feature Comparison Grid */}
-        <div className={styles.comparisonSection}>
-          <h2 className={styles.comparisonTitle}>Compare Plans</h2>
-
-          <div className={styles.comparisonTable}>
-
-            {/* Table header */}
-            <div className={`${styles.comparisonRow} ${styles.comparisonHeader}`}>
-              <div className={styles.comparisonFeatureCell}>Feature</div>
-              <div className={styles.comparisonTierCell}>Silver</div>
-              <div className={`${styles.comparisonTierCell} ${styles.comparisonTierCellFeatured}`}>Gold</div>
-              <div className={styles.comparisonTierCell}>Platinum</div>
+        <div className={styles.table} role="table" aria-label="Plan features">
+          <div className={styles.tableHead} role="row">
+            <div className={styles.featuresLabel} role="columnheader">
+              Features
             </div>
+            <div className={styles.planColLabel} role="columnheader">
+              Open
+            </div>
+            <div
+              className={clsx(styles.planColLabel, styles.planColLabelFeatured)}
+              role="columnheader"
+            >
+              Enterprise
+            </div>
+          </div>
 
-            {featureSections.map((section) => (
-              <React.Fragment key={section.title}>
-                {/* Section heading row */}
-                <div className={styles.comparisonSectionRow}>
-                  <div className={styles.comparisonSectionTitle}>{section.title}</div>
+          {featureGroups.map((group) => (
+            <div
+              key={group.id}
+              className={styles.group}
+            >
+              {group.label && (
+                <div className={styles.groupHeader} role="rowheader">
+                  {group.label}
                 </div>
-
-                {/* Feature rows */}
-                {section.features.map((feature) => (
-                  <div key={feature.name} className={styles.comparisonRow}>
-                    <div className={styles.comparisonFeatureCell}>
-                      <span className={styles.comparisonFeatureName}>{feature.name}</span>
-                      <span className={styles.comparisonFeatureDesc}>{feature.description}</span>
-                    </div>
-                    <div className={styles.comparisonTierCell}>
-                      <span className={feature.silver === CHECK ? styles.checkIcon : styles.dashIcon}>
-                        {feature.silver}
-                      </span>
-                    </div>
-                    <div className={`${styles.comparisonTierCell} ${styles.comparisonTierCellFeatured}`}>
-                      <span className={feature.gold === CHECK ? styles.checkIcon : styles.dashIcon}>
-                        {feature.gold}
-                      </span>
-                    </div>
-                    <div className={styles.comparisonTierCell}>
-                      <span className={feature.platinum === CHECK ? styles.checkIcon : styles.dashIcon}>
-                        {feature.platinum}
-                      </span>
-                    </div>
+              )}
+              {group.rows.map((row) => (
+                <div key={row.id} className={styles.row} role="row">
+                  <div className={styles.feature} role="cell">
+                    <span className={styles.featureName}>{row.name}</span>
+                    <p className={styles.featureDetail}>{row.detail}</p>
                   </div>
-                ))}
-              </React.Fragment>
-            ))}
-
-          </div>
+                  <div className={styles.cell} role="cell">
+                    <PlanCellValue cell={row.open} />
+                  </div>
+                  <div
+                    className={clsx(styles.cell, styles.cellFeatured)}
+                    role="cell"
+                  >
+                    <PlanCellValue cell={row.enterprise} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          ))}
         </div>
 
-        {/* Bottom CTA */}
+        <p className={styles.progressionNote}>
+          <strong>CodeRx Open is refreshed once a year</strong>, so it will
+          drift out of date between releases.{' '}
+          <strong>Enterprise is refreshed weekly</strong> and delivered to AWS
+          S3 in CSV and Parquet with complete documentation.
+        </p>
+
         <div className={styles.ctaSection}>
           <h2 className={styles.ctaTitle}>Not sure which plan is right for you?</h2>
           <p className={styles.ctaSubtitle}>
-            Book a 30-minute demo and we'll walk you through the data and help you choose.
+            Book a 30-minute demo and we'll walk you through the data and help
+            you choose.
           </p>
           <div className={styles.ctaButtons}>
             <button
               data-cal-link="coderx/30-min"
-              data-cal-config='{"layout":"month_view"}'
+              data-cal-config='{"layout":"month_view","metadata[plan]":"Enterprise","notes":"Interested in: Enterprise"}'
               className={styles.ctaButton}
             >
               Book a Demo
@@ -350,7 +190,6 @@ export default function Pricing() {
             </Link>
           </div>
         </div>
-
       </div>
     </Layout>
   );

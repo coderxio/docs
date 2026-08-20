@@ -1,0 +1,269 @@
+import type { VercelRequest, VercelResponse } from '@vercel/node';
+
+interface OpenRequestFormData {
+  firstName: string;
+  lastName: string;
+  name: string;
+  email: string;
+  company: string;
+  useCase: string;
+  problem: string;
+}
+
+const USE_CASES = new Set([
+  'Population health and utilization',
+  'Payer coverage and mix',
+  'Claims analytics',
+  'Medication feature in a product',
+  'Replace a proprietary drug database',
+  'Formulary and benefit design',
+  'Healthcare AI or data product',
+  'Academic or clinical research',
+  'Other',
+]);
+
+function asString(value: unknown): string {
+  return typeof value === 'string' ? value.trim() : '';
+}
+
+function asUseCases(value: unknown): string[] {
+  const raw = Array.isArray(value) ? value : [value];
+  const unique: string[] = [];
+  for (const item of raw) {
+    const useCase = asString(item);
+    if (useCase && !unique.includes(useCase)) {
+      unique.push(useCase);
+    }
+  }
+  return unique;
+}
+
+function isValidEmail(email: string): boolean {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function formatEmailHtml(data: OpenRequestFormData): string {
+  return `
+    <h2>New CodeRx Open Request</h2>
+    <p>Someone requested access to the free CodeRx Open drug database.</p>
+    <hr>
+    <p><strong>Name:</strong> ${escapeHtml(data.name)}</p>
+    <p><strong>Work email:</strong> ${escapeHtml(data.email)}</p>
+    <p><strong>Company:</strong> ${escapeHtml(data.company)}</p>
+    <p><strong>Intended use case:</strong> ${escapeHtml(data.useCase)}</p>
+    <hr>
+    <h3>What drug data problem are you trying to solve?</h3>
+    <p>${escapeHtml(data.problem).replace(/\n/g, '<br>')}</p>
+  `;
+}
+
+function formatEmailText(data: OpenRequestFormData): string {
+  return `
+New CodeRx Open Request
+
+Someone requested access to the free CodeRx Open drug database.
+
+Name: ${data.name}
+Work email: ${data.email}
+Company: ${data.company}
+Intended use case: ${data.useCase}
+
+What drug data problem are you trying to solve?
+${data.problem}
+  `.trim();
+}
+
+async function sendEmailWithResend(data: OpenRequestFormData): Promise<boolean> {
+  const apiKey = process.env.RESEND_API_KEY?.trim();
+  const fromEmail = (process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev').trim();
+  const toEmail = (process.env.CONTACT_EMAIL || process.env.RESEND_TO_EMAIL)?.trim();
+
+  if (!apiKey || !toEmail) {
+    return false;
+  }
+
+  try {
+    const response = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        from: fromEmail,
+        to: toEmail,
+        reply_to: data.email,
+        subject: `CodeRx Open: ${data.company} (${data.name})`,
+        html: formatEmailHtml(data),
+        text: formatEmailText(data),
+      }),
+    });
+
+    if (!response.ok) {
+      console.error('Resend API error:', response.status, await response.text());
+      return false;
+    }
+
+    return true;
+  } catch (error) {
+    console.error('Error sending email with Resend:', error);
+    return false;
+  }
+}
+
+async function sendEmailWithSendGrid(data: OpenRequestFormData): Promise<boolean> {
+  const apiKey = process.env.SENDGRID_API_KEY;
+  const fromEmail = process.env.SENDGRID_FROM_EMAIL;
+  const toEmail = process.env.CONTACT_EMAIL || process.env.SENDGRID_TO_EMAIL;
+
+  if (!apiKey || !fromEmail || !toEmail) {
+    return false;
+  }
+
+  try {
+    const response = await fetch('https://api.sendgrid.com/v3/mail/send', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        personalizations: [
+          {
+            to: [{ email: toEmail }],
+            reply_to: { email: data.email, name: data.name },
+          },
+        ],
+        from: { email: fromEmail },
+        subject: `CodeRx Open: ${data.company} (${data.name})`,
+        content: [
+          { type: 'text/plain', value: formatEmailText(data) },
+          { type: 'text/html', value: formatEmailHtml(data) },
+        ],
+      }),
+    });
+
+    return response.ok;
+  } catch (error) {
+    console.error('Error sending email with SendGrid:', error);
+    return false;
+  }
+}
+
+async function sendToWebhook(data: OpenRequestFormData): Promise<boolean> {
+  const webhookUrl =
+    process.env.OPEN_WEBHOOK_URL || process.env.CONTACT_WEBHOOK_URL;
+
+  if (!webhookUrl) {
+    return false;
+  }
+
+  try {
+    const response = await fetch(webhookUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        source: 'coderx-open-form',
+        pipeline: 'coderx-open',
+        timestamp: new Date().toISOString(),
+        ...data,
+      }),
+    });
+
+    return response.ok;
+  } catch (error) {
+    console.error('Error sending to webhook:', error);
+    return false;
+  }
+}
+
+export default async function handler(req: VercelRequest, res: VercelResponse) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  try {
+    const body = (req.body ?? {}) as Record<string, unknown>;
+    const firstName = asString(body.firstName);
+    const lastName = asString(body.lastName);
+    const email = asString(body.email);
+    const company = asString(body.company);
+    const useCases = asUseCases(body.useCase);
+    const problem = asString(body.problem);
+
+    if (!firstName || !lastName || !email || !company || !useCases.length || !problem) {
+      return res.status(400).json({
+        error:
+          'Missing required fields: firstName, lastName, email, company, useCase, and problem are required',
+      });
+    }
+
+    if (!isValidEmail(email)) {
+      return res.status(400).json({ error: 'Invalid email address' });
+    }
+
+    if (!useCases.every((useCase) => USE_CASES.has(useCase))) {
+      return res.status(400).json({ error: 'Invalid use case' });
+    }
+
+    if (problem.length > 10000) {
+      return res.status(400).json({ error: 'Problem description is too long' });
+    }
+
+    const payload: OpenRequestFormData = {
+      firstName,
+      lastName,
+      name: `${firstName} ${lastName}`,
+      email,
+      company,
+      useCase: useCases.join(', '),
+      problem,
+    };
+
+    // Webhook first so leads land in the CRM even if email delivery is down
+    let delivered = await sendToWebhook(payload);
+
+    if (process.env.RESEND_API_KEY) {
+      const emailed = await sendEmailWithResend(payload);
+      delivered = delivered || emailed;
+    }
+
+    if (!delivered && process.env.SENDGRID_API_KEY) {
+      delivered = await sendEmailWithSendGrid(payload);
+    }
+
+    if (!delivered) {
+      console.error('No lead capture destination configured for CodeRx Open');
+      return res.status(500).json({
+        error:
+          'Lead capture is not configured. Set OPEN_WEBHOOK_URL, CONTACT_WEBHOOK_URL, or RESEND_API_KEY with CONTACT_EMAIL.',
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: 'CodeRx Open request submitted successfully',
+    });
+  } catch (error) {
+    console.error('Error processing CodeRx Open request:', error);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+}

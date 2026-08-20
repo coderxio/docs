@@ -19,9 +19,30 @@ CodeRx turns messy, fragmented public drug data into clean, analytics-ready data
 - Built by pharmacists who code.
 - Designed for developers, analysts, healthcare data teams, and pharmacy researchers.
 - Makes complex drug data query-ready without requiring RxNorm expertise.
-- Unifies sources like RxNorm, FDA NDC, DailyMed, NADAC, RxClass, and FDA UNII.
+- Unifies sources like RxNorm, FDA, DailyMed, NADAC, RxClass, and CMS.
 - Emphasizes open standard identifiers, transparent data modeling, and practical analytics.
 - Provides an affordable, modern alternative to legacy enterprise drug databases.
+
+### Plans and how to talk about them
+
+CodeRx sells two things:
+
+| Plan | What it is | How to position it |
+|---|---|---|
+| **Open** | Free. A single yearly snapshot of three marts (drugs, packages, classes), limited to actively marketed products and a reduced column set. | An on-ramp and an evaluation tool. Never the product. |
+| **Enterprise** | Paid annual subscription. The full database, every mart and column, refreshed weekly on CodeRx AWS S3 for customers to pull. | The product. Everything else exists to lead here. |
+
+Rules for writing about Open:
+
+- Always state the yearly refresh cadence, and always state that it goes stale. `Refreshed once a year, so it starts drifting out of date the day it ships.`
+- Never imply Open is sufficient for production work, and never call it a "free tier," "starter plan," or anything that implies a peer relationship with Enterprise.
+- Do not sell Open's limitations as features. A yearly refresh is not a benefit; it is the constraint you accept in exchange for it being free.
+- Keep the sign-up friction low anyway. Open is the top of the funnel, so it should be easy to get and honestly labeled — those are not in tension.
+
+Rules for writing about Enterprise:
+
+- Lead with weekly refresh, full column coverage, and delivery on CodeRx AWS S3 for customers to pull.
+- The conversion action is **Book a Demo**, not a self-serve checkout.
 
 ### Taglines (approved)
 
@@ -94,6 +115,23 @@ Canonical brand colors from the live site and logo:
 
 Dark mode (docs / site) brightens red and yellow for contrast: primary `#ff4757`, secondary `#ffd93d`.
 
+#### These values are live
+
+The block above is not documentation of the code — it *is* the code. It is mirrored verbatim into `:root` in `src/css/custom.css`, and every marketing stylesheet consumes it through tokens. There are no hardcoded hex values in `src/pages/*.module.css`. Change a value here, change the matching token in `custom.css`, and it propagates across every page in both color modes.
+
+The implementation has two layers:
+
+| Layer | Example | Rule |
+|---|---|---|
+| **Raw palette** | `--coderx-red`, `--coderx-ink`, `--coderx-canvas` | Mirrors the table above. Fixed values; identical in light and dark mode. |
+| **Semantic** | `--coderx-surface-page`, `--coderx-text-body`, `--coderx-line` | What components actually use. Flips automatically in dark mode. |
+
+Because the semantic layer flips on its own, a component styled with tokens usually needs **no** `[data-theme='dark']` block. If you find yourself writing one, check whether a semantic token already expresses what you want.
+
+Dark bands are a special case: `--coderx-band-*` tokens describe surfaces that stay dark in *both* modes (they lighten slightly in dark mode so they don't disappear into the page). Text on those bands uses `--coderx-band-text` and `--coderx-band-body`, never `--coderx-text-primary`.
+
+Status colors (`--coderx-positive`, `--coderx-negative`) sit deliberately outside the brand palette so a validation error never competes with red-as-CTA.
+
 #### How to use color
 
 | Color | Role |
@@ -114,7 +152,7 @@ A good CodeRx composition usually follows:
 - 5–10% red accents
 - 5–10% yellow accents
 
-**Rhythm on marketing pages:** alternate light canvas sections with full-bleed ink (`#0a0a0a`) bands. Red often frames those dark product bands (as on “The CodeRx Drug Database”).
+**Rhythm on marketing pages:** alternate light canvas sections with full-bleed ink (`#0a0a0a`) bands. On the homepage the ink bands are delivery and the closing CTA, with Open (light) between them. Red is reserved for the italic hero word, featured borders, and the demo CTA on ink.
 
 Avoid:
 
@@ -229,10 +267,8 @@ CodeRx interfaces should feel like:
 
 Ship intentional motion, not noise. Patterns already in product:
 
-- Soft card carousel / depth shifts for data-mart previews
-- Staggered row entrance for example fields
-- Subtle pulse on database / stack visuals
-- Expand/collapse for process steps
+- Hover lift on mart and pricing cards
+- Expand/collapse for pricing feature rows
 
 Keep easing restrained (`cubic-bezier(0.4, 0, 0.2, 1)`), durations ~0.3–0.6s. Prefer presence and hierarchy over decorative flair.
 
@@ -289,6 +325,17 @@ Preferred labels:
 
 Avoid vague CTAs (`Learn more`, `Transform now`, `Unlock insights`) when a specific action exists.
 
+#### CTA placement: one action, carried by the navbar
+
+**Book a Demo** is the single conversion action across the site, and it lives as a persistent red button in the navbar (`.navbarDemoButton` in `src/css/custom.css`, wired as an `html` navbar item so the Cal.com embed can find its data attributes).
+
+Because the navbar always carries it:
+
+- **Marketing heroes do not need a button cluster.** The homepage hero is headline, one supporting paragraph, and badges. The query below is the visual. Let the hero teach; the CTA is already on screen.
+- **Do not stack competing CTAs.** One page should not offer `Book a Demo`, `View Pricing`, and `Get Open` side by side at equal weight — that is three destinations and no decision.
+- **Earn the click at the bottom.** The closing dark band is where the in-page demo CTA belongs, in brand red, with `View Pricing` as the quiet secondary.
+- **Open is a text link, not a button.** Its entry points should read as an aside (`Get CodeRx Open free →`), never as a primary control competing with the demo.
+
 #### Cards
 
 Use cards for data sources, data marts, audiences, comparisons, and pricing — not as default decoration for every block.
@@ -325,7 +372,7 @@ Keep tables legible. Do not over-decorate them.
 Small badges for status and provenance:
 
 - `Weekly refresh` / `weekly updates`
-- `SQL-ready` / `pharmacy-ready`
+- `SQL-ready` / `analytics-ready`
 - `Open standards` / `Open identifiers`
 - Source names: `RxNorm`, `FDA NDC`, `DailyMed`, `NADAC`
 - Formats: `CSV` / `Parquet`
@@ -469,9 +516,11 @@ Be sharp, not cruel. Punch up at systems and vendor lock-in, not at practitioner
 
 #### Prefer concrete claims
 
-Use: `Weekly updates`, `Six integrated public data sources`, `Pre-joined tables`, `No XML parsing`, `Built by pharmacists`, `Open standard identifiers`, `CSV and Parquet delivery`, `Silver / Gold / Platinum`
+Use: `Weekly updates`, `Six integrated public data sources`, `Fourteen data marts`, `Pre-joined tables`, `No XML parsing`, `Built by pharmacists`, `Open standard identifiers`, `CSV and Parquet delivery`, `Open / Enterprise`
 
 Avoid: `Best-in-class`, `Revolutionary`, `World-class`, `Seamless end-to-end`, `AI-powered` (unless an actual AI feature is shipping)
+
+Never ship a number without a source. A stat that cannot be traced to the product or a public data source (`95% cost savings`) does more damage to credibility than leaving the slot empty.
 
 #### Make the pain vivid
 
@@ -501,14 +550,29 @@ Docs: practical answer first, caveats after, source and refresh assumptions expl
 
 **Hero (website)**
 
+No CTA cluster — `Book a Demo` is persistent in the navbar.
+
 ```md
 # Drug Data, Simplified
 
-Stop choosing between hard-to-use raw government data and expensive proprietary
-databases. CodeRx transforms RxNorm, FDA, DailyMed, and NADAC into ready-to-query
-data marts—built by pharmacists, designed for analytics.
+CodeRx makes open drug data easy to use, at a fraction of the cost of
+proprietary drug databases.
 
-[Book a Demo] [View Pricing]
+◈ weekly updates   ◇ analytics-ready   ○ open standards
+```
+
+**CodeRx Open (positioning an on-ramp)**
+
+On the homepage, Open is a quiet on-ramp. Do not sell the plan split here — no “Enterprise” badge, no “the rest of the database,” no “weekly updates come with Enterprise.” Pricing is where Open vs Enterprise is compared.
+
+```md
+## Start with CodeRx Open
+
+CodeRx Open is a once-a-year snapshot of three marts, filtered to actively
+marketed products. Enough to prototype against a real schema and see how
+the data is modeled.
+
+Get CodeRx Open free →
 ```
 
 **Newsletter / Substack**
@@ -571,17 +635,27 @@ Emphasize less file wrangling, more research time, transparent source mapping.
 
 ## Recommended page structure
 
-For a CodeRx marketing / landing page:
+The homepage is the product page. There is no separate `/product` — that route
+redirects to `/`. The pitch is eight sections, in this order:
 
-1. **Hero** — headline, one sentence for whom, primary + secondary CTA, product visual
-2. **Audience** — analysts, startups, developers, researchers
-3. **Product promise** — unified schema, weekly refresh, query-ready
-4. **Proof stats** — sources, cadence, cost contrast, “0 XML parsing”
-5. **Data sources** — RxNorm, FDA NDC, RxClass, DailyMed, NADAC, FDA UNII
-6. **Data marts** — Packages, Drugs, Ingredients (+ Classes, Excipients, Synonyms)
-7. **Comparison** — vs other databases / vs raw open data
-8. **How it works** — Subscribe → Query → Analyze
-9. **CTA** — Book a Demo / View Pricing
+1. **Hero** — headline, one problem paragraph, badges. No buttons.
+2. **Query proof** — a real SQL snippet against the real schema, paired with a result table
+3. **Data marts** — six featured marts with docs links
+4. **Open drug data is valuable — if you know how to use it** — ink band leading into purpose-built marts: largely public sources, transformed into easy-to-use marts (or unavailable without validated refresh work); hub diagram with the white CodeRx wordmark and yellow lines to six source cards (wordmark at the bottom on mobile); CodeRx coordinates it and keeps building
+5. **Purpose-built data marts for pharmacy** — own paper band: four operational groups (label, pricing, packaging, e-prescribing). Product story, not a plan split — no Enterprise badge, no “the rest of the database.”
+6. **How it's delivered** — ink band: weekly refresh, CodeRx AWS S3, documented columns, built by pharmacists
+7. **CodeRx Open** — a quiet on-ramp. Name the yearly snapshot and that it goes stale. Do not contrast it with Enterprise on this page.
+8. **CTA** — Book a Demo in brand red on ink, View Pricing secondary
+
+Supporting pages:
+
+| Route | Job |
+|---|---|
+| `/pricing` | Open vs Enterprise comparison table. The honest, detailed answer. |
+| `/open` | Lead capture. Hero, then the form immediately, then supporting detail. |
+| `/contact-us` | Non-demo enquiries. |
+
+Section rhythm alternates light canvas and ink bands. Two ink bands should not sit adjacent.
 
 ---
 
@@ -656,6 +730,10 @@ Before publishing CodeRx design or copy, verify:
 - [ ] Is any humor subtle enough that it does not reduce trust?
 - [ ] For visuals: cool neutrals + ink bands, not cream/purple defaults?
 - [ ] For standalone images/PDFs: logo treatment correct for the background?
+- [ ] Colors via tokens, with no hex literals added to page stylesheets?
+- [ ] Exactly one primary action on the page, with Open kept subordinate to it?
+- [ ] Every stat traceable to the product or a public source?
+- [ ] Open described with its refresh cadence and its staleness, both?
 
 ---
 
@@ -663,6 +741,12 @@ Before publishing CodeRx design or copy, verify:
 
 This guide lives at the root of the CodeRx docs / website repository (`docs/DESIGN.md`) so product, marketing, and content work share one source of truth. Implementation references:
 
-- Brand CSS variables: `src/css/custom.css`
-- Marketing layout: `src/pages/index.module.css`, `src/pages/pricing.module.css`
+- Design tokens and shared components: `src/css/custom.css`
+- Homepage (the full product pitch): `src/pages/index.tsx`, `src/pages/index.module.css`
+- Plans data, shared by pricing and comparison copy: `src/data/plans.ts`
+- Other marketing pages: `src/pages/pricing.*`, `src/pages/open.*`, `src/pages/contact-us.*`
+- Navbar, footer, and redirects: `docusaurus.config.ts`
+- Cal.com embed bootstrap: `src/clientModules/cal.ts`
 - Logos: `static/img/`
+
+When changing anything visual, change it in `custom.css` rather than in a page stylesheet. A hex literal in a `*.module.css` file is a color that can never be rebranded.
