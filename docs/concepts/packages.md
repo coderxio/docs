@@ -15,7 +15,7 @@ Packages provide a comprehensive view of how National Drug Codes (NDCs) map to s
 | Column Name | Description | Tests |
 |------------|-------------|-------|
 | `ndc11` | The 11-digit National Drug Code (NDC) format, which uniquely identifies a specific drug package. Includes labeler code, product code, and package code. | `unique`, `not_null` (primary key) |
-| `ndc10` | Hyphenated NDC10 package code when available (e.g., "12345-678-90"). From all_ndc_descriptions; preferentially RxNorm MTHSPL, otherwise FDA ndcpackagecode. Null when no NDC10 mapping exists. | |
+| `ndc10` | Hyphenated NDC10 package code when available. The FDA's official NDC Directory code format is variable depending on how the labeler segment was originally assigned. It can be 4-4-2 (e.g. 0378-0631-88), 5-3-2 (e.g. 68229-102-01), or 5-4-1 (e.g. 68599-4744-7). NDC10 is always 10 digits total. From all_ndc_descriptions; preferentially RxNorm MTHSPL, otherwise FDA ndcpackagecode. Null when no NDC10 mapping exists. | |
 | `ndc9` | The 9-digit NDC format (first 9 digits of NDC11), representing the product level without package-specific information. | |
 | `ndc` | Hyphenated NDC10 package code, same value as ndc10. Retained for backward compatibility with consumers that expect a column named ndc. | |
 | `drug_id` | RxNorm RXCUI for the drug associated with this NDC. Null if no RxNorm mapping exists for this NDC. | |
