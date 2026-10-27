@@ -1,3 +1,5 @@
+import {ENTERPRISE_VERSION} from './version';
+
 export type PlanCell =
   | { kind: 'yes' }
   | { kind: 'no' }
@@ -37,6 +39,7 @@ export const enterprisePlan = {
   name: 'Enterprise',
   badge: 'Recommended',
   tag: 'Annual subscription',
+  version: ENTERPRISE_VERSION,
   description:
     'The full CodeRx Drug Database — every table, every column, refreshed weekly on CodeRx AWS S3 for you to pull.',
   featured: true,

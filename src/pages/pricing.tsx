@@ -33,6 +33,7 @@ function PlanCard({
   name,
   badge,
   tag,
+  version,
   description,
   highlights,
   featured,
@@ -41,6 +42,7 @@ function PlanCard({
   name: string;
   badge?: string;
   tag: string;
+  version?: string;
   description: string;
   highlights: string[];
   featured?: boolean;
@@ -55,7 +57,14 @@ function PlanCard({
   return (
     <div className={clsx(styles.planCard, featured && styles.planCardFeatured)}>
       <div className={styles.planHeaderTop}>
-        <h2 className={styles.planName}>{name}</h2>
+        <h2 className={styles.planName}>
+          {name}
+          {version && (
+            <span className={styles.planVersion} aria-label={`Version ${version}`}>
+              v{version}
+            </span>
+          )}
+        </h2>
         {badge && (
           <span
             className={clsx(
@@ -129,7 +138,10 @@ export default function Pricing() {
               className={clsx(styles.planColLabel, styles.planColLabelFeatured)}
               role="columnheader"
             >
-              Enterprise
+              Enterprise{' '}
+              <span className={styles.tableVersion}>
+                v{enterprisePlan.version}
+              </span>
             </div>
           </div>
 

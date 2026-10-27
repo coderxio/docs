@@ -14,6 +14,7 @@ import CodeBlock from '@theme/CodeBlock';
 import ThemedImage from '@theme/ThemedImage';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
+import {ENTERPRISE_VERSION} from '../data/version';
 import styles from './index.module.css';
 
 function HashScrollHandler() {
@@ -148,6 +149,9 @@ function ProductSection() {
             <Heading as="h2" className={styles.productTitle}>
               The CodeRx Drug Database
             </Heading>
+            <p className={styles.productVersion}>
+              ENTERPRISE v{ENTERPRISE_VERSION}
+            </p>
             <p className={styles.productDesc}>
               Six public sources unified into query-ready data marts. Drugs,
               packages, ingredients, classes, and prices — already joined on
